@@ -136,7 +136,7 @@
     
     <!-- Sheet Body-->
     <div class="sheet-body-container">
-        <input type="hidden" name="attr_tab" class="sheet-tab-swap" value="4" />
+        <input type="hidden" name="attr_tab" class="sheet-tab-swap" value="0" />
         
        
         <!----------------------
@@ -214,8 +214,35 @@
                     </div>
                     
                 </div>
+                
+                <!-- Party Pokemon -->
                 <div>
-                    <textarea class="sheet-text-fill" style="width: 100% ; height: 100%;" name="attr_character_appearance"></textarea>
+                    
+                    <div class="sheet-trainer-only">
+                        
+                        <div style="background: black ; color: white ; font: x-large bold;text-align: center;"> Pokemon</div>
+                        
+                        <fieldset class="repeating_pokemon">
+                            
+                        
+                            <span class="sheet-partyPokemon">
+                                <input type="hidden" name="attr_pState" class="sheet-pokeballState" value="0" />
+                                
+                                <img class="sheet-partyClosed" src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/pokeballClosed.png" width="30px" />
+                                <input class="sheet-partyOpened" type="radio" name="attr_pState" value="1" />
+                                
+                                <img class="sheet-partyOpened" src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/pokeballOpened.png" width="30px" />
+                                <input class="sheet-partyLocked" type="radio" name="attr_pState" value="2" />
+                                
+                                <img class="sheet-partyLocked" src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/pokeballLocked.png" width="30px" />
+                                <input class="sheet-partyClosed" type="radio" name="attr_pState" value="0" />
+                                
+                                <input type="text" name="attr_pName" />
+                            </span>
+                        </fieldset>
+                    </div>
+                    
+                    
                 </div>
                 
             </div>
@@ -1376,6 +1403,7 @@
             4 Inventory
         ----------------------->
         <div class="sheet-inventory">
+            <input type="hidden" name="attr_isTrainer" class="sheet-trainerSwap" value="0"/>
             
             <div class="sheet-trainer-only sheet-equipped">
                 <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Trainer.png" />
@@ -1405,7 +1433,7 @@
                 </div>
             </div>
             <div>
-                <strong>Money</strong> <input type="number" name="attr_money" style="min-width:120px;" /> 
+                <strong>Money</strong> <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/PokeDollar.png" /> <input type="number" name="attr_money" style="min-width:120px;" /> 
             </div>
             
             <div>
