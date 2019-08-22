@@ -39,7 +39,7 @@
         <tr>
             <td style="text-align:right;"><strong>Critical</strong></td>
             <td >{{crit_damage}} {{type}}</td>
-        </tr>
+        </tr>.sheet-whisper span
         {{/rollWasCrit() accuracy}}
         {{#effect}}
         <tr>
@@ -70,7 +70,7 @@
     </table>
 </rolltemplate>
 
-<rolltemplate class="sheet-rolltemplate-PTU_generic">
+<rolltemplate class="sheet-rolltemplate-PTU">
     <table>
         <tr>
             <th colspan="2">{{name}}</th>
@@ -113,7 +113,7 @@
             <input type="radio" name="attr_tab" value="1" />
             <span>Skills</span>
         </div>
-        <div class="sheet-tab">
+        <div class="sheet-tab"> 
             <input type="radio" name="attr_tab" value="2" />
             <span>Moves</span>
         </div>
@@ -123,13 +123,20 @@
         </div>
         <div class="sheet-tab">
             <input type="radio" name="attr_tab" value="4" />
-            <span>Inventory</span>
+            <span >Inventory</span>
         </div>
+        <div class="sheet-whisper">
+            <input type="radio" name="attr_whisper" value="/w gm" checked/>
+            <span style="left:0px">To GM</span>
+            <input type="radio" name="attr_whisper" value=" " />
+            <span style="right:0px">Public</span>
+        </div>
+
     </div>
     
     <!-- Sheet Body-->
     <div class="sheet-body-container">
-        <input type="hidden" name="attr_tab" class="sheet-tab-swap" value="0" />
+        <input type="hidden" name="attr_tab" class="sheet-tab-swap" value="4" />
         
        
         <!----------------------
@@ -295,7 +302,7 @@
                                <input type="hidden" name="attr_initiative_calc" value="@{initiative_bonus} + @{stat_speed_calc}" />
                                <td colspan="3" class="sheet-table-label" >Initiative Bonus</td>
                                <td><input type="number" name="attr_initiative_bonus" value="0" /></td>
-                               <td><button type="roll" value="&{template:PTU_generic} {{name=@{character_name}'s Initiative }} {{initiative=[[(@{initiative_calc})+([[1d20]]/100) &{tracker}]]  }} "></button></td>
+                               <td><button type="roll" value="@{whisper} &{template:PTU} {{name=@{character_name}'s Initiative }} {{initiative=[[(@{initiative_calc})+([[1d20]]/100) &{tracker}]]  }} "></button></td>
                            </tr>
                            
                            
@@ -623,7 +630,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_acrobatics" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Acrobatics }}{{roll=[[@{acrobatics}d6 + @{acrobatics_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Acrobatics }} {{roll=[[@{acrobatics}d6 + @{acrobatics_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -640,7 +647,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_athletics" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Athletics }}{{roll=[[@{athletics}d6 + @{athletics_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Athletics }} {{roll=[[@{athletics}d6 + @{athletics_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -657,7 +664,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_combat" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Combat }}{{roll=[[@{combat}d6 + @{combat_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Combat }} {{roll=[[@{combat}d6 + @{combat_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -674,7 +681,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_intimidate" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Intimidate }}{{roll=[[@{intimidate}d6 + @{intimidate_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Intimidate }} {{roll=[[@{intimidate}d6 + @{intimidate_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -691,7 +698,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_stealth" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Stealth }}{{roll=[[@{stealth}d6 + @stealth_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Stealth }} {{roll=[[@{stealth}d6 + @stealth_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -708,7 +715,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_survival" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Survival }}{{roll=[[@{survival}d6 + @{survival_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Survival }} {{roll=[[@{survival}d6 + @{survival_mod}]] }}" /></button>
                     </td>
                 </tr>
                 
@@ -735,7 +742,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_general_edu" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=General Education }}{{roll=[[@{general_edu}d6 + @{general_edu_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s General Education }} {{roll=[[@{general_edu}d6 + @{general_edu_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -752,7 +759,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_medicine_edu" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Medicine Education }}{{roll=[[@{medicine_edu}d6 + @{medicine_edu_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Medicine Education }} {{roll=[[@{medicine_edu}d6 + @{medicine_edu_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -769,7 +776,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_occult_edu" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Occult Education }}{{roll=[[@{occult_edu}d6 + @{occult_edu_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Occult Education }} {{roll=[[@{occult_edu}d6 + @{occult_edu_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -786,7 +793,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_pokemon_edu" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Pokemon Education }}{{roll=[[@{pokemon_edu}d6 + @{pokemon_edu_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Pokemon Education }} {{roll=[[@{pokemon_edu}d6 + @{pokemon_edu_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -803,7 +810,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_technology_edu_mod" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Technology Education }}{{roll=[[@{technology_edu}d6 + @{technology_edu_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Technology Education }} {{roll=[[@{technology_edu}d6 + @{technology_edu_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -820,7 +827,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_guile" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Guile }}{{roll=[[@{guile}d6 + @{guile_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Guile }} {{roll=[[@{guile}d6 + @{guile_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -837,7 +844,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_perception" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Perception }}{{roll=[[@{perception}d6 + @{perception_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Perception }} {{roll=[[@{perception}d6 + @{perception_mod}]] }}" /></button>
                     </td>
                 </tr>
                 
@@ -863,7 +870,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_charm" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Charm }}{{roll=[[@{charm}d6 + @{charm_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU_skill} {{name=@{character_name} }} {{rank=@{charm_rank} }} {{roll=[[@{charm}d6 + @{charm_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -880,7 +887,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_command" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Command }}{{roll=[[@{command}d6 + @{command_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Command }} {{rank=@{command_rank} }} {{roll=[[@{command}d6 + @{command_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -897,7 +904,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_focus" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Focus }}{{roll=[[@{focus}d6 + @{focus_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Focus }} {{rank=@{focus_rank} }} {{roll=[[@{focus}d6 + @{focus_mod}]] }}" /></button>
                     </td>
                 </tr>
                 <tr class="sheet-skill-item">
@@ -914,7 +921,7 @@
                     </td>
                     <td class="sheet-skill-roll">
                         <button type="roll" name="roll_intuition" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=Intuition }}{{roll=[[@{intuition}d6 + @{intuition_mod}]] }}" /></button>
+                        value="@{whisper} &{template:PTU} {{name=@{character_name}'s Intuition }} {{rank=@{intuition_rank} }} {{roll=[[@{intuition}d6 + @{intuition_mod}]] }}" /></button>
                     </td>
                 </tr>
                 
@@ -939,7 +946,7 @@
                         <strong>+</strong>
                         <input type="number" name="attr_custom_skill_mod" value="0" />
                         <button type="roll" name="roll_custom_skill" 
-                        value="&{template:PTU_skill} {{name=@{character_name} }}{{skill=@{custom_skill_name} }}{{roll=[[@{custom_skill_rank}d6 + @{custom_skill_mod}]] }}"></button>
+                        value="@{whisper} &{template:PTU_skill} {{name=@{character_name}'s @{custom_skill_name} }} {{roll=[[@{custom_skill_rank}d6 + @{custom_skill_mod}]] }}"></button>
                     </div>
                 </fieldset>
             </div>
@@ -1104,7 +1111,7 @@
                                 </span>
                                 <span style="float:right">
                                     <button type="roll" name="roll_moveAttack"
-                                    value="&{template:PTU_attack}{{name= @{character_name} }} {{attack= @{move_name} }} {{frequency= @{move_freq} }} {{range= @{move_range} }} {{type= @{move_type} }} {{category= @{move_cat} }} {{accuracy= [[1d20cs@{move_crit} - @{move_ac}]] }} {{ac= [[@{move_ac}]] }} {{crit_range= [[@{move_crit}]] }} {{db= @{move_damage_base} }} {{damage= [[@{move_damage_roll}]] }} {{crit_damage= [[@{move_damage_roll}]] }} {{contest_type= @{move_contest_type} }} {{contest_effects= @{move_contest_effects} }} {{effect= @{move_effects} }}">Attack</button>
+                                    value="@{whisper} &{template:PTU_attack}{{name= @{character_name} }} {{attack= @{move_name} }} {{frequency= @{move_freq} }} {{range= @{move_range} }} {{type= @{move_type} }} {{category= @{move_cat} }} {{accuracy= [[1d20cs@{move_crit} - @{move_ac}]] }} {{ac= [[@{move_ac}]] }} {{crit_range= [[@{move_crit}]] }} {{db= @{move_damage_base} }} {{damage= [[@{move_damage_roll}]] }} {{crit_damage= [[@{move_damage_roll}]] }} {{contest_type= @{move_contest_type} }} {{contest_effects= @{move_contest_effects} }} {{effect= @{move_effects} }}">Attack</button>
                                 </span>
                             </div>
                             <div class="sheet-move-row">
@@ -1221,7 +1228,7 @@
                                 <input type="checkbox" class="sheet-hide-swap"  name="attr_readonly"/>
                                 <div></div>
                                 <button type="roll" 
-                                value="&{template:PTU_generic} {{name= @{character_name}'s @{name} }} {{prerequisites= @{prerequisites} }} {{effect= @{effect} }}"></button>
+                                value="@{whisper} &{template:PTU} {{name= @{character_name}'s @{name} }} {{prerequisites= @{prerequisites} }} {{effect= @{effect} }}"></button>
                                 
                                 <div class="sheet-hide-swap-a sheet-edit">
                                     <div class="sheet-class-name">
@@ -1259,7 +1266,7 @@
                                 <input type="checkbox" class="sheet-hide-swap"  name="attr_readonly"/>
                                 <div></div>
                                 <button type="roll" 
-                                value="&{template:PTU_generic} {{name= @{character_name}'s @{name} }} {{prerequisites= @{prerequisites} }} {{Cost-Action= @{action} }} {{target= @{target} }} {{trigger= @{trigger} }} {{effect= @{effect} }}"></button>
+                                value="@{whisper} &{template:PTU} {{name= @{character_name}'s @{name} }} {{prerequisites= @{prerequisites} }} {{Cost-Action= @{action} }} {{target= @{target} }} {{trigger= @{trigger} }} {{effect= @{effect} }}"></button>
                                 
                                 <div class="sheet-hide-swap-a sheet-edit">
                                     <div class="sheet-class-name">
@@ -1318,7 +1325,7 @@
                                 <input type="checkbox" class="sheet-hide-swap"  name="attr_readonly"/>
                                 <div></div>
                                 <button type="roll" 
-                                value="&{template:PTU_generic} {{name= @{character_name}'s @{name} }} {{prerequisites= @{prerequisites} }} {{Cost-Action= @{action} }} {{target= @{target} }} {{trigger= @{trigger} }} {{effect= @{effect} }}"></button>
+                                value="@{whisper} &{template:PTU} {{name= @{character_name}'s @{name} }} {{prerequisites= @{prerequisites} }} {{Cost-Action= @{action} }} {{target= @{target} }} {{trigger= @{trigger} }} {{effect= @{effect} }}"></button>
                                 
                                 <div class="sheet-hide-swap-a sheet-edit">
                                     <div class="sheet-class-name">
@@ -1369,6 +1376,34 @@
             4 Inventory
         ----------------------->
         <div class="sheet-inventory">
+            
+            <div class="sheet-trainer-only sheet-equipped">
+                <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Trainer.png" />
+                <div class="sheet-equipped-item sheet-inventory-head">
+                    <span>Head</span>
+                    <textarea></textarea>
+                </div>
+                <div class="sheet-equipped-item sheet-inventory-body">
+                    <span>Body</span>
+                    <textarea></textarea>
+                </div>
+                <div class="sheet-equipped-item sheet-inventory-mainHand">
+                    <span>Main-Hand</span>
+                    <textarea></textarea>
+                </div>
+                <div class="sheet-equipped-item sheet-inventory-offHand">
+                    <span>Off-Hand</span>
+                    <textarea></textarea>
+                </div>
+                <div class="sheet-equipped-item sheet-inventory-feet">
+                    <span>Feet</span>
+                    <textarea></textarea>
+                </div>
+                <div class="sheet-equipped-item sheet-inventory-accessory">
+                    <span>Accessory</span>
+                    <textarea></textarea>
+                </div>
+            </div>
             <div>
                 <strong>Money</strong> <input type="number" name="attr_money" style="min-width:120px;" /> 
             </div>

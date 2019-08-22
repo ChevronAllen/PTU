@@ -1,25 +1,21 @@
-.sheet-rolltemplate-PTU_generic table,
-.sheet-rolltemplate-PTU_skill table,
+.sheet-rolltemplate-PTU table,
 .sheet-rolltemplate-PTU_attack table{
     border:2px solid black;
     min-width:200px;
     width:100%;
 }
-.sheet-rolltemplate-PTU_generic table tr,
-.sheet-rolltemplate-PTU_skill table tr,
+.sheet-rolltemplate-PTU table tr,
 .sheet-rolltemplate-PTU_attack table tr{
     background-color:#999999;
     color:black;
 }
-.sheet-rolltemplate-PTU_generic table td,
-.sheet-rolltemplate-PTU_skill table td,
+.sheet-rolltemplate-PTU table td,
 .sheet-rolltemplate-PTU_attack table td{
     padding:3px 5px 3px  0px;
     white-space:pre-line
     font-weight:bold;   
 }
-.sheet-rolltemplate-PTU_generic table th,
-.sheet-rolltemplate-PTU_skill table th,
+.sheet-rolltemplate-PTU table th,
 .sheet-rolltemplate-PTU_attack table th
 {
     height:2rem;
@@ -27,22 +23,18 @@
     background-color:#333333;
     color:white;
 }
-.sheet-rolltemplate-PTU_generic table tr:nth-child(odd),
-.sheet-rolltemplate-PTU_skill table tr:nth-child(odd),
+.sheet-rolltemplate-PTU table tr:nth-child(odd),
 .sheet-rolltemplate-PTU_attack table tr:nth-child(odd){
     background-color:#bbbbbb;
 }
-.sheet-rolltemplate-PTU_generic table td:nth-child(1),
-.sheet-rolltemplate-PTU_skill table td:nth-child(1), 
+.sheet-rolltemplate-PTU table td:nth-child(1), 
 .sheet-rolltemplate-PTU_attack table td:nth-child(1){
     padding-right:10px;
 }
 
 .charsheet{
     display:block;
-
     width:860px;
-
     
     box-sizing:border-box;
     -moz-box-sizing:border-box;
@@ -52,6 +44,7 @@
 textarea{
     resize:vertical;
     margin:0;
+    
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -63,30 +56,32 @@ label{
 
 input{margin-bottom:1px;}
 input[type="number"]{
+    text-align:center !important;
+    
     appearance:textfield;
     -moz-appearance:textfield;
     -webkit-appearance:textfield;
-    text-align:center !important;
     
     
 }
+
 select{
     margin:0px;
     vertical-align:middle;
+    text-align:center !important;
+    
     appearance:none;
     -moz-appearance:none;
     -webkit-appearance:none;
-    text-align:center !important;
 }
 
 input, select{
     background:none;
+    color:inherit;
     border-radius:0px;
     border-width:0px;
     border-bottom:1px solid black;
-    color:inherit;
 }
-
 
 label{
     display:inline;
@@ -96,10 +91,12 @@ label{
 textarea.sheet-text-fill{
     resize:none;
 }
+
 span.sheet-textarea{
     
     white-space: pre-line;
 }
+
 input:disabled,
 span.sheet-field{
     display:inline-block;
@@ -187,7 +184,6 @@ span.sheet-field{
 
 .sheet-tab-container{
     display:block;
-    /*min-width:200px;*/
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -203,7 +199,6 @@ span.sheet-field{
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-
 }
 
 /*****************************
@@ -213,9 +208,7 @@ span.sheet-field{
 .sheet-tab{
     position:relative;
     display:inline-block;
-    border-radius:10px 10px 0 0;
-    border:2px solid black;
-    border-bottom:0px;
+    
     
     height:auto;
     margin:0px;
@@ -240,6 +233,8 @@ span.sheet-field{
     font-weight:bold;
     z-index:0;
     border-radius:10px 10px 0 0;
+    border:2px solid black;
+    border-bottom:0px;
     background-color:grey;
     
     -moz-box-sizing:border-box;
@@ -248,6 +243,33 @@ span.sheet-field{
 }
 .sheet-tab > input[type="radio"]:checked + span{
     background-color:lightgrey;
+}
+
+.sheet-whisper{
+    position:relative;
+    display:inline;
+    margin-left:10px;
+}
+.sheet-whisper span{
+    position:absolute;
+    display:inline-block;
+    width:100px;
+    text-align:center;
+    font-weight:bold;
+    border:1px solid black;
+    border-radius:10px;
+    background:#ddd;
+}
+.sheet-whisper input{
+    position:relative;
+    display:inline-block;
+    width:100px;
+    height:100%;
+    z-index:1;
+    opacity:0;
+}
+.sheet-whisper input:checked + span{
+    background:orange;
 }
 
 /*****************************
@@ -914,6 +936,49 @@ span.sheet-field{
 /*****************************
     Inventory
 *****************************/
+.sheet-equipped{
+    position:relative;
+    text-align:center;
+}
+.sheet-equipped-item{
+    position:absolute;
+    display:inline-block;
+    background:beige;
+    border:1px solid black;
+    width:200px;
+
+}
+.sheet-equipped-item textarea{
+    max-height:100px;
+    min-height:28px;
+    height:28px;
+}
+
+.sheet-inventory-head{
+    top: 10px;
+    left: 505px;
+}
+.sheet-inventory-body{
+    top: 100px;
+    left: 300px;
+}
+.sheet-inventory-mainHand{
+    top: 150px;
+    left: 505px;
+}
+.sheet-inventory-offHand{
+    top: 150px;
+    right: 520px;
+}
+.sheet-inventory-feet{
+    bottom: 30px;
+    left: 300px;
+}
+.sheet-inventory-accessory{
+    top: 10px;
+    right: 520px;
+}
+
 .sheet-inventory-item{
     position:relative;
     margin-top:5px;
@@ -950,6 +1015,8 @@ span.sheet-field{
     height:70px;
     margin-top:5px;
 }
+
+
 
 
 /*****************************
@@ -1005,7 +1072,8 @@ input.sheet-hide-swap:checked ~ .sheet-hide-swap-b{
 .sheet-moves,
 .sheet-skills,
 .sheet-features,
-.sheet-inventory{
+.sheet-inventory,
+.sheet-settings{
     display:block;
 }
 
