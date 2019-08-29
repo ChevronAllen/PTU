@@ -76,6 +76,8 @@ select{
     margin:0px;
     vertical-align:bottom;
     text-align:center !important;
+    width:auto;
+    min-width:45px;
     
     appearance:none;
     -moz-appearance:none;
@@ -246,6 +248,7 @@ div.sheet-field-simple{
     border-color:black;
     border-style:solid;
     background-color:#8888;
+    border-radius:5px;
 }
 .sheet-field-simple > span,
 .sheet-field-simple > input[type="text"],
@@ -259,6 +262,7 @@ div.sheet-field-simple{
     margin:0px;
     border:none;
     font-weight:bold;
+    border-radius:inherit;
 
 }
 
@@ -331,13 +335,19 @@ div.sheet-field-simple{
     display:block;
 }
 .sheet-background-adept > span::before{
-    content:"+2";
+    font-size:10pt;
+    font-weight:bold;
+    content:"(+2) ";
 }
 .sheet-background-novice > span::before{
-    content:"+1";
+    font-size:10pt;
+    font-weight:bold;
+    content:"(+1) ";
 }
 .sheet-background-pathetic > span::before{
-    content:"-1";
+    font-size:10pt;
+    font-weight:bold;
+    content:"(-1) ";
 }
 
 .sheet-background-adept > span:empty,
@@ -463,10 +473,10 @@ div.sheet-field-simple{
         HP Markers
     *****************************/
 
-.sheet-HP-Markers{
-    border-collapse: separate;
-    border-spacing: 15px 0;
-}
+    .sheet-HP-Markers{
+        border-collapse: separate;
+        border-spacing: 15px 0;
+    }
 
 
     /*****************************
@@ -477,7 +487,15 @@ div.sheet-field-simple{
     /*****************************
         Capabilities
     *****************************/
+    
+    
+    .sheet-custom-capability{
+        display:block;
 
+    }
+    .sheet-custom-capability input[type="text"]{
+        width: 240px;
+    }
 
 
     /*****************************
@@ -505,6 +523,11 @@ div.sheet-field-simple{
     .sheet-conditions .sheet-condition-item > input[type="checkbox"]:checked + span{
         background:#444;
         color:white;
+    }
+    
+    .sheet-custom-status{
+        width: 250px;
+        margin: 2px auto;
     }
     
 

@@ -242,7 +242,7 @@
     
     <!-- Sheet Body-->
     <div class="sheet-body-container">
-        <input type="hidden" name="attr_tab" class="sheet-tab-swap" value="1" />
+        <input type="hidden" name="attr_tab" class="sheet-tab-swap" value="0" />
         
         <!----------------------------------------
             (0) General Info
@@ -265,57 +265,165 @@
                             </tr>
                             <tr>
                                 <td><strong>HP</strong></td>
-                                <td><input type="number" value="10" min="0"/></td>
-                                <td><input type="number" value="0" min="0"/></td>
-                                <td><input type="number" value="0" /></td>
+                                <td><input type="number" name="attr_stat_hp_base"      value="10" min="0"/></td>
+                                <td><input type="number" name="attr_stat_hp_allocated" value="0" min="0"/></td>
+                                <td><input type="number" name="attr_stat_hp_bonus"     value="0" /></td>
                                 <td></td>
-                                <td><span class="sheet-readonly-field" name=""></span></td>
+                                <td>
+                                    <div class="sheet-field-simple" style="width:50px">
+                                        <span name="attr_stat_hp"></span>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td><strong>Attack</strong></td>
-                                <td><input type="number" value="5" min="0"/></td>
-                                <td><input type="number" value="0" min="0"/></td>
-                                <td><input type="number" value="0" /></td>
-                                <td><input type="number" value="0" min="-6" max="6"/></td>
-                                <td><span class="sheet-readonly-field" name=""></span></td>
+                                <td><input type="number"  name="attr_stat_atk_base" value="5" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_atk_allocated" value="0" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_atk_bonus" value="0" /></td>
+                                <td>
+                                    <select type="number" name="attr_stat_atk_combat" value="0" min="-6" max="6">
+                                        <option value="-6">-6</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-1">-1</option>
+                                        <option value="0" selected>+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                        <option value="3">+3</option>
+                                        <option value="4">+4</option>
+                                        <option value="5">+5</option>
+                                        <option value="6">+6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="sheet-field-simple" style="width:50px">
+                                        <span name="attr_stat_atk"></span>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td><strong>Defense</strong></td>
-                                <td><input type="number" value="5" min="0"/></td>
-                                <td><input type="number" value="0" min="0"/></td>
-                                <td><input type="number" value="0" /></td>
-                                <td><input type="number" value="0" min="-6" max="6"/></td>
-                                <td><span class="sheet-readonly-field" name=""></span></td>
+                                <td><input type="number"  name="attr_stat_def_base" value="5" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_def_allocated" value="0" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_def_bonus" value="0" /></td>
+                                <td>
+                                    <select type="number" name="attr_stat_def_combat" value="0" min="-6" max="6">
+                                        <option value="-6">-6</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-1">-1</option>
+                                        <option value="0" selected>+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                        <option value="3">+3</option>
+                                        <option value="4">+4</option>
+                                        <option value="5">+5</option>
+                                        <option value="6">+6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="sheet-field-simple" style="width:50px">
+                                        <span name="attr_stat_def"></span>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td><strong>Sp.Attack</strong></td>
-                                <td><input type="number" value="5" min="0"/></td>
-                                <td><input type="number" value="0" min="0"/></td>
-                                <td><input type="number" value="0" /></td>
-                                <td><input type="number" value="0" min="-6" max="6"/></td>
-                                <td><span class="sheet-readonly-field" name=""></span></td>
+                                <td><input type="number"  name="attr_stat_spatk_base" value="5" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_spatk_allocated" value="0" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_spatk_bonus" value="0" /></td>
+                                <td>
+                                    <select type="number" name="attr_stat_spatk_combat" value="0" min="-6" max="6">
+                                        <option value="-6">-6</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-1">-1</option>
+                                        <option value="0" selected>+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                        <option value="3">+3</option>
+                                        <option value="4">+4</option>
+                                        <option value="5">+5</option>
+                                        <option value="6">+6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="sheet-field-simple" style="width:50px">
+                                        <span name="attr_stat_spatk"></span>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td><strong>Sp.Defense</strong></td>
-                                <td><input type="number" value="5" min="0"/></td>
-                                <td><input type="number" value="0" min="0"/></td>
-                                <td><input type="number" value="0" /></td>
-                                <td><input type="number" value="0" min="-6" max="6"/></td>
-                                <td><span class="sheet-readonly-field" name=""></span></td>
+                                <td><input type="number"  name="attr_stat_spdef_base" value="5" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_spdef_allocated" value="0" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_spdef_bonus" value="0" /></td>
+                                <td>
+                                    <select type="number" name="attr_stat_spdef_combat">
+                                        <option value="-6">-6</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-1">-1</option>
+                                        <option value="0" selected>+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                        <option value="3">+3</option>
+                                        <option value="4">+4</option>
+                                        <option value="5">+5</option>
+                                        <option value="6">+6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="sheet-field-simple" style="width:50px">
+                                        <span name="attr_stat_spdef"></span>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td><strong>Speed</strong></td>
-                                <td><input type="number" value="5" min="0"/></td>
-                                <td><input type="number" value="0" min="0"/></td>
-                                <td><input type="number" value="0" /></td>
-                                <td><input type="number" value="0" min="-6" max="6"/></td>
-                                <td><span class="sheet-readonly-field" name=""></span></td>
+                                <td><input type="number"  name="attr_stat_speed_base" value="5" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_speed_allocated" value="0" min="0"/></td>
+                                <td><input type="number"  name="attr_stat_speed_bonus" value="0" /></td>
+                                <td>
+                                    <select type="number" name="attr_stat_speed_combat">
+                                        <option value="-6">-6</option>
+                                        <option value="-5">-5</option>
+                                        <option value="-4">-4</option>
+                                        <option value="-3">-3</option>
+                                        <option value="-2">-2</option>
+                                        <option value="-1">-1</option>
+                                        <option value="0" selected>+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                        <option value="3">+3</option>
+                                        <option value="4">+4</option>
+                                        <option value="5">+5</option>
+                                        <option value="6">+6</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="sheet-field-simple" style="width:50px">
+                                        <span name="attr_stat_speed"></span>
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
                                 <td colspan="3"><strong>Initiative</strong></td>
-                                <td><input type="number" value="0" /></td>
+                                <td><input type="number" name="attr_initiative_bonus" value="0" /></td>
                                 <td></td>
-                                <td><button type="roll" name="" value=""></button></span></td>
+                                <td>
+                                    <input type="hidden" name="attr_initiative" value="@{stat_speed} + @{initiative_bonus}" />
+                                    <button type="roll" name="roll_initiative" 
+                                    value="&{template:PTU} {{name= @{character_name}'s Initiative }} {{initiative= [[@{initiative} + ([[1d20]]/100)  &{tracker}]] }}"></button></span>
+                                </td>
                             </tr>
                             <tr>
                                 <th colspan="6">Bonuses</th>
@@ -475,10 +583,8 @@
                                     <label>Temp Hit Points</label>
                                 </td>
                                 <td>
-                                    
-                                    
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" />
+                                        <input type="number" name="" min="0" value="0" />
                                     </div>
                                 </td>
                             </tr>
@@ -489,11 +595,11 @@
                                 <td>
                                     
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" />
+                                        <input type="number" name="" value="0" />
                                     </div>
                                     <strong>&nbsp;/&nbsp;</strong>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" />
+                                        <span name=""></span>
                                     </div>
                                 </td>
                             </tr>
@@ -1179,7 +1285,7 @@
     });
     
     // Set HP MAx
-    on("change:stat_hp_base change:stat_hp_allocated change:level change:isTrainer",function(eventInfo){
+    on("change:stat_hp_base change:stat_hp_allocated change:stat_hp_bonus change:level change:isTrainer",function(eventInfo){
         
         getAttrs(["stat_hp_allocated", "stat_hp_base", "level","isTrainer"],function(values){
             
@@ -1218,15 +1324,38 @@
 </script>
 <script type="text/worker">
 
+    const stats = ['atk','def','spatk','spdef','speed'];
+    
+    stats.forEach(stat => {
+        on(`change:stat_${stat}_base change:stat_${stat}_allocated change:stat_${stat}_bonus change:stat_${stat}_combat sheet:opened`, () => {
+            
+            getAttrs([ `stat_${stat}_base`, `stat_${stat}_allocated`, `stat_${stat}_bonus`, `stat_${stat}_combat` ], values => {
+                
+                const stat_base = parseInt(values[`stat_${stat}_base`], 10)||0;
+                const stat_allocated = parseInt(values[`stat_${stat}_allocated`], 10)||0;
+                const stat_bonus = parseInt(values[`stat_${stat}_bonus`], 10)||0;
+                const stat_combat = parseInt(values[`stat_${stat}_combat`], 10)||0;
+                
+                const stat_score = Math.floor((stat_base + stat_allocated + stat_bonus) * (1 + (0.1 * stat_combat)));
+                
+                
+                setAttrs({
+                    [`stat_${stat}`]: stat_score 
+                });
+            });
+        });
+    });
+
     //  HP Stat
-    on( "change:stat_hp_base change:stat_hp_allocated", function(eventinfo){
+    on( "change:stat_hp_base change:stat_hp_allocated change:stat_hp_bonus sheet:opened", function(eventinfo){
         
-        getAttrs(["stat_hp_base", "stat_hp_allocated"], function(values){
+        getAttrs(["stat_hp_base", "stat_hp_allocated", "stat_hp_bonus"], function(values){
             
             var base = parseInt(values["stat_hp_base"],10)||0;
             var allocated = parseInt(values["stat_hp_allocated"],10)||0;
+            var bonus = parseInt(values["stat_hp_bonus"],10)||0;
             
-            var stat = (base + allocated);
+            var stat = (base + allocated + bonus);
             
             setAttrs({
                 "stat_hp":stat
@@ -1235,108 +1364,7 @@
         });
         
     });
-    //  Attack
-    on( "change:stat_atk_base change:stat_atk_allocated change:stat_atk_battle_stage", function(eventinfo){
-        
-        getAttrs(["stat_atk_base", "stat_atk_allocated", "stat_atk_battle_stage"],function(values){
-            
-            var base = parseInt(values["stat_atk_base"],10)||0;
-            var allocated = parseInt(values["stat_atk_allocated"],10)||0;
-            var battle = parseInt(values["stat_atk_battle_stage"],10)||0;
-            
-            var stat = (base + allocated) * (1 + (battle*0.1));
-            
-            setAttrs({
-                "stat_atk":stat
-            });
-            
-        });
-        
-    });
-    //  Defense
-    on( "change:stat_def_base change:stat_def_allocated change:stat_def_battle_stage change:evade_physical_bonus", function(eventinfo){
-        
-        getAttrs(["stat_def_base", "stat_def_allocated", "stat_def_battle_stage","evade_physical_bonus"],function(values){
-            
-            var base = parseInt(values["stat_def_base"],10)||0;
-            var allocated = parseInt(values["stat_def_allocated"],10)||0;
-            var battle = parseInt(values["stat_def_battle_stage"],10)||0;
-            var evade = parseInt(values["evade_physical_bonus"],10)||0;
-            
-            var stat = (base + allocated) * (1 + (battle*0.1));
-            
-            evade=Math.floor(Math.max(0,Math.min(6, (stat/5) + evade  )));
-            
-            setAttrs({
-                "stat_def":stat,
-                "evade_physical":evade
-            });
-            
-        });
-        
-    });
-    //  Sp. Attack
-    on( "change:stat_spatk_base change:stat_spatk_allocated change:stat_spatk_battle_stage", function(eventinfo){
-        
-        getAttrs(["stat_spatk_base", "stat_spatk_allocated", "stat_spatk_battle_stage"],function(values){
-            
-            var base = parseInt(values["stat_spatk_base"],10)||0;
-            var allocated = parseInt(values["stat_spatk_allocated"],10)||0;
-            var battle = parseInt(values["stat_spatk_battle_stage"],10)||0;
-            
-            var stat = (base + allocated) * (1 + (battle*0.1));
-            
-            setAttrs({
-                "stat_spatk":stat
-            });
-            
-        });
-        
-    });
-    //  Sp. Defense
-    on( "change:stat_spdef_base change:stat_spdef_allocated change:stat_spdef_battle_stage change:evade_special_bonus", function(eventinfo){
-        
-        getAttrs(["stat_spdef_base", "stat_spdef_allocated", "stat_spdef_battle_stage","evade_special_bonus"],function(values){
-            
-            var base = parseInt(values["stat_spdef_base"],10)||0;
-            var allocated = parseInt(values["stat_spdef_allocated"],10)||0;
-            var battle = parseInt(values["stat_spdef_battle_stage"],10)||0;
-            var evade = parseInt(values["evade_special_bonus"],10)||0;
-            
-            var stat = (base + allocated) * (1 + (battle*0.1));
-            
-            evade=Math.floor(Math.max(0,Math.min(6, (stat/5) + evade  )));
-            
-            setAttrs({
-                "stat_spdef":stat,
-                "evade_special":evade
-            });
-            
-        });
-        
-    });
-    //  Speed
-    on( "change:stat_speed_base change:stat_speed_allocated change:stat_speed_battle_stage change:evade_speed_bonus", function(eventinfo){
-        
-        getAttrs(["stat_speed_base", "stat_speed_allocated", "stat_spdef_battle_stage","evade_speed_bonus"],function(values){
-            
-            var base = parseInt(values["stat_speed_base"],10)||0;
-            var allocated = parseInt(values["stat_speed_allocated"],10)||0;
-            var battle = parseInt(values["stat_speed_battle_stage"],10)||0;
-            var evade = parseInt(values["evade_speed_bonus"],10)||0;
-            
-            var stat = (base + allocated) * (1 + (battle*0.1));
-            
-            evade=Math.floor(Math.max(0,Math.min(6, (stat/5) + evade  )));
-            
-            setAttrs({
-                "stat_speed":stat,
-                "evade_speed":evade
-            });
-            
-        });
-        
-    });
+   
     
 </script>
 <script type="text/worker">
@@ -1378,43 +1406,43 @@
     
 </script>
 <script type="text/worker">
-    const stats = [
+    const skills = [
         'acrobatics','athletics','combat','intimidate','stealth','survival',
         'general_edu','medicine_edu','occult_edu','pokemon_edu','technology_edu','guile','perception',
         'charm','command','focus','intuition'
         ];
-    stats.forEach(function (stat) {
-        on("change:" + stat + " sheet:opened", function () {
-            getAttrs([stat], function (values) {
-                const stat_score = parseInt(values[stat], 10)||0;
-                var stat_rank = "";
+    skills.forEach(function (skill) {
+        on("change:" + skill + " sheet:opened", function () {
+            getAttrs([skill], function (values) {
+                const skill_score = parseInt(values[skill], 10)||0;
+                var skill_rank = "";
 
-                switch(stat_score){
+                switch(skill_score){
                     case 1:
-                        stat_rank = "Pathetic";
+                        skill_rank = "Pathetic";
                         break;
                     case 2:
-                        stat_rank = "Untrained";
+                        skill_rank = "Untrained";
                         break;
                     case 3:
-                        stat_rank = "Novice";
+                        skill_rank = "Novice";
                         break;
                     case 4:
-                        stat_rank = "Adept";
+                        skill_rank = "Adept";
                         break;
                     case 5:
-                        stat_rank = "Expert";
+                        skill_rank = "Expert";
                         break;
                     case 6:
-                        stat_rank = "Master";
+                        skill_rank = "Master";
                         break;
                     default:
-                        stat_rank = "???";
+                        skill_rank = "???";
                         break;
                 }
                 
                 setAttrs({
-                    [stat + '_rank']: stat_rank 
+                    [skill + '_rank']: skill_rank 
                 });
             });
         });
