@@ -21,7 +21,6 @@
         </tr>
         <tr>
             <td style="text-align:right;"><strong>Accuracy</strong></td>
-            <td >{{accuracy}} </td>
         </tr>
         <tr>
             <td style="text-align:right;"><strong>Crits On</strong></td>
@@ -78,7 +77,6 @@
     </table>
 </rolltemplate>
 
-
 <input type="hidden" class="sheet-trainerSwap" name="attr_isTrainer" />
 
 <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Logo.png" style="display:block;margin:0 auto;width:100px">
@@ -98,7 +96,7 @@
 ---------------------------------------->
 
 <div class="sheet-character-info">
-    <input type="hidden" class="sheet-trainerSwap" name="attr_isTrainer" value="1"/>
+    <input type="hidden" class="sheet-trainerSwap" name="attr_isTrainer" value="0"/>
     
     <div class="sheet-row sheet-trainer-only">
         <div class="sheet-field" style="width:250px">
@@ -138,31 +136,75 @@
     <div class="sheet-row sheet-pokemon-only" >
         <div class="sheet-field" style="width:120px">
             <select name="attr_character_nature">
-                <option>-</option>
                 <option>Adamant</option>
+                <option>Bashful</option>
+                <option>Bold</option>
+                <option>Brave</option>
+                <option>Calm</option>
+                <option>Careful</option>
+                <option>Composed</option>
+                <option>Cuddly</option>
+                <option>Curious</option>
+                <option>Decisive</option>
+                <option>Desperate</option>
+                <option>Distracted</option>
+                <option>Docile</option>
+                <option>Dreamy</option>
+                <option>Gentle</option>
+                <option>Hardy</option>
+                <option>Hasty</option>
+                <option>Impish</option>
+                <option>Jolly</option>
+                <option>Lax</option>
+                <option>Lonely</option>
+                <option>Mild</option>
+                <option>Modest</option>
+                <option>Naive</option>
+                <option>Naughty</option>
+                <option>Patient</option>
+                <option>Proud</option>
+                <option>Quiet</option>
+                <option>Quirky</option>
+                <option>Rash</option>
+                <option>Relaxed</option>
+                <option>Sassy</option>
+                <option>Serious</option>
+                <option>Skittish</option>
+                <option>Stark</option>
+                <option>Timid</option>
             </select>
             <span>Nature</span>
         </div>
-        <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-        <div class="sheet-field" style="width:120px">
-            <span class="sheet-field" name="attr_character_likes"></span>
+        <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+        <div class="sheet-field" style="width:100px">
+            <span class="sheet-field" name="attr_character_raisedStat"></span>
+            <span>Raised</span>
+        </div>
+        <div class="sheet-field" style="width:100px">
+            <span class="sheet-field" name="attr_character_loweredStat"></span>
+            <span>Lowered</span>
+        </div>
+        <div class="sheet-field" style="width:100px">
+            <span class="sheet-field" name="attr_character_likeFlavor"></span>
             <span>Likes</span>
         </div>
-        <div class="sheet-field" style="width:120px">
-            <span class="sheet-field" name="attr_character_dislikes"></span>
+        <div class="sheet-field" style="width:100px">
+            <span class="sheet-field" name="attr_character_dislikeFlavor"></span>
             <span>Dislikes</span>
         </div>
+        
     </div>
     
     <div class="sheet-row">
-        <div class="sheet-field" style="">
+        <div class="sheet-field" style="width:70px">
             <input type="text" name="attr_character_height" />
             <span>Height</span>
         </div>
-        <div class="sheet-field" style="">
+        <div class="sheet-field" style="width:100px">
             <input type="text" name="attr_character_weight" />
             <span>Weight</span>
         </div>
+
     </div>
     <div class="sheet-row sheet-trainer-only">
         <div class="sheet-background">
@@ -265,8 +307,8 @@
                             </tr>
                             <tr>
                                 <td><strong>HP</strong></td>
-                                <td><input type="number" name="attr_stat_hp_base"      value="10" min="0"/></td>
-                                <td><input type="number" name="attr_stat_hp_allocated" value="0" min="0"/></td>
+                                <td><input type="number" name="attr_stat_hp_base"      value="10" min="0" /></td>
+                                <td><input type="number" name="attr_stat_hp_allocated" value="0" min="0" /></td>
                                 <td><input type="number" name="attr_stat_hp_bonus"     value="0" /></td>
                                 <td></td>
                                 <td>
@@ -526,7 +568,6 @@
                         </fieldset>
                     </div>
                 </div>
-                
             </div>
             
             <div class="sheet-right">
@@ -543,7 +584,7 @@
                                 </td>
                                 <td>
                                     <div class="sheet-field" style="width:70px">
-                                        <input type="number" name="" />
+                                        <input type="number" name="attr_character_level" min="1" value="1" />
                                         <span>Level</span>
                                     </div>
                                 </td>
@@ -554,11 +595,11 @@
                                 </td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" />
+                                        <input type="number" name="attr_exp"  min="0" value="0" />
                                     </div>
                                     <strong>&nbsp;/&nbsp;</strong>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" />
+                                        <span name="attr_exp_max" >10</span>
                                     </div>
                                 </td>
                             </tr>
@@ -570,11 +611,11 @@
                                 <td>
                                     
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" />
+                                        <input type="number" name="attr_AP" min="0" value="0" />
                                     </div>
                                     <strong>&nbsp;/&nbsp;</strong>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" disabled/>
+                                        <span name="attr_AP_max" >5</span>
                                     </div>
                                 </td>
                             </tr>
@@ -584,7 +625,7 @@
                                 </td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" min="0" value="0" />
+                                        <input type="number" name="attr_temp_HP" min="0" value="0" />
                                     </div>
                                 </td>
                             </tr>
@@ -595,11 +636,11 @@
                                 <td>
                                     
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" value="0" />
+                                        <input type="number" name="attr_HP" value="0" />
                                     </div>
                                     <strong>&nbsp;/&nbsp;</strong>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <span name=""></span>
+                                        <span name="attr_HP_max"></span>
                                     </div>
                                 </td>
                             </tr>
@@ -610,7 +651,7 @@
                                 <td>
                                     
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <input type="number" name="" />
+                                        <input type="number" name="attr_injuries" min="0" value="0" />
                                     </div>
                                     <strong>&nbsp;/&nbsp;</strong>
                                     <div class="sheet-field-simple" style="width:70px">
@@ -621,6 +662,15 @@
                         </tbody>
                     </table>
                     
+                    <input type="hidden" name="attr_hp_mark_3_4" />
+                    <input type="hidden" name="attr_hp_mark_1_2" />
+                    <input type="hidden" name="attr_hp_mark_1_3" />
+                    <input type="hidden" name="attr_hp_mark_1_4" />
+                    <input type="hidden" name="attr_hp_mark_1_6" />
+                    <input type="hidden" name="attr_hp_mark_1_8" />
+                    <input type="hidden" name="attr_hp_mark_1_10" />
+                    <input type="hidden" name="attr_hp_mark_1_16" />
+                    
                     <table class="sheet-HP-Markers">
                         <tbody>
                             <tr>
@@ -630,14 +680,14 @@
                                 <td><label>75%</label></td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <span class="sheet-field"></span>
+                                        <span class="sheet-field" name="attr_hp_mark_3_4">0</span>
                                         
                                     </div>
                                 </td>
                                 <td><label>1/6</label></td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <span class="sheet-field"></span>
+                                        <span class="sheet-field" name="attr_hp_mark_1_6">0</span>
                                         
                                     </div>
                                 </td>
@@ -646,14 +696,14 @@
                                 <td><label>50%</label></td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <span class="sheet-field"></span>
+                                        <span class="sheet-field" name="attr_hp_mark_1_2">0</span>
                                         
                                     </div>
                                 </td>
                                 <td><label>1/8</label></td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <span class="sheet-field"></span>
+                                        <span class="sheet-field" name="attr_hp_mark_1_8" >0</span>
                                         
                                     </div>
                                 </td>
@@ -662,14 +712,14 @@
                                 <td><label>25%</label></td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <span class="sheet-field"></span>
+                                        <span class="sheet-field" name="attr_hp_mark_1_4" >0</span>
                                         
                                     </div>
                                 </td>
                                 <td><label style="font-size: 1.1em;" >1/10 (tick)</label></td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <span class="sheet-field"></span>
+                                        <span class="sheet-field" name="attr_hp_mark_1_10">0</span>
                                         
                                     </div>
                                 </td>
@@ -678,14 +728,14 @@
                                 <td><label>1/3</label></td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <span class="sheet-field"></span>
+                                        <span class="sheet-field" name="attr_hp_mark_1_3">0</span>
                                         
                                     </div>
                                 </td>
-                                <td><label>1/12</label></td>
+                                <td><label>1/16</label></td>
                                 <td>
                                     <div class="sheet-field-simple" style="width:70px">
-                                        <span class="sheet-field"></span>
+                                        <span class="sheet-field" name="attr_hp_mark_1_16">0</span>
                                         
                                     </div>
                                 </td>
@@ -704,21 +754,21 @@
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_burned"/>
                                         <span title='#000' >Burned</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_frozen"/>
                                         <span title='#000' >Frozen</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_paralysis"/>
                                         <span title='#000' >Paralysis</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_poisoned"/>
                                         <span title='#000' >Poisoned</span>
                                     </td>
                                 </tr>
@@ -727,47 +777,47 @@
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_bad_sleep"/>
                                         <span title='#000' >Bad Sleep</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_confused"/>
                                         <span title='#000' >Confused</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_cursed"/>
                                         <span title='#000' >Cursed</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_disabled"/>
                                         <span title='#000' >Disabled</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_rage"/>
                                         <span title='#000' >Rage</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_flinch"/>
                                         <span title='#000' >Flinch</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_infatuation"/>
                                         <span title='#000' >Infatuation</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_sleep"/>
                                         <span title='#000' >Sleep</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_suppressed"/>
                                         <span title='#000' >Suppressed</span>
                                     </td>
                                     <td class="sheet-condition-item">
@@ -779,41 +829,41 @@
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_fainted"/>
                                         <span title='#000' >Fainted</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_blindness"/>
                                         <span title='#000' >Blindness</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_blindnessTotal"/>
                                         <span title='#000' >Total Blindness</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_slowed"/>
                                         <span title='#000' >Slowed</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_stuck"/>
                                         <span title='#000' >Stuck</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_trapped"/>
                                         <span title='#000' >Trapped</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_tripped"/>
                                         <span title='#000' >Tripped</span>
                                     </td>
                                     <td class="sheet-condition-item">
-                                        <input type="checkbox" name=""/>
+                                        <input type="checkbox" name="attr_vulnerable"/>
                                         <span title='#000' >Vulnerable</span>
                                     </td>
                                 </tr>
@@ -835,7 +885,6 @@
                     </div>
                     
                 </div>
-                
             </div>
             
         </div>
@@ -1151,15 +1200,458 @@
             </div>
         </div>
         
+        
+        <!----------------------------------------
+            (2) Moves
+        ----------------------------------------->
+        <div class="sheet-page-moves">
+            
+            <div class="sheet-header">Known Moves</div>
+            
+            <div class="sheet-known">
+                <fieldset class="repeating_movesKnown">
+                    <div class="sheet-move-item">
+                        
+                        <input type="hidden" class="sheet-move-type" name="attr_mkType" value="-"/>
+                        <div class="sheet-header">
+                            <span name="attr_mkName">Move Name</span>
+                            <span name="attr_mkType">Type</span>
+                            <input type="hidden" name="attr_mkFreq" class="sheet-move-freq"/>
+                            <span class="sheet-move-usesMax">
+                                <input type="number" name="" />
+                                
+                                <span class="sheet-move-freq" name="attr_mkUses_max" >10</span>
+                            </span>
+                            <button type="roll" class="sheet-btn-show"></button>
+                        </div>
+                        <div class="sheet-body">
+                                
+                            <input type="hidden" name="attr_mHasAC" class="sheet-move-hasAccuracy" />
+                            <input type="hidden" name="attr_mHasDB" class="sheet-move-hasDamage" />
+                            
+                            <div>
+                                <label>Range</label>
+                                <span name="attr_mkRange"></span>
+                                <span name="attr_mkTarget">Target 1</span>
+                            </div>
+                            
+                            <div class="sheet-move-AC">
+                                <span style="display:inline-block; width:80%">
+                                    <label>AC</label>
+                                    <span name="attr_mkAC" style="display:inline-block;width:50px">2</span>
+                                    <span style="margin-left:25px">
+                                        <label>Crit on</label>
+                                        <span name="attr_mkCrit" style="display:inline-block;width:48px">20</span>
+                                    </span>
+                                </span>
+                            </div>
+                            
+                            <div class="sheet-move-DB">
+                                <span style="display:inline-block; width:80%">
+                                    <label>DB</label>
+                                    <span name="attr_mkDB" style="display:inline-block;width:50px">9</span>
+                                    <label style="margin-left:25px">Roll</label>
+                                    <span name="attr_mkRoll" style="display:inline-block;width:70px">4d8 + 5</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            
+            <div class="sheet-header">Move List</div>
+            
+            <div class="sheet-move-list">
+                <fieldset class="repeating_movesList">
+                    <div class="sheet-move-item">
+                        <input type="hidden" name="attr_mID" />
+                        
+                        <div class="sheet-move-known-swap">
+                            <input type="checkbox" name="attr_mKnown" value="1" />
+                            <span></span>
+                        </div>
+                        
+                        
+                        <input type="checkbox" name="attr_mCollapse" class="sheet-hide-swap" /><span></span>
+                        
+                        <input type="hidden" class="sheet-move-type" name="attr_mType" value="-" />
+                        <div class="sheet-header">
+                            
+                                <input type="text" name="attr_mName" placeholder="Move Name" style="width: 300px;" /> 
+                                
+                                <select name="attr_mType">
+                                    <option selected>-</option>
+                                    <option>Normal</option>
+                                    <option>Bug</option>
+                                    <option>Dark</option>
+                                    <option>Dragon</option>
+                                    <option>Electric</option>
+                                    <option>Fairy</option>
+                                    <option>Fighting</option>
+                                    <option>Fire</option>
+                                    <option>Flying</option>
+                                    <option>Ghost</option>
+                                    <option>Grass</option>
+                                    <option>Ground</option>
+                                    <option>Ice</option>
+                                    <option>Poison</option>
+                                    <option>Psychic</option>
+                                    <option>Rock</option>
+                                    <option>Steel</option>
+                                    <option>Water</option>
+                                </select>
+                                <select name="attr_mFreq" >
+                                    <option selected>At-Will</option>
+                                    <option>EOT</option>
+                                    <option>Scene</option>
+                                    <option>Daily</option>
+                                    <option>Static</option>
+                                    <option>Other</option>
+                                </select>
+                                
+                                <input type="hidden" name="attr_mUses"  />
+                                <input type="hidden" name="attr_mFreq" class="sheet-move-freq"/>
+                                <input type="number" name="attr_mUses_max" class="sheet-move-usesMax" placeholder="Uses"/>
+                                
+                                <span>
+                                    <select name="attr_mCat">
+                                        <option selected>Physical</option>
+                                        <option>Special</option>
+                                        <option>Status</option>
+                                    </select>
+                                </span>
+                            
+                        </div>
+                        
+                        <div class="sheet-body sheet-hide-swap-a">
+                            <div class="sheet-row">
+                                
+                                <input type="hidden" name="attr_mHasDamage"  class="sheet-move-hasDamage"/>
+                                <input type="hidden" name="attr_mHasAccuracy" class="sheet-move-hasAccuracy"  value="0"/>
+                                <input type="hidden" name="attr_mHasCondition" class="sheet-move-hasCondition" />
+                                
+                                <span class="sheet-switch">
+                                    <input type="checkbox" name="attr_mHasAccuracy" value="1" checked/><span>Accuracy</span>
+                                </span>
+                                <span class="sheet-switch">
+                                    <input type="checkbox" name="attr_mHasDamage"  value="1" checked/><span>Damage</span>
+                                </span>
+                                <span class="sheet-switch sheet-move-accuracy">
+                                    <input type="checkbox" name="attr_mHasCondition"  value="1" checked/><span>Condition</span>
+                                </span>
+                            </div>
+                            
+                            <input type="hidden" name="attr_mHasAccuracy" class="sheet-move-hasAccuracy"    value="0"/>
+                            <input type="hidden" name="attr_mHasDamage"  class="sheet-move-hasDamage"       value="0"/>
+                            <input type="hidden" name="attr_mHasCondition" class="sheet-move-hasCondition"  value="1"/>
+                            
+                            
+                            <!-- Range -->
+                            <span class="sheet-row" style="display:inline-block">
+                                
+                                <label style="display:inline-block;width:70px">Range</label>
+                                <input type="number" name="attr_mRange" value="0" /><strong><pre>  ,   </pre></strong>
+                                <input type="text" name="attr_mTarget" placeholder="Target 1 / Self" />
+                                
+                            </span>
+                            
+                            <!-- AC -->
+                            <span class="sheet-move-accuracy">
+                                <label>AC</label>
+                                
+                                <input type="number" name="attr_mAC" placeholder="0" value="0"  />
+                                <label>Crit on</label>
+                                <input type="number" name="attr_mCrit" value="20" />
+                                
+                            </span>
+                            
+                            <div  class="sheet-move-accuracy sheet-move-condition">
+                                <label style="display:inline-block;width:70px">Condition</label>
+                                <input type="number" name="attr_mConditionTrigger" value="20" />
+                                <input type="text" name="attr_mCondition" placeholder="Flinch" />
+
+                            </div>
+                            
+                            <!-- Damage -->
+                            <div class="sheet-move-damage">
+                                <label style="display:inline-block;width:70px">Damage</label>
+                                <input type="number" name="attr_mDB" value="4"/>
+                                
+                                <span style="margin-left:20px">
+                                    
+                                    <input type="number" name="attr_mDiceCount" value="1" />
+                                    
+                                    <strong>D</strong>
+                                    
+                                    <input type="number" name="attr_mDiceType" value="6" />
+                                    
+                                    <strong>+</strong>
+                                    
+                                    <input type="number" name="attr_mDiceBonus" value="1" />
+                                    
+                                </span>
+                            </div>
+                            
+                            <!-- Contest -->
+                            <div class="sheet-move-contest">
+                                
+                            </div>
+                            
+                            <!-- Effect -->
+                            <div class="sheet-row">
+                                <textarea name="attr_mEffects" style="height:70px"></textarea>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </fieldset>
+            </div>
+                
+            
+                
+            
+        </div>
+        
+        
+        <!----------------------------------------
+            (3) Features, Edges, Abilities
+        ----------------------------------------->
+        <div class="sheet-page-features">
+            
+                <div class="sheet-feature-wrapper">
+                    <input type="checkbox" name="attr_features_hidden" class="sheet-hide-swap"  /><span></span>
+                    
+                    <div class="sheet-header">
+                        Abilities
+                    </div>
+                    <div class="sheet-hide-swap-a">
+                        <fieldset class="repeating_classFeature">
+                            <div class="sheet-feature-item">
+                                <input type="checkbox" class="sheet-hide-swap" name="attr_hidden" checked/><span></span>
+                                
+                                <button type="roll" name="roll_fshow" class="sheet-show-btn" ></button>
+                                
+                                <div class="sheet-feature-header">
+                                    <input type="text"  name="attr_fName"    placeholder="Feature Name"  class="sheet-feature-name" />
+                                    <input type="text"  name="attr_fKeyword" placeholder="Keywords/Tags" class="sheet-feature-keywords" />
+                                    
+                                    <span>
+                                        <input type="text"  name="attr_fCost"   placeholder="Cost"      class="sheet-feature-cost" />
+                                        <input type="text"  name="attr_fFreq"   placeholder="Frequency" class="sheet-feature-freq" />
+                                        <input type="text"  name="attr_fAction" placeholder="Action"    class="sheet-feature-action" />
+                                    </span>
+                                </div>
+                                
+                                <div class="sheet-feature-body sheet-hide-swap-a">
+                                    <textarea name="attr_fTarget"  placeholder="Target" class="sheet-feature-target" ></textarea>
+                                    <textarea name="attr_fTrigger" placeholder="Trigger" class="sheet-feature-trigger" ></textarea>
+                                    <textarea name="attr_fEffect"  placeholder="Effects" class="sheet-feature-effect" ></textarea>
+                                </div>
+                                
+                            </div>
+                        </fieldset>
+                    </div>
+                    
+                </div>
+                
+                <div class="sheet-feature-wrapper">
+                    <input type="checkbox" name="attr_features_hidden" class="sheet-hide-swap"  /><span></span>
+                    
+                    <div class="sheet-header">
+                        Edges
+                    </div>
+                    <div class="sheet-hide-swap-a">
+                        <fieldset class="repeating_classFeature">
+                            <div class="sheet-feature-item">
+                                <input type="checkbox" class="sheet-hide-swap" name="attr_hidden" checked/><span></span>
+                                
+                                <button type="roll" name="roll_fshow" class="sheet-show-btn" ></button>
+                                
+                                <div class="sheet-feature-header">
+                                    <input type="text"  name="attr_fName"    placeholder="Feature Name"  class="sheet-feature-name" />
+                                    <input type="text"  name="attr_fKeyword" placeholder="Keywords/Tags" class="sheet-feature-keywords" />
+                                    
+                                    <span>
+                                        <input type="text"  name="attr_fCost"   placeholder="Cost"      class="sheet-feature-cost" />
+                                        <input type="text"  name="attr_fFreq"   placeholder="Frequency" class="sheet-feature-freq" />
+                                        <input type="text"  name="attr_fAction" placeholder="Action"    class="sheet-feature-action" />
+                                    </span>
+                                </div>
+                                
+                                <div class="sheet-feature-body sheet-hide-swap-a">
+                                    <textarea name="attr_fTarget"  placeholder="Target" class="sheet-feature-target" ></textarea>
+                                    <textarea name="attr_fTrigger" placeholder="Trigger" class="sheet-feature-trigger" ></textarea>
+                                    <textarea name="attr_fEffect"  placeholder="Effects" class="sheet-feature-effect" ></textarea>
+                                </div>
+                                
+                            </div>
+                        </fieldset>
+                    </div>
+                    
+                </div>
+                
+                <div class="sheet-feature-wrapper">
+                    <input type="checkbox" name="attr_features_hidden" class="sheet-hide-swap"  /><span></span>
+                    
+                    <div class="sheet-header">
+                        Features
+                    </div>
+                    <div class="sheet-hide-swap-a">
+                        <fieldset class="repeating_classFeature">
+                            <div class="sheet-feature-item">
+                                <input type="checkbox" class="sheet-hide-swap" name="attr_hidden" checked/><span></span>
+                                
+                                <button type="roll" name="roll_fshow" class="sheet-show-btn" ></button>
+                                
+                                <div class="sheet-feature-header">
+                                    <input type="text"  name="attr_fName"    placeholder="Feature Name"  class="sheet-feature-name" />
+                                    <input type="text"  name="attr_fKeyword" placeholder="Keywords/Tags" class="sheet-feature-keywords" />
+                                    
+                                    <span>
+                                        <input type="text"  name="attr_fCost"   placeholder="Cost"      class="sheet-feature-cost" />
+                                        <input type="text"  name="attr_fFreq"   placeholder="Frequency" class="sheet-feature-freq" />
+                                        <input type="text"  name="attr_fAction" placeholder="Action"    class="sheet-feature-action" />
+                                    </span>
+                                </div>
+                                
+                                <div class="sheet-feature-body sheet-hide-swap-a">
+                                    <textarea name="attr_fTarget"  placeholder="Target" class="sheet-feature-target" ></textarea>
+                                    <textarea name="attr_fTrigger" placeholder="Trigger" class="sheet-feature-trigger" ></textarea>
+                                    <textarea name="attr_fEffect"  placeholder="Effects" class="sheet-feature-effect" ></textarea>
+                                </div>
+                                
+                            </div>
+                        </fieldset>
+                    </div>
+                    
+                </div>
+                
+           
+            
+        </div>
+        
+        
+        <!----------------------------------------
+            (4) Inventory , Gear
+        ----------------------------------------->
+        <div class="sheet-page-inventory">
+            
+            <div class="sheet-header">Gear</div>
+            
+            <div class=" sheet-trainer-only">
+                <div style="text-align:center">
+                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Trainer.png">
+                </div>
+                    
+                <div  style="text-align:center">
+                    <div class="sheet-field" style="width:80%">
+                        <input type="text" name="attr_gear_head" />
+                        <span>Head</span>
+                    </div>
+                    <div class="sheet-field" style="width:80%">
+                        <input type="text" name="attr_gear_accessory" />
+                        <span>Accessory</span>
+                    </div>
+                    <div class="sheet-field" style="width:80%">
+                        <input type="text" name="attr_gear_body" />
+                        <span>Body</span>
+                    </div>
+                    <div class="sheet-field" style="width:80%">
+                        <input type="text" name="attr_gear_handMain" />
+                        <span>Main Hand</span>
+                    </div>
+                    <div class="sheet-field" style="width:80%">
+                        <input type="text" name="attr_gear_handOff" />
+                        <span>Off Hand</span>
+                    </div>
+                    <div class="sheet-field" style="width:80%">
+                        <input type="text" name="attr_gear_Feet" />
+                        <span>Feet</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sheet-header">Inventory</div>
+            
+            <div>
+                <fieldset class="repeating_inventory">
+                    
+                    <div class="sheet-inventory-item">
+                        <div class="sheet-header">
+                            <input type="number" name="attr_iCount" />
+                            <input type="text" name="attr_iName" />
+                            
+                            <div>
+                                <input type="checkbox" name="attr_iCollapse" value="1" /><span></span>
+                            </div>
+                        </div>
+                        <input type="hidden" name="attr_iCollapse" value="0"/>
+                        <textarea name="attr_iDescr"></textarea>
+                        
+                    </div>
+                    
+                </fieldset>
+            </div>
+            
+        </div>
+        
     </div>
     
 </div>
 
-<!--
-    convert DB to Damage Damage roll
--->
+
+
 <script type="text/worker">
-    
+    const stats = ['atk','def','spatk','spdef','speed'];
+    const skills = [
+        'acrobatics','athletics','combat','intimidate','stealth','survival',
+        'general_edu','medicine_edu','occult_edu','pokemon_edu','technology_edu','guile','perception',
+        'charm','command','focus','intuition'
+    ];
+    const natures={
+        cuddly      :['HP','Attack','Salty','Spicy'],
+        distracted  :['HP','Defense','Salty','Sour'],
+        proud       :['HP','Sp.Attack','Salty','Dry'],
+        decisive    :['HP','Sp.Defense','Salty','Bitter'],
+        patient     :['HP','Speed','Salty','Sweet'],
+        
+        desperate   :['Attack','HP','Spicy','Salty'],
+        lonely      :['Attack','Defense','Spicy','Sour'],
+        adamant     :['Attack','Sp.Attack','Spicy','Dry'],
+        naughty     :['Attack','Sp.Defense','Spicy','Bitter'],
+        brave       :['Attack','Speed','Spicy','Sweet'],
+        
+        stark       :['Defense','HP','Sour','Salty'],
+        bold        :['Defense','Attack','Sour','Spicy'],
+        impish      :['Defense','Sp.Attack','Sour','Dry'],
+        lax         :['Defense','Sp.Defense','Sour','Bitter'],
+        relaxed     :['Defense','Speed','Sour','Sweet'],
+        
+        curious     :['Sp.Attack','HP','Dry','Salty'],
+        modest      :['Sp.Attack','Attack','Dry','Spicy'],
+        mild        :['Sp.Attack','Defense','Dry','Sour'],
+        rash        :['Sp.Attack','Sp.Defense','Dry','Bitter'],
+        quiet       :['Sp.Attack','Speed','Dry','Sweet'],
+        
+        dreamy      :['Sp.Defense','HP','Bitter','Salty'],
+        calm        :['Sp.Defense','Attack','Bitter','Spicy'],
+        gentle      :['Sp.Defense','Defense','Bitter','Sour'],
+        careful     :['Sp.Defense','Sp.Attack','Bitter','Dry'],
+        sassy       :['Sp.Defense','Speed','Bitter','Sweet'],
+        
+        skittish    :['Speed','HP','Sweet','Salty'],
+        timid       :['Speed','Attack','Sweet','Spicy'],
+        hasty       :['Speed','Defense','Sweet','Sour'],
+        jolly       :['Speed','Sp.Attack','Sweet','Dry'],
+        naive       :['Speed','Sp.Defense','Sweet','Bitter'],
+        
+        composed    :['HP','HP','None','None'],
+        hardy       :['Attack','Attack','None','None'],
+        docile      :['Defense','Defense','None','None'],
+        bashful     :['Sp.Attack','Sp.Attack','None','None'],
+        quirky      :['Sp.Defense','Sp.Defense','None','None'],
+        serious     :['Speed','Speed','None','None']
+    };
     
     function set_damage_roll(dieCount,dieType,modifier){
         
@@ -1169,7 +1661,8 @@
 
         var roll = n + "d" +  d + (m >= 0 ? (" + " + Math.abs(m) ):(" - " + Math.abs(m) )) ;
         return roll;
-    }
+    };
+    
     function convert_db(db){
         var n , d, m;
         
@@ -1211,38 +1704,136 @@
         else { m = 80;}
         
         return {dieCount: n, dieType: d, mod:m};
-    }
+    };
+    // AP
+    on("change:character_level",function(eventInfo){
+        var level = parseInt(eventInfo.newValue,10)||0;
+        var ap = 5 + Math.floor(level/5);
+        
+        setAttrs({
+            "AP_max": ap;
+        });
+    });
+
+    // Update Move Summary
+    on("change:repeating_movesList:mKnown", function(eventInfo){
+       
+       var known = parseInt(eventInfo.newValue,10) || 0;
+       var id= "";
+
+       
+       if(known == 1){
+
+            // Create new movesKnown row store Row Id in mID
+            id = generateRowID();
+            var sourceID = eventInfo.sourceAttribute.substring(19,39);
+            
+            getAttrs([
+                "repeating_movesList_mName",
+                "repeating_movesList_mType",
+                "repeating_movesList_mFreq",
+                "repeating_movesList_mUses_max",
+                "repeating_movesList_mCat",
+                "repeating_movesList_mRange",
+                "repeating_movesList_mHasAC",
+                "repeating_movesList_mAC",
+                "repeating_movesList_mHasDB",
+                "repeating_movesList_mDB",
+                "repeating_movesList_mDamageStat",
+                "repeating_movesList_mRoll",
+                "repeating_movesList_mContestType",
+                "repeating_movesList_mContestEffect",
+                "repeating_movesList_mEffects"
+            ],function(values){
+                
+                var rowAttrs = {};
+
+                rowAttrs["repeating_movesKnown_" + id + "_mkID"]            = id;
+                rowAttrs["repeating_movesKnown_" + id + "_mkName"]          = String(values["repeating_movesList_mName"]);
+                rowAttrs["repeating_movesKnown_" + id + "_mkFreq"]          = String(values["repeating_movesList_mFreq"]);
+                rowAttrs["repeating_movesKnown_" + id + "_mkUses_max"]      = parseInt(values["repeating_movesList_mUses_max"] ,10) || 0;
+                rowAttrs["repeating_movesKnown_" + id + "_mkType"]          = String(values["repeating_movesList_mType"]);
+                rowAttrs["repeating_movesKnown_" + id + "_mkCat"]           = String(values["repeating_movesList_mCat"]);
+                rowAttrs["repeating_movesKnown_" + id + "_mkRange"]         = parseInt(values["repeating_movesList_mRange"] ,10) || 0;
+                rowAttrs["repeating_movesKnown_" + id + "_mkHasAC"]         = parseInt(values["repeating_movesList_mHasAC"] ,10) || 0;
+                rowAttrs["repeating_movesKnown_" + id + "_mkAC"]            = parseInt(values["repeating_movesList_mAC"] ,10) || 0;
+                rowAttrs["repeating_movesKnown_" + id + "_mkHasDB"]         = parseInt(values["repeating_movesList_mHasDB"] ,10) || 0;
+                rowAttrs["repeating_movesKnown_" + id + "_mkDB"]            = parseInt(values["repeating_movesList_mDB"] ,10) || 0;
+                rowAttrs["repeating_movesKnown_" + id + "_mkDamageStat"]    = String(values["repeating_movesList_mDamageStat"]);
+                rowAttrs["repeating_movesKnown_" + id + "_mkRoll"]          = String(values["repeating_movesList_mRoll"]);
+                rowAttrs["repeating_movesKnown_" + id + "_mkContestType"]   = String(values["repeating_movesList_mContestType"]);
+                rowAttrs["repeating_movesKnown_" + id + "_mkContestEffect"] = String(values["repeating_movesList_mContestEfect"]);
+                rowAttrs["repeating_movesKnown_" + id + "_mkEffects"]       = String(values["repeating_movesList_mEffects"]);
+                
+                
+                setAttrs(rowAttrs);
+                setAttrs({
+                    repeating_movesList_mID: id
+                });
+            
+            });
+            
+       }else if(known == 0){
+  
+            getAttrs(["repeating_movesKnown_mID"], function(values){
+                
+                id = String(values["repeating_movesKnown_mID"]);
+                
+                
+                getSectionIDs("movesKnown", function(idarray) {
+                    for(var i=0; i < idarray.length; i++) {
+                        //Do something with the IDs
+                        
+                        if(idarray[i].toLowerCase() == id.toLowerCase()){
+                            removeRepeatingRow("repeating_movesKnown_" + idarray[i]);
+                            break;
+                        }
+                    }
+                });
+                
+                setAttrs({
+                    repeating_movesList_mID: ""
+                });
+                
+            });
+            
+       }
+        
+    });
+    
+    // Convert DB to Damage Damage roll
+    
     
     //Set damage roll
-    on("change:repeating_moves:move_damage_dicecount change:repeating_moves:move_damage_dice change:repeating_moves:move_damage_mod", function() {
+    on("change:repeating_movesList:mDiceCount change:repeating_movesList:mDiceType change:repeating_movesList:mDiceBonus", function() {
        //Do something here
        // eventInfo.sourceAttribute is the full name (including repeating ID) of the attribute 
        // that originally triggered this event, 
        // however the entire string will have been translated into lowercase and thus might not be 
        // suitable for being fed directly
        // into getAttrs() or other uses without being devandalized first.
-        console.log("Entered Worker Script");
+
         
         getAttrs([
-          "repeating_moves_move_damage_dicecount",
-          "repeating_moves_move_damage_dice",
-          "repeating_moves_move_damage_mod"
+          "repeating_movesList_mDiceCount",
+          "repeating_movesList_mDiceType",
+          "repeating_movesList_mDiceBonus"
         ], function(values) {
-            var n = parseInt(values["repeating_moves_move_damage_dicecount"], 10)||0;
-            var d = parseInt(values["repeating_moves_move_damage_dice"], 10)||0;
-            var m = parseInt(values["repeating_moves_move_damage_mod"], 10)||0;
+            var n = parseInt(values["repeating_movesList_mDiceCount"], 10)||0;
+            var d = parseInt(values["repeating_movesList_mDiceType"], 10)||0;
+            var m = parseInt(values["repeating_movesList_mDiceBonus"], 10)||0;
 
             var roll = set_damage_roll(n,d,m);
             
             setAttrs({
-                "repeating_moves_move_damage_roll": roll
+                "repeating_movesList_mRoll": roll
             });
             
         });
     });
     
     // Calculate damage base
-    on("change:repeating_moves:move_damage_base",function(eventInfo ){
+    on("change:repeating_movesList:mDB",function(eventInfo ){
         var db = parseInt(eventInfo.newValue,10)||1
         var n , d, m;
         
@@ -1251,47 +1842,44 @@
         var roll = set_damage_roll(db_roll.dieCount,db_roll.dieType,db_roll.mod);
         
         setAttrs({
-            "repeating_moves_move_damage_roll": roll
-        });
-        setAttrs({
-            "repeating_moves_move_damage_dicecount": n
-        });
-        setAttrs({
-            "repeating_moves_move_damage_dice": d
-        });
-        setAttrs({
-            "repeating_moves_move_damage_mod": m
+            "repeating_movesList_mRoll": roll,
+            "repeating_movesList_mDiceCount": db_roll.dieCount,
+            "repeating_movesList_mDiceType": db_roll.dieType,
+            "repeating_movesList_mDiceBonus": db_roll.mod
         });
         
     });
     
     // Set damage stat
-    on("change:repeating_moves:move_cat", function(eventInfo){
+    on("change:repeating_moves:mCat", function(eventInfo){
         
         var statName="";
         
         if(eventInfo.newValue.toLowerCase() == "physical"){
-            statName="attack_calc";
+            statName="stat_attack";
         }else if(eventInfo.newValue.toLowerCase() == "special"){
-            statName="spattack_calc";
+            statName="stat_spattack";
         }else{
-            setAttrs({"repeating_moves_damage_stat":0});
+            setAttrs({"repeating_moves_mDamageStat":0});
             return;
         }
         
         getAttrs([statName],function(values){
-            setAttrs({"repeating_moves_damage_stat":values[statName]});
+            setAttrs({"repeating_moves_mDamageStat":values[statName]});
         });
     });
     
-    // Set HP MAx
-    on("change:stat_hp_base change:stat_hp_allocated change:stat_hp_bonus change:level change:isTrainer",function(eventInfo){
+    // Set HP Max
+    on("change:stat_hp change:character_level change:isTrainer sheet:opened", function(){
         
-        getAttrs(["stat_hp_allocated", "stat_hp_base", "level","isTrainer"],function(values){
+        console.log("HP MAX");
+        
+        getAttrs(["stat_hp", "character_level","isTrainer"],function(values){
             
             var trainer = parseInt(values["isTrainer"])||0;
-            var hp = (parseInt(values["stat_hp_base"])||0 ) + (parseInt(values["stat_hp_allocated"])||0 );
-            var level = parseInt(values["level"])||0;
+            var hp = parseInt(values["stat_hp"])||0 ;
+            var level = parseInt(values["character_level"])||0;
+            
             var hp_m = 0;
             
             if(trainer == 0){
@@ -1304,29 +1892,42 @@
             }
             
             setAttrs({
-                "HP_max": hp_m,
-                "hp_mark_75":   Math.floor(hp_m*(3/4)),
-                "hp_mark_50":   Math.floor(hp_m*(2/4)),
-                "hp_mark_25":   Math.floor(hp_m*(1/4)),
-                "hp_mark_1_3":  Math.floor(hp_m*(1/3)),
-                "hp_mark_1_6":  Math.floor(hp_m*(1/6)),
-                "hp_mark_1_8":  Math.floor(hp_m*(1/8)),
-                "hp_mark_1_10": Math.floor(hp_m*(1/10)),
-                "hp_mark_1_16": Math.floor(hp_m*(1/16))
+                HP_max:         hp_m,
+                hp_mark_3_4:   Math.floor(hp_m*(3/4)),
+                hp_mark_1_2:   Math.floor(hp_m*(2/4)),
+                hp_mark_1_4:   Math.floor(hp_m*(1/4)),
+                hp_mark_1_3:  Math.floor(hp_m*(1/3)),
+                hp_mark_1_6:  Math.floor(hp_m*(1/6)),
+                hp_mark_1_8:  Math.floor(hp_m*(1/8)),
+                hp_mark_1_10: Math.floor(hp_m*(1/10)),
+                hp_mark_1_16: Math.floor(hp_m*(1/16))
             });
-            
-            
             
         });
         
     });
     
-</script>
-<script type="text/worker">
-
-    const stats = ['atk','def','spatk','spdef','speed'];
+    // HP Stat
+    on( "change:stat_hp_base change:stat_hp_allocated change:stat_hp_bonus sheet:opened", function(){
+        console.log("Hello, World");
+        getAttrs(["stat_hp_base", "stat_hp_allocated", "stat_hp_bonus"], function(values){
+            
+            var base = parseInt(values["stat_hp_base"],10)||0;
+            var allocated = parseInt(values["stat_hp_allocated"],10)||0;
+            var bonus = parseInt(values["stat_hp_bonus"],10)||0;
+            
+            var stat = (base + allocated + bonus);
+            
+            setAttrs({
+                "stat_hp": stat
+            });
+            
+        });
+        
+    });
     
-    stats.forEach(stat => {
+    
+    stats.forEach( stat => {
         on(`change:stat_${stat}_base change:stat_${stat}_allocated change:stat_${stat}_bonus change:stat_${stat}_combat sheet:opened`, () => {
             
             getAttrs([ `stat_${stat}_base`, `stat_${stat}_allocated`, `stat_${stat}_bonus`, `stat_${stat}_combat` ], values => {
@@ -1345,32 +1946,16 @@
             });
         });
     });
-
-    //  HP Stat
-    on( "change:stat_hp_base change:stat_hp_allocated change:stat_hp_bonus sheet:opened", function(eventinfo){
-        
-        getAttrs(["stat_hp_base", "stat_hp_allocated", "stat_hp_bonus"], function(values){
-            
-            var base = parseInt(values["stat_hp_base"],10)||0;
-            var allocated = parseInt(values["stat_hp_allocated"],10)||0;
-            var bonus = parseInt(values["stat_hp_bonus"],10)||0;
-            
-            var stat = (base + allocated + bonus);
-            
-            setAttrs({
-                "stat_hp":stat
-            });
-            
-        });
-        
-    });
-   
     
-</script>
-<script type="text/worker">
+    
+
+    
+    
+    
+   
     // Overland, Swimming, Power, High Jump, Long Jump, Throw
     
-    on("change:acrobatics change:athletics change:combat sheet:opened", function(eventinfo){
+    on("change:acrobatics change:athletics change:combat sheet:opened", function(){
         
         getAttrs(["acrobatics","athletics","combat"],function(values){
             var acro = parseInt(values["acrobatics"], 10)||1;
@@ -1404,13 +1989,34 @@
         
     });
     
-</script>
-<script type="text/worker">
-    const skills = [
-        'acrobatics','athletics','combat','intimidate','stealth','survival',
-        'general_edu','medicine_edu','occult_edu','pokemon_edu','technology_edu','guile','perception',
-        'charm','command','focus','intuition'
-        ];
+    
+    
+    on("change:character_nature sheet:opened", function(eventinfo){
+        var temp = String(eventinfo.newValue).toLowerCase();
+        var like = "";
+        var dislike = "";
+        var raised = "";
+        var lowered = "";
+        
+        if(natures[temp] === null){
+            
+        }else{
+            
+            setAttrs({
+                character_raisedStat:   natures[temp][0],
+                character_loweredStat:  natures[temp][1],
+                character_likeFlavor:   natures[temp][2],
+                character_dislikeFlavor:natures[temp][3] ,
+            });
+            
+        }
+        
+        
+        
+    });
+    
+    
+    
     skills.forEach(function (skill) {
         on("change:" + skill + " sheet:opened", function () {
             getAttrs([skill], function (values) {
@@ -1447,7 +2053,6 @@
             });
         });
     });
-    
     
     on("change:repeating_skills:skill", function () {
             getAttrs(["repeating_skills_skill"], function (values) {

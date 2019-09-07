@@ -4,22 +4,22 @@
     min-width:200px;
     width:100%;
 }
-.sheet-rolltemplate-PTU table tr,
+.sheet-rolltemplate-PTU table tr,repcontrol
 .sheet-rolltemplate-PTU_attack table tr{
     background-color:#999999;2px 0 3px 0px;
     color:black;
 }
 .sheet-rolltemplate-PTU table td,
 .sheet-rolltemplate-PTU_attack table td{
-    padding:3px 5px 3px  0px;
+    padding:3px 0px 3px 3px;
     white-space:pre-line
     font-weight:bold;   
 }
 .sheet-rolltemplate-PTU table th,
 .sheet-rolltemplate-PTU_attack table th
 {
-    height:2rem;
-    vertical-align:middle;
+    padding: 5px 5px;
+    font-size: larger;
     background-color:#333333;
     color:white;
 }
@@ -29,12 +29,13 @@
 }
 .sheet-rolltemplate-PTU table td:nth-child(1), 
 .sheet-rolltemplate-PTU_attack table td:nth-child(1){
-    padding-right:10px;
+
 }
 
 .charsheet{
     display:block;
-    width:820px;
+    min-width:900px;
+    width:100%;
     
     box-sizing:border-box;
     -moz-box-sizing:border-box;
@@ -97,6 +98,14 @@ table{
 }
 table th{
     text-align:center;
+    background-color: #333;
+    color: #ddd;
+}
+table td:nth-child(1){
+    padding:0 10px;
+}
+table input{
+    margin:0px;
 }
 
 /*********************************
@@ -169,7 +178,7 @@ div.sheet-field{
     position:relative;
     display:inline-block;
     vertical-align: bottom;
-    min-width:70px;
+    min-width:30px;
     margin: 1px 5px;
 
 }
@@ -183,6 +192,10 @@ div.sheet-field{
     background-color:#8888;
     border-width:0 0 1px 0;
     border-color:black;
+}
+.sheet-field textarea{
+    padding-top:10pt;
+    
 }
 
 input:disabled,
@@ -199,6 +212,18 @@ span.sheet-field{
 .sheet-field select{
     height:auto;
     width:100%;
+    font-size: smaller;
+    font-weight: bold;
+}
+
+.sheet-field textarea + span{
+    position:absolute;
+    top:2px;
+    left:0px;
+    width:100%;
+    padding:0 10px;
+    font-size: smaller;
+    font-weight: bold;
 }
 .sheet-field input + span{
     position:absolute;
@@ -263,6 +288,7 @@ div.sheet-field-simple{
     border:none;
     font-weight:bold;
     border-radius:inherit;
+    text-align:center;
 
 }
 
@@ -274,7 +300,7 @@ div.sheet-field-simple{
 
 .sheet-character-info{
     display:block;
-    width:80%;
+    width:650px;
     margin:20px auto;
     border:1px solid black;
     border-radius:10px;
@@ -454,13 +480,14 @@ div.sheet-field-simple{
 
 .sheet-stats th, 
 .sheet-stats td {
-    padding:5px;
     width:60px;
     text-align:center;
     border-bottom: 1px solid #ddd;
 }
 .sheet-stats th{
     text-align:center;
+    background-color:#333;
+    color:#ddd;
     
 }
 .sheet-stats td:first-child{
@@ -474,7 +501,6 @@ div.sheet-field-simple{
     *****************************/
 
     .sheet-HP-Markers{
-        border-collapse: separate;
         border-spacing: 15px 0;
     }
 
@@ -521,7 +547,7 @@ div.sheet-field-simple{
         font:bold 12pt black;
     }
     .sheet-conditions .sheet-condition-item > input[type="checkbox"]:checked + span{
-        background:#444;
+        background:#855;
         color:white;
     }
     
@@ -544,8 +570,258 @@ div.sheet-field-simple{
     Moves
     
 *****************************/
+.sheet-page-moves{
+    
+}
+
+.sheet-page-moves > .sheet-header{
+    display:block;
+    text-align:center;
+    background:#222;
+    color:white;
+    padding:10px;
+    margin:2px 0px;
+    font-size:large;
+    font-weight:900;
+    border-radius:10px;
+}
 
 
+
+.sheet-known > .repcontainer{
+    display:grid;
+    grid-template-columns: 400px 400px;
+    justify-content:space-around;
+    grid-row-gap: 10px;
+}
+
+.sheet-move-item label{
+    margin:0 5px 0 5px;
+    padding:0;
+    font-size:10pt;
+    font-weight:bold;
+}
+.sheet-move-item > .sheet-header{
+    padding:5px 5px;   
+    border-radius:10px 10px 0 0;
+    border:solid #444;
+    border-width:3px 3px 0px;
+}
+.sheet-move-item .sheet-body{
+    padding:0px 5px;   
+    background-color:#999;
+    border:solid #444;
+    border-width:0px 3px 3px;
+    
+}
+
+.sheet-known .sheet-move-item{
+    width:400px;
+}
+
+.sheet-move-item{
+    position:relative;
+    
+   
+}
+
+.sheet-move-item input,
+.sheet-move-item select{
+    box-shadow:none;
+    border-bottom: black solid;
+    border-width:0 0 1px 0;
+    color:black;
+    font-weight:bold;
+    margin:none;
+    vertical-align:middle;
+    overflow-x:hidden;
+    background-color:#fff4;
+}
+
+.sheet-move-item button{
+    display:none;
+}
+.sheet-move-item:hover button{
+   display:inline-block;
+}
+
+.sheet-move-item .sheet-header{
+    display:block;
+    padding:2px 5px;
+    font-size:8pt;
+    font-weight:900;
+    background:black;
+
+    
+}
+
+
+
+/*Dynamic Elements*/
+/* Type Coloring */
+.sheet-move-type[value="-"] +           .sheet-header{background-color:#ddd;}
+.sheet-move-type[value="Normal"] +      .sheet-header{background-color:#a9a878;}
+.sheet-move-type[value="Bug"] +         .sheet-header{background-color:#a8b839;}
+.sheet-move-type[value="Dark"] +        .sheet-header{background-color:#70584a;}
+.sheet-move-type[value="Dragon"] +      .sheet-header{background-color:#6558a5;}
+.sheet-move-type[value="Electric"] +    .sheet-header{background-color:#f7d031;}
+.sheet-move-type[value="Fairy"] +       .sheet-header{background-color:#ec99ac;}
+.sheet-move-type[value="Fighting"] +    .sheet-header{background-color:#c1302c;}
+.sheet-move-type[value="Fire"] +        .sheet-header{background-color:#ed802f;}
+.sheet-move-type[value="Flying"] +      .sheet-header{background-color:#a08ec3;}
+.sheet-move-type[value="Ghost"] +       .sheet-header{background-color:#715998;}
+.sheet-move-type[value="Grass"] +       .sheet-header{background-color:#7ac44f;}
+.sheet-move-type[value="Ground"] +      .sheet-header{background-color:#dfc069;}
+.sheet-move-type[value="Ice"] +         .sheet-header{background-color:#97d4d5;}
+.sheet-move-type[value="Poison"] +      .sheet-header{background-color:#9e449a;}
+.sheet-move-type[value="Psychic"] +     .sheet-header{background-color:#f05887;}
+.sheet-move-type[value="Rock"] +        .sheet-header{background-color:#b89f38;}
+.sheet-move-type[value="Steel"] +       .sheet-header{background-color:#b8b8d0;}
+.sheet-move-type[value="Water"] +       .sheet-header{background-color:#718bc6;}
+
+/* Auto Hide Uses Input */
+.sheet-move-item .sheet-move-freq[value="At-Will"] + .sheet-move-usesMax,
+.sheet-move-item .sheet-move-freq[value="EOT"] + .sheet-move-usesMax, 
+.sheet-move-item .sheet-move-freq[value="Static"] + .sheet-move-usesMax {
+    display:none;
+}
+
+.sheet-move-item .sheet-body .sheet-move-hasAccuracy[value="0"]  ~ .sheet-move-accuracy,
+.sheet-move-item .sheet-body .sheet-move-hasDamage[value="0"]    ~ .sheet-move-damage,
+.sheet-move-item .sheet-body .sheet-move-hasCondition[value="0"] ~ .sheet-move-condition{
+    display:none;
+}
+
+
+
+.sheet-known .sheet-body{
+    padding:0px 5px 5px;   
+}
+.sheet-known .sheet-body > div {
+    margin-bottom:2px;
+}
+
+.sheet-known span[name$="Name"],
+.sheet-known span[name$="Type"],
+.sheet-known span[name$="Cat"],
+.sheet-known span[name$="Uses_max"],
+.sheet-known span[name$="Range"],
+.sheet-known span[name$="Target"],
+.sheet-known span[name$="Crit"],
+.sheet-known span[name$="AC"],
+.sheet-known span[name$="DB"],
+.sheet-known span[name$="Roll"]{
+    display:inline-block;
+    border:1px solid black;
+    padding:3px 5px;
+    margin-right:5px;
+    text-align:center;
+    background-color:#ddc;
+    font-weight:bold;
+    color:black;
+}
+.sheet-known span[name$="Range"]:empty,
+.sheet-known span[name$="Uses_max"]:empty{
+    display:none;
+}
+.sheet-known span[name$="Uses_max"]::before{
+    content:"  /  ";
+}
+
+.sheet-known span[name$="Name"]{ width:150px;}
+.sheet-known span[name$="Type"]{ width:100px;}
+.sheet-known span[name$="Range"]::after{
+    content:"m";
+    margin-left:2px;
+}
+.sheet-known span[name$="Crit"]::after{
+    content:"+";
+
+}
+
+.sheet-known .repcontrol{
+    display:none;
+    height:30px;
+}
+.sheet-known .repitem{
+    display:inline-block;
+}
+
+.sheet-known .sheet-btn-show{
+    float:right;
+    color:black;
+}
+
+
+
+
+/* 
+    Collapse Move 
+*/
+
+.sheet-move-list .sheet-hide-swap{
+    position:absolute;
+    top: 10px;
+    right: 12px;
+    z-index:1;
+    opacity:0;
+}
+.sheet-move-list .sheet-hide-swap + span{
+    position:absolute;
+    top:5px;
+    right:10px;
+    font-size:large;
+}
+.sheet-move-list .sheet-hide-swap + span::before{
+    content:"▼";
+}
+.sheet-move-list .sheet-hide-swap:checked + span::before{
+    content:"▲";
+}
+
+.sheet-move-list .sheet-move-item{
+    position:relative;
+    width:650px;
+    margin:5px auto;
+}
+.sheet-move-list .sheet-move-item > div{
+    min-height:20px;
+}
+
+.sheet-move-known-swap{
+    position:absolute;
+    top: 5px;
+    left: -45px;
+    width: 20px;
+    height: 20px;
+    
+}
+.sheet-move-known-swap > input{
+    position:relative;
+    display:block;
+    width:100%;
+    height:100%;
+    z-index:1;
+    opacity:0;
+}
+.sheet-move-known-swap > span{
+    display:block;
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    border:1px solid black;
+    border-radius:15px;
+    background-color:#555;
+}
+.sheet-move-known-swap > input:checked + span{
+    background-color:red;
+}
+
+.sheet-move-item .sheet-switch{
+    border-radius:10px;
+}
 
 /*****************************
 
@@ -555,6 +831,7 @@ div.sheet-field-simple{
 
 .sheet-skills{
     margin:10px auto;
+    width: 600px;
 }
 .sheet-skills tr{
 }
@@ -571,7 +848,7 @@ div.sheet-field-simple{
     border:1px solid;
 }
 .sheet-skills .sheet-field-simple span{
-    padding: 5px 10px;
+    padding: 1px 10px;
     
     
 }
@@ -614,7 +891,179 @@ div.sheet-field-simple{
     
 *****************************/
 
+.sheet-page-features{
+    
+}
 
+
+
+.sheet-feature-wrapper{
+    position:relative;
+    padding: 0px 5px 5px;
+    border:1px solid black;
+    border-radius:10px;
+    margin:2px auto;
+    background:#555;
+}
+.sheet-feature-wrapper .itemcontrol{
+    z-index: 5;
+}
+.sheet-feature-wrapper .repcontainer[data-groupname="repeating_classfeature"]{
+
+}
+.sheet-feature-wrapper .repcontainer[data-groupname="repeating_classfeature"] > .repitem {
+
+}
+.sheet-feature-wrapper > input.sheet-hide-swap{
+    position:absolute;
+    top:11px;
+    right:10px;
+    opacity:0;
+    z-index:1;
+}
+.sheet-feature-wrapper > input.sheet-hide-swap + span{
+    position:absolute;
+    top:5px;
+    right:7px;
+    font-size:large;
+}
+.sheet-feature-wrapper > input.sheet-hide-swap + span::before{
+    content:"▼";   
+}
+.sheet-feature-wrapper > input.sheet-hide-swap:checked + span::before{
+    content:"▲";   
+}
+
+.sheet-feature-wrapper > .sheet-header{
+    text-align:center;
+    font-size: 16pt;
+    font-weight: 900;   
+    color:black;
+}
+
+.sheet-feature-item{
+    position:relative;
+    display:inline-block;
+    
+    border-radius:10px;
+    padding:3px 5px 3px 5px;
+    margin: 2px 0;
+    width:100%;
+    background-color:#aaa;
+    
+    
+}
+
+.sheet-feature-item  input,
+.sheet-feature-item  select{
+    background: none;
+    border: none;
+    color: black;
+    font-weight: bold;
+    padding:none;
+    border-bottom:1px solid #666;
+}
+
+.sheet-feature-item  textarea{
+    background: none;
+    border: none;
+    color: black;
+    font-weight: bold;
+    padding:none;
+    margin:5px 2px;
+    border:1px solid #666;
+}
+
+.sheet-feature-item  input:focus, .sheet-feature-item  input:hover,
+.sheet-feature-item  select:focus, .sheet-feature-item  select:hover,
+.sheet-feature-item  textarea:focus, .sheet-feature-item  textarea:hover{
+    border-bottom:1px solid black;
+}
+.sheet-feature-item  textarea:focus, .sheet-feature-item  textarea:hover{
+    border:1px solid black;
+}
+
+
+.sheet-feature-item button.sheet-show-btn{
+    position:absolute;
+    top: 3px;
+    right: 30px;
+    display:none;
+    
+}
+.sheet-feature-item:hover button.sheet-show-btn{
+    display:inline-block;
+}
+
+.sheet-feature-item > .sheet-hide-swap{
+    position:absolute;
+    top:13px;
+    right:15px;
+    opacity:0;
+    z-index:1;
+}
+.sheet-feature-item > .sheet-hide-swap + span{
+    position:absolute;
+    top:8px;
+    right:13px;
+    font-size:large;
+}
+.sheet-feature-item > .sheet-hide-swap + span::before{
+    content:"▼";
+}
+.sheet-feature-item > .sheet-hide-swap:checked + span::before{
+    content:"▲";
+}
+
+.sheet-feature-item .sheet-feature-name{
+    font-size: 14pt;
+    width:250px;
+}
+.sheet-feature-item .sheet-feature-keywords{
+    width:150px;
+}
+.sheet-feature-item .sheet-feature-prereq{
+    width:100px;
+}
+
+.sheet-feature-item .sheet-feature-cost{
+    width:70px;    
+}
+
+.sheet-feature-item .sheet-feature-freq{
+    width:100px;
+}
+
+.sheet-feature-item .sheet-feature-action{
+    width:130px;
+}
+
+.sheet-feature-item .sheet-feature-trigger{
+    display:block;
+    height:60px;
+}
+
+.sheet-feature-item .sheet-feature-target{
+    display:block;
+    height:60px;
+}
+
+.sheet-feature-item .sheet-feature-effect{
+    display:block;
+    height:100px;
+
+}
+
+
+.sheet-feature-item .sheet-feature-keywords span:empty,
+.sheet-feature-item .sheet-feature-prereq span:empty,
+.sheet-feature-item .sheet-feature-cost span:empty,
+.sheet-feature-item .sheet-feature-freq span:empty,
+.sheet-feature-item .sheet-feature-action span:empty,
+.sheet-feature-item .sheet-feature-target span:empty,
+.sheet-feature-item .sheet-feature-trigger span:empty{
+    display:none;
+}
 
 /*****************************
 
@@ -622,6 +1071,122 @@ div.sheet-field-simple{
     
 *****************************/
 
+.sheet-page-inventory{
+    
+}
+
+.sheet-page-inventory > .sheet-header{
+    position:relative;
+    background-color:black;
+    color:white;
+    padding:5px;
+    text-align:center;
+}
+.sheet-page-inventory > .sheet-trainer-only{
+    display:grid;
+    grid-template-columns:40% 60%;
+}
+
+.sheet-page-inventory > .sheet-trainer-only img{
+    width:100px;
+}
+
+.sheet-inventory-item .sheet-header > div{
+    position:relative;
+    top:5px;
+    right:0px;
+    display:inline;
+}
+.sheet-inventory-item .sheet-header div > input{
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    opacity:0;
+}
+.sheet-inventory-item .sheet-header div > input + span{
+    font-size:large;
+}
+.sheet-inventory-item .sheet-header div > input + span::before{
+    content:"▲";   
+}
+.sheet-inventory-item .sheet-header div > input:checked + span::before{
+    content:"▼";   
+}
+
+
+.sheet-inventory-item{
+    display:block;
+    width:600px;
+    margin:2px auto;
+}
+.sheet-inventory-item input,
+.sheet-inventory-item textarea{
+    background-color: #fff3;
+    border-width:0 0 1px;
+    border-color:#999;
+}
+.sheet-inventory-item textarea{
+    border:1px solid #999; 
+    margin:2px 0px;
+}
+.sheet-inventory-item input:hover{
+    border-color:black;
+}
+.sheet-inventory-item textarea:hover{
+    border-color:black;
+}
+.sheet-inventory-item input[type="number"]{
+    display:inline-block;
+    width:50px;
+}
+.sheet-inventory-item input[type="text"]{
+    display:inline-block;
+    width:500px;
+}
+
+.sheet-inventory-item > input[value="0"] + textarea{
+    display:none;
+}
+
+
+
+/*****************************
+    Switch
+*****************************/
+.sheet-switch{
+    position:relative;
+    display:inline-block;
+    margin: 2px 0px;
+    
+    text-align:center;
+    border:1px solid transparent;
+}
+.sheet-switch > input[type="checkbox"]{
+    position:absolute;
+    display:inline-block;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    z-index:1;
+    opacity:0;
+}
+.sheet-switch > span{
+    display:inline-block;
+    width:100%;
+    height:100%;
+    padding:2px 10px;
+    border-radius:inherit;
+    background-color:grey;
+    color:black;
+    font-weight:bold;
+}
+.sheet-switch > input:checked + span{
+    background-color:black;
+    color:white;
+}
 
 
 /*****************************
@@ -670,15 +1235,16 @@ input.sheet-hide-swap:checked ~ .sheet-hide-swap-b{
     display:none;
 }
 
-
-.sheet-page-generalo,
+/*
+.sheet-page-general,
 .sheet-page-moves,
 .sheet-page-skills,
-.sheet-features,
+.sheet-page-features,
 .sheet-page-inventory,
 .sheet-page-settings{
     display:block;
 }
+*/
 
 .sheet-tab-swap{
     
