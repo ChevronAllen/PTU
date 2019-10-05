@@ -391,6 +391,17 @@ td.sheet-header{
 .sheet-page-core .sheet-status input{
     width:80px;
 }
+.sheet-page-core table select
+{
+    background:none;
+    color:black;
+    text-align-last:center;
+    font-weight:bold;
+    border:solid black;
+    border-radius:0;
+    border-width: 0 0 1px;
+    padding:0 10px;
+}
 
 .sheet-AP-item,
 .sheet-capabilities-item,

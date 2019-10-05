@@ -154,7 +154,7 @@
         </div>
     </div>
     
-    <div class="sheet-row sheet-background">
+    <div class="sheet-row sheet-background sheet-trainer">
         <input type="hidden" name="attr_background_hide" class="sheet-hide-swap" />
         
         <div class="sheet-row">
@@ -278,7 +278,23 @@
                             <td><input type="number" name="attr_stat_atk_base" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_atk_allocated" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_atk_bonus" value="0"  /></td>
-                            <td><input type="number" name="attr_stat_atk_stage" value="0" min="-6" max="6" /></td>
+                            <td>
+                                <select name="attr_stat_atk_stage" style="width:auto">
+                                    <option value="-6" >-6</option>
+                                    <option value="-5" >-5</option>
+                                    <option value="-4" >-4</option>
+                                    <option value="-3" >-3</option>
+                                    <option value="-2" >-2</option>
+                                    <option value="-1" >-1</option>
+                                    <option value="0"  selected>0</option>
+                                    <option value="1"  >+1</option>
+                                    <option value="2"  >+2</option>
+                                    <option value="3"  >+3</option>
+                                    <option value="4"  >+4</option>
+                                    <option value="5"  >+5</option>
+                                    <option value="6"  >+6</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="hidden" name="attr_stat_atk" />
                                 <div class="sheet-field" style="width:50px">
@@ -291,7 +307,23 @@
                             <td><input type="number" name="attr_stat_def_base" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_def_allocated" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_def_bonus" value="0" /></td>
-                            <td><input type="number" name="attr_stat_def_stage" value="0" min="-6" max="6" /></td>
+                            <td>
+                                <select name="attr_stat_def_stage" style="width:auto">
+                                    <option value="-6" >-6</option>
+                                    <option value="-5" >-5</option>
+                                    <option value="-4" >-4</option>
+                                    <option value="-3" >-3</option>
+                                    <option value="-2" >-2</option>
+                                    <option value="-1" >-1</option>
+                                    <option value="0"  selected>0</option>
+                                    <option value="1"  >+1</option>
+                                    <option value="2"  >+2</option>
+                                    <option value="3"  >+3</option>
+                                    <option value="4"  >+4</option>
+                                    <option value="5"  >+5</option>
+                                    <option value="6"  >+6</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="hidden" name="attr_stat_def" />
                                 <div class="sheet-field" style="width:50px">
@@ -304,7 +336,23 @@
                             <td><input type="number" name="attr_stat_spatk_base" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_spatk_allocated" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_spatk_bonus" value="0"  /></td>
-                            <td><input type="number" name="attr_stat_spatk_stage" value="0" min="-6" max="6" /></td>
+                            <td>
+                                <select name="attr_stat_spatk_stage" style="width:auto">
+                                    <option value="-6" >-6</option>
+                                    <option value="-5" >-5</option>
+                                    <option value="-4" >-4</option>
+                                    <option value="-3" >-3</option>
+                                    <option value="-2" >-2</option>
+                                    <option value="-1" >-1</option>
+                                    <option value="0"  selected>0</option>
+                                    <option value="1"  >+1</option>
+                                    <option value="2"  >+2</option>
+                                    <option value="3"  >+3</option>
+                                    <option value="4"  >+4</option>
+                                    <option value="5"  >+5</option>
+                                    <option value="6"  >+6</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="hidden" name="attr_stat_spatk" />
                                 <div class="sheet-field" style="width:50px">
@@ -317,7 +365,23 @@
                             <td><input type="number" name="attr_stat_spdef_base" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_spdef_allocated" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_spdef_bonus" value="0" /></td>
-                            <td><input type="number" name="attr_stat_spdef_stage" value="0" min="-6" max="6" /></td>
+                            <td>
+                                <select name="attr_stat_spdef_stage" style="width:auto">
+                                    <option value="-6" >-6</option>
+                                    <option value="-5" >-5</option>
+                                    <option value="-4" >-4</option>
+                                    <option value="-3" >-3</option>
+                                    <option value="-2" >-2</option>
+                                    <option value="-1" >-1</option>
+                                    <option value="0"  selected>0</option>
+                                    <option value="1"  >+1</option>
+                                    <option value="2"  >+2</option>
+                                    <option value="3"  >+3</option>
+                                    <option value="4"  >+4</option>
+                                    <option value="5"  >+5</option>
+                                    <option value="6"  >+6</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="hidden" name="attr_stat_spdef" />
                                 <div class="sheet-field" style="width:50px">
@@ -330,7 +394,23 @@
                             <td><input type="number" name="attr_stat_speed_base" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_speed_allocated" value="0" min="0" /></td>
                             <td><input type="number" name="attr_stat_speed_bonus" value="0" /></td>
-                            <td><input type="number" name="attr_stat_speed_stage" value="0" min="-6" max="6" /></td>
+                            <td>
+                                <select name="attr_stat_speed_stage" style="width:auto">
+                                    <option value="-6" >-6</option>
+                                    <option value="-5" >-5</option>
+                                    <option value="-4" >-4</option>
+                                    <option value="-3" >-3</option>
+                                    <option value="-2" >-2</option>
+                                    <option value="-1" >-1</option>
+                                    <option value="0"  selected>0</option>
+                                    <option value="1"  >+1</option>
+                                    <option value="2"  >+2</option>
+                                    <option value="3"  >+3</option>
+                                    <option value="4"  >+4</option>
+                                    <option value="5"  >+5</option>
+                                    <option value="6"  >+6</option>
+                                </select>
+                            </td>
                             <td>
                                 <input type="hidden" name="attr_stat_speed" />
                                 <div class="sheet-field" style="width:50px">
@@ -339,27 +419,46 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">Accuracy</td>
+                            <td colspan="5">Accuracy</td>
     
-                            <td><input type="number" name="attr_stat_accuracy_bonus" value="0" /></td>
-                            <td><input type="number" name="attr_stat_accuracy_stage" value="0" min="-6" max="6" /></td>
+                            
                             <td>
-                                <input type="hidden" name="attr_stat_hp" />
-                                <div class="sheet-field" style="width:50px">
-                                    <span name="attr_stat_accuracy" class="sheet-field">0</span>
-                                </div>
+                                <select name="attr_stat_accuracy" style="width:auto">
+                                    <option value="-6" >-6</option>
+                                    <option value="-5" >-5</option>
+                                    <option value="-4" >-4</option>
+                                    <option value="-3" >-3</option>
+                                    <option value="-2" >-2</option>
+                                    <option value="-1" >-1</option>
+                                    <option value="0"  selected>0</option>
+                                    <option value="1"  >+1</option>
+                                    <option value="2"  >+2</option>
+                                    <option value="3"  >+3</option>
+                                    <option value="4"  >+4</option>
+                                    <option value="5"  >+5</option>
+                                    <option value="6"  >+6</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">Evasion</td>
+                            <td colspan="5">Evasion</td>
     
-                            <td><input type="number" name="attr_stat_evasion_bonus" value="0" /></td>
-                            <td><input type="number" name="attr_stat_evasion_stage" value="0" min="-6" max="6" /></td>
                             <td>
-                                <input type="hidden" name="attr_stat_hp" />
-                                <div class="sheet-field" style="width:50px">
-                                    <span name="attr_stat_evasion" class="sheet-field">0</span>
-                                </div>
+                                <select name="attr_stat_evasion" style="width:auto">
+                                    <option value="-6" >-6</option>
+                                    <option value="-5" >-5</option>
+                                    <option value="-4" >-4</option>
+                                    <option value="-3" >-3</option>
+                                    <option value="-2" >-2</option>
+                                    <option value="-1" >-1</option>
+                                    <option value="0"  selected>0</option>
+                                    <option value="1"  >+1</option>
+                                    <option value="2"  >+2</option>
+                                    <option value="3"  >+3</option>
+                                    <option value="4"  >+4</option>
+                                    <option value="5"  >+5</option>
+                                    <option value="6"  >+6</option>
+                                </select>
                             </td>
                         </tr>
                         <tr>
@@ -596,12 +695,12 @@
                 <fieldset class="repeating_AP">
                     <div class="sheet-AP-item">
                         <select name="attr_apType" style="width:auto">
-                            <option selected>Spent</option>
-                            <option>Drain</option>
-                            <option>Bound</option>
+                            <option >Spent</option>
+                            <option >Drained</option>
+                            <option >Bound</option>
                         </select>
                         <input type="number" name="attr_apCost" min="0" placeholder="cost" />
-                        <input type="text" name="attr_apName" style="width:160px" placeholder="Ability Name"/>
+                        <input type="text" name="attr_apName" style="width:160px" placeholder="Ability Name / Reason"/>
                     </div>
                 </fieldset>
             </div>
