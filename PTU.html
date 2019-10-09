@@ -23,6 +23,30 @@
         {{/descr}}
     </table>
 </rolltemplate>
+<rolltemplate class="sheet-rolltemplate-PTU_Move_AC">
+    <table>
+        <tr>
+            <th colspan="2">{{name}}</th>
+        </tr>
+        <tr>
+            <th colspan="2">{{roll}} &#8805; {{ac}}</th>
+        </tr>
+        <tr>
+            <th colspan="2">Crit on {{crit}}+</th>
+        </tr>
+    </table>
+</rolltemplate>
+<rolltemplate class="sheet-rolltemplate-PTU_Move_DMG">
+    <div class="sheet-header">
+        <label>{{name}}</label>
+    </div>
+    <div>
+        <label>DB:<span>{{db}}</span></label>
+    </div>
+    <div>
+        <label>Damage:<span>{{damage}} {{type}}</span></label>
+    </div>
+</rolltemplate>
 
 <div class="sheet-header" >
     <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Logo.png" style="display:block;margin:0 auto;width:100px">
@@ -160,7 +184,7 @@
         <div class="sheet-row">
             <input type="hidden" name="attr_background_hide" class="sheet-hide-swap" />
             
-            <div class="sheet-field" style="width:250px">
+            <div class="sheet-field">
                 <input type="text" name="attr_background" />
                 <span>Background Name</span>
             </div>
@@ -179,8 +203,8 @@
                 <input type="hidden" name="attr_background_hide" class="sheet-hide-swap" value="1"/>
                 
                 <input type="checkbox" name="attr_background_hide" value="1" />
-                <span class="sheet-hide-a" >▼</span>
-                <span class="sheet-hide-b" >▲</span>
+                <span></span>
+
             </div>
         </div>
         
@@ -239,7 +263,7 @@
 
 <div class="sheet-body" >
     <input type="hidden" name="attr_isTrainer" class="sheet-creature-swap" value="0"/>
-    <input type="hidden" name="attr_tab" class="sheet-tab-swap" value="0" />
+    <input type="hidden" name="attr_tab" class="sheet-tab-swap" value="3" />
     
     <!-- (0) Core -->
     <div class="sheet-page-core" >
@@ -928,13 +952,14 @@
     <!-- (3) Moves -->
     <div class="sheet-page-moves" >
         
-        <div class="sheet-row">
-            <button type="roll" >Accuracy</button>
-            <span>
-                <input type="hidden" name="attr_DB_Roll" value="1d6+1" />
-                <label style="display:inline">DB:<input type="number" name="attr_DB" /></label>
-                <button type="roll" name="roll_DB"></button>
+        <div class="sheet-row sheet-header">
+            <span style="margin-right:20px">
+                <input type="hidden" name="attr_generic_DB_Roll" value="1d6+1" />
+                <label style="display:inline">DB:</label><input type="number" name="attr_generic_DB_Roll" />
+                <span class="sheet-generic-damage" name="attr_generic_DB_Roll"> 16d+1</span>
+                <button type="roll" name="roll_DB">Damage</button>
             </span>
+            <button type="roll" >Accuracy</button>
         </div>
         
         <div class="sheet-moveKnown-group">
@@ -1030,7 +1055,7 @@
                            
                             <div class="sheet-field sheet-row" style="width:100%">
                                 <select name="attr_mType">
-                                    <option selected>-</option>
+                                    <option value="Untyped" selected>-</option>
                                     <option>Normal</option>
                                     <option>Bug</option>
                                     <option>Dark</option>
