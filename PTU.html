@@ -92,8 +92,54 @@
     });
     
     on("remove:repeating_moves", function(eventinfo) {
-        console.log(eventinfo.removedInfo);
+        //var id = eventinfo.removedInfo["repeating_moves_-LrS5VRJcSqFE1JXdN5l_mlID"];
+        
+        //removeRepeatingRow("repeating_movesKnown_" + id);
+        
+        for (var property in eventinfo.removedInfo) {
+            console.log(property);
+            if (eventinfo.removedInfo.hasOwnProperty(property)) {
+                if (property.match(/.*mlID/g)!=null) {
+                    
+                    removeRepeatingRow("repeating_movesKnown_" + eventinfo.removedInfo[property]);
+                    
+                }
+                
+            }
+        }
+        
     });
+    
+    on("change:repeating_moves", function(eventinfo){
+    
+        console.log(eventinfo.sourceAttribute.substring(39));
+        
+        var source = eventinfo.sourceAttribute.substring(39);
+        var v;
+        var update = {};
+        
+        console.log("repeating_moves_mk"+source);
+        
+        getAttrs(["repeating_moves_ml"+source, "repeating_moves_mlID"], function(values){
+            v = values["repeating_moves_ml"+source];
+            
+            console.log(v);
+            
+            console.log(values["repeating_moves_mlID"]);
+            
+            if(values["repeating_moves_mlID"] != "" && values["repeating_moves_mlID"] != null){
+               
+                console.log("repeating_movesKnown_" + values["repeating_moves_mlID"] + "_mk" + source);
+                
+                update["repeating_movesKnown_" + values["repeating_moves_mlID"] + "_mk" + source] = v;
+               
+            }
+            setAttrs(update);
+        });
+        
+    
+    });
+   
     
     // Change Character Mode
     on("change:chartype", function() {
@@ -561,34 +607,71 @@
             for (var property in char) {
                 if (char.hasOwnProperty(property)) {
                     if (property.match(/Move\d/g)!=null) {
-                        i = Number(property.substring(4));
+                        
                         t = {};
-                        if (i<7){
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = property.concat("_").concat(prop);
-                                    t[x] = char[property][prop];
+                        i=generateRowID();
+                        
+                        for (var prop in char[property]){
+                            if (char[property].hasOwnProperty(prop)){
+                                
+                                
+                                x = "repeating_moves_" + i + "_ml";
+                                //t[x] = char[property][prop];
+                                
+                                
+                                switch(prop){
+                                    case "Name":
+                                        t[x + "Name"] = char[property][prop];
+                                        console.log(char[property][prop]);
+                                        break;
+                                    case "Type":
+                                        t[x + "Type"] = char[property][prop];
+                                        break;
+                                    case "Freq":
+                                        list = char[property][prop].match(/([a-wyz\-]+)(\s*[x]\s*)?(\d+)?/i);
+                                        if(list.length <= 2){
+                                            // has no use count
+                                            t[x + "Frequency"] = list[1];
+                                        }else if(list.length < 4){
+                                            //number missing
+                                            t[x + "Frequency"] = list[1];
+                                            t[x + "Uses_max"] = 1;
+                                        }else{
+                                            // frequesncy and uses
+                                            t[x + "Frequency"] = list[1];
+                                            t[x + "Uses_max"] = list[3];
+                                        }
+                                        
+                                        break;
+                                    case "AC":
+                                        t[x + "AC"] = parseInt(char[property][prop])||0;
+                                        break;
+                                    case "DB":
+                                        t[x + "DB"] = parseInt(char[property][prop])||0;
+                                        break;
+                                    case "DType":
+                                        t[x + "Cat"] = char[property][prop];
+                                        break;
+                                    case "Range":
+                                        t[x + "Range"] = char[property][prop];
+                                        break;
+                                    case "Effects":
+                                        t[x + "Effects"] = char[property][prop];
+                                        break;
+                                    case "Contest Type":
+                                        t[x + "ContestEffect"] = char[property][prop];
+                                        break;
+                                    case "Contest Effect":
+                                        t[x + "ContestType"] = char[property][prop];
+                                        break;
+                                    default:
+                                        break;
                                 }
+                                
                             }
-                            setAttrs(t);
-                        } else if (i<7+rmoves.length){
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "repeating_moves_".concat(rmoves[i-7]).concat("_Move_").concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
-                        } else {
-                            i=generateRowID();
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "repeating_moves_".concat(i).concat("_Move_").concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
                         }
+                        setAttrs(t);
+                        
                     } else if (property.match(/Feature\d/g)!=null) {
                         i = Number(property.substring(7));
                         t = {};
@@ -1566,15 +1649,15 @@
                 </div>
                 <div class="sheet-row">
                     <div style="width:30%">
-                        Physical Evasion
+                        Special Evasion
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
-                        <input type='number' style="width:100%" name='attr_PEB' value="0"/>
+                        <input type='number' style="width:100%" name='attr_ScEB' value="0"/>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <span class="sheet-field" style="width:100%" name='attr_PhysEvade'>0</span>
+                        <span class="sheet-field" style="width:100%" name='attr_SpecEvade'>0</span>
                     </div>
                 </div>
                 <div class="sheet-row">
@@ -1807,25 +1890,39 @@
         
         <fieldset class="repeating_movesKnown">
             <input type="hidden" name="attr_mkID" />
+            
             <div class="sheet-table sheet-moveKnown-item">
-                <div class="sheet-row">
-                    <span name="attr_mkName">Name</span>
-                    <span><</span>
+                <input type="hidden" name="attr_mkType" class="sheet-move-type" />
+                <div class=" sheet-move-header">
+                    <span name="attr_mkName" class="sheet-name">Name</span>
+                    <span name="attr_mkFrequency" class="sheet-freq">Frequency</span>
+                    
+                    <input type="hidden" name="attr_mkFrequency" class="sheet-freq" value="Physical" />
+                    <span class="sheet-uses">
+                        <input type="number" name="attr_mkUses" />
+                        <span>/</span>
+                        <span name="attr_mkUses_max">0</span>
+                    </span>
                 </div>
-                <div class="sheet-row">
-                    <span name="attr_mkFrequency">Frequency</span>
-                </div>
-                <div class="sheet-row">
-                    <span name="attr_mkAC">AC</span> <span name="attr_mkCrit">Crit</span>
-                </div>
-                <div class="sheet-row">
-                    <span name="attr_mkDB">DB</span> <span name="attr_mkBD_roll">Roll</span>
-                </div>
-                <div class="sheet-row">
-                    <div style="width:50%">
-                        <button type="roll">Accuracy</button>
-                    </div><div style="width:50%">
-                        <button type="roll">Damage</button>
+                <div class="sheet-move-body">
+                    <button type="roll" class="sheet-btn-accuracy"></button>
+                    <button type="roll" class="sheet-btn-damage"></button>
+                    <button type="roll" class="sheet-btn-show"></button>
+                    <div class="">
+                        <span>Range:</span><span name="attr_mkRange"></span>
+                    </div>
+                    <div class="">
+                        <span name="attr_mkAC">AC</span> <span name="attr_mkCrit">Crit</span>
+                    </div>
+                    <div class="">
+                        <span name="attr_mkDB">DB</span> <span name="attr_mkDB_roll">Roll</span>
+                    </div>
+                    <div class="">
+                        <div style="width:50%">
+                            
+                        </div><div style="width:50%">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1849,7 +1946,7 @@
                     </div><div style="width:10%">
                     </div><div style="width:25%">
                         <select name="attr_struggleCat">
-                            <option>Physical</option>
+                            <option selected="selected">Physical</option>
                             <option>Special</option>
                             <option>Support</option>
                         </select>
@@ -1882,7 +1979,7 @@
                         </div>
                         <div>
                             <select name="attr_struggleContestType">
-                                <option >Cool</option>
+                                <option selected="selected">Cool</option>
                                 <option >Tough</option>
                                 <option >Beauty</option>
                                 <option >Smart</option>
@@ -1896,14 +1993,14 @@
                         
                     </div><div style="width:70%" class="sheet-move-body" >
                         <div>
-                            <span>Range: <input type="text" name="attr_struggleRange" /></span>
+                            <span>Range: <input type="text" name="attr_struggleRange"  /></span>
                         </div>
                         <div>
                             <span>AC: <input type="number" name="attr_struggleAC" value="4" /></span>
-                            <span>Crit On: <input type="number" name="arrt_struggleCrit"/> </span>
+                            <span>Crit On: <input type="number" name="arrt_struggleCrit" value="20" /> </span>
                         </div>
                         <div>
-                            <input type="hidden" name="attr_struggle_db_roll" />
+                            <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
                             <span>DB: <input type="number" name="attr_struggle_db" value="4" /></span>
                             <span class="sheet-field" name="attr_struggle_db_roll">1d8+6</span>
                             <span> + <input type="text" name="attr_struggleDamageBonus" placeholder="Additional Damage" /></span>
@@ -1930,7 +2027,7 @@
                         <input type="text" placeholder="Move Name" name="attr_mlName" style="width:100%" />
                     </div><div style="width:25%">
                         <select name="attr_mlFrequency" class="sheet-move-freq">
-                            <option>At-Will</option>
+                            <option selected="selected">At-Will</option>
                             <option>EOT</option>
                             <option>Scene</option>
                             <option>Daily</option>
@@ -1942,7 +2039,7 @@
                         <input type="text" placeholder="Uses" name="attr_mlUses_max" class="sheet-move-uses" />
                     </div><div style="width:25%">
                         <select name="attr_mlCat">
-                            <option>Physical</option>
+                            <option selected="selected">Physical</option>
                             <option>Special</option>
                             <option>Support</option>
                         </select>
@@ -1975,7 +2072,7 @@
                         </div>
                         <div>
                             <select name="attr_mlContestType">
-                                <option >Cool</option>
+                                <option selected="selected">Cool</option>
                                 <option >Tough</option>
                                 <option >Beauty</option>
                                 <option >Smart</option>
@@ -1989,7 +2086,7 @@
                         
                     </div><div style="width:70%" class="sheet-move-body" >
                         <div>
-                            <span>Range: <input type="text" name="attr_mlRange" /></span>
+                            <span>Range: <input type="text" name="attr_mlRange" placeholder="6," /></span>
                         </div>
                         <div>
                             <span>AC: <input type="number" name="attr_mlAC" value="4" /></span>

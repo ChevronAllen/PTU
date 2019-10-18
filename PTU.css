@@ -18,6 +18,17 @@ select, input[type="number"]{
     text-align-last:center;
     display:inline-block;
 }
+input:not(.sheet-buttons){
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
+}
+input:not(.sheet-buttons)::-webkit-inner-spin-button, 
+input:not(.sheet-buttons)::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 
 span.sheet-field{
     display:inline-block;
@@ -184,6 +195,16 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     margin:0 auto 2px;
     border:1px solid black;
 }
+.sheet-movesList .sheet-movesKnown-Add{
+    display:block;
+    position:absolute;
+    top:0;
+    left:-40px;
+    width:30px;
+    height:70px;
+}
+
+
 .sheet-move-item{
     padding:2px;
 }
@@ -192,7 +213,7 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
 }
 
 .sheet-movesKnown{
-    
+    position:relative;
     width:100%;
     min-height:150px;
 }
@@ -209,16 +230,49 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     border:1px solid black;
 }
 .sheet-movesKnown .repcontrol{
-    display:none;
+    /*display:none;*/
 }
-.sheet-movesKnown-Add{
+
+.sheet-cat{
     display:block;
     position:absolute;
-    top:0;
-    left:-40px;
-    width:30px;
-    height:70px;
+    top:0px;
+    right:0px;
+    width:60px;
+    height:30px;
+    background-repeat:no-repeat;
+    background-size:contain;
 }
+span.sheet-uses{
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+span.sheet-freq{
+    position: absolute;
+    right: 90px;
+}
+
+.sheet-moveKnown-item .sheet-freq[value="Physical"] + .sheet-cat{
+    background-image:url('https://raw.githubusercontent.com/ChevronAllen/PTU/master/physical.png');
+}
+.sheet-moveKnown-item .sheet-freq[value="Special"] + .sheet-cat{
+    background-image:url('https://raw.githubusercontent.com/ChevronAllen/PTU/master/special.png');
+}
+.sheet-moveKnown-item .sheet-freq[value="Support"] + .sheet-cat{
+    background-image:url('https://raw.githubusercontent.com/ChevronAllen/PTU/master/support.png');
+}
+.sheet-moveKnown-item {
+    position:relative;
+    
+}
+.sheet-moveKnown-item .sheet-name{
+    display:inline-block;
+    margin-right:10px;
+    max-width:120px;
+}
+
+
 
 .sheet-move-item{
     background:#ddd;
@@ -258,12 +312,22 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     min-width:80px;
 }
 
+
 .sheet-move-item .sheet-move-header{ 
+    position:relative;
     background-color:#d6d6c4;
     padding:5px;
     color:black;
     font-size:12pt;
     font-weight:bold;
+}
+.sheet-moveKnown-item .sheet-move-header{ 
+    background-color:#d6d6c4;
+    padding:5px;
+    color:black;
+    font-weight:bold;
+    border:solid black;
+    border-width: 1px 1px 0px;
 }
 .sheet-move-item .sheet-move-header select,
 .sheet-move-item .sheet-move-header input{
@@ -271,25 +335,50 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     font-size:12pt;
     font-weight:bold;
 }
-.sheet-move-item .sheet-move-type[value="Normal"] + .sheet-move-header{ background-color:#a9a878;}
-.sheet-move-item .sheet-move-type[value="Bug"] + .sheet-move-header{ background-color:#a8b839;}
-.sheet-move-item .sheet-move-type[value="Dark"] + .sheet-move-header{ background-color:#6b5b52;}
-.sheet-move-item .sheet-move-type[value="Dragon"] + .sheet-move-header{ background-color:#6559a5;}
-.sheet-move-item .sheet-move-type[value="Electric"] + .sheet-move-header{ background-color:#f7d031;}
-.sheet-move-item .sheet-move-type[value="Fairy"] + .sheet-move-header{ background-color:#ec99ac;}
-.sheet-move-item .sheet-move-type[value="Fighting"] + .sheet-move-header{ background-color:#bd3226;}
-.sheet-move-item .sheet-move-type[value="Fire"] + .sheet-move-header{ background-color:#ed802f;}
-.sheet-move-item .sheet-move-type[value="Flying"] + .sheet-move-header{ background-color:#a08ec3;}
-.sheet-move-item .sheet-move-type[value="Ghost"] + .sheet-move-header{ background-color:#715999;}
-.sheet-move-item .sheet-move-type[value="Grass"] + .sheet-move-header{ background-color:#7cc252;}
-.sheet-move-item .sheet-move-type[value="Ground"] + .sheet-move-header{ background-color:#dfc069;}
-.sheet-move-item .sheet-move-type[value="Ice"] + .sheet-move-header{ background-color:#97d4d5;}
-.sheet-move-item .sheet-move-type[value="Poison"] + .sheet-move-header{ background-color:#9e449a;}
-.sheet-move-item .sheet-move-type[value="Psychic"] + .sheet-move-header{ background-color:#f05887;}
-.sheet-move-item .sheet-move-type[value="Rock"] + .sheet-move-header{ background-color:#b79e37;}
-.sheet-move-item .sheet-move-type[value="Steel"] + .sheet-move-header{ background-color:#b8b8d0;}
-.sheet-move-item .sheet-move-type[value="Water"] + .sheet-move-header{ background-color:#6c8ec4;}
+.sheet-move-type[value="Normal"] + .sheet-move-header{ background-color:#a9a878;}
+.sheet-move-type[value="Bug"] + .sheet-move-header{ background-color:#a8b839;}
+.sheet-move-type[value="Dark"] + .sheet-move-header{ background-color:#6b5b52;}
+.sheet-move-type[value="Dragon"] + .sheet-move-header{ background-color:#6559a5;}
+.sheet-move-type[value="Electric"] + .sheet-move-header{ background-color:#f7d031;}
+.sheet-move-type[value="Fairy"] + .sheet-move-header{ background-color:#ec99ac;}
+.sheet-move-type[value="Fighting"] + .sheet-move-header{ background-color:#bd3226;}
+.sheet-move-type[value="Fire"] + .sheet-move-header{ background-color:#ed802f;}
+.sheet-move-type[value="Flying"] + .sheet-move-header{ background-color:#a08ec3;}
+.sheet-move-type[value="Ghost"] + .sheet-move-header{ background-color:#715999;}
+.sheet-move-type[value="Grass"] + .sheet-move-header{ background-color:#7cc252;}
+.sheet-move-type[value="Ground"] + .sheet-move-header{ background-color:#dfc069;}
+.sheet-move-type[value="Ice"] + .sheet-move-header{ background-color:#97d4d5;}
+.sheet-move-type[value="Poison"] + .sheet-move-header{ background-color:#9e449a;}
+.sheet-move-type[value="Psychic"] + .sheet-move-header{ background-color:#f05887;}
+.sheet-move-type[value="Rock"] + .sheet-move-header{ background-color:#b79e37;}
+.sheet-move-type[value="Steel"] + .sheet-move-header{ background-color:#b8b8d0;}
+.sheet-move-type[value="Water"] + .sheet-move-header{ background-color:#6c8ec4;}
 
+.sheet-moveKnown-item .sheet-move-body{
+    position:relative;
+    border:solid black;
+    border-width: 0px 1px 1px;
+}
+.sheet-move-body .sheet-btn-accuracy{
+    position:absolute;
+    top:5px;
+    right:5px;
+}
+.sheet-move-body .sheet-btn-damage{
+    position:absolute;
+    top:5px;
+    right:35px;
+}
+.sheet-move-body .sheet-btn-show{
+    position:absolute;
+    top:5px;
+    right:65px;
+}
+.sheet-move-body:not(:hover) .sheet-btn-accuracy,
+.sheet-move-body:not(:hover) .sheet-btn-damage,
+.sheet-move-body:not(:hover) .sheet-btn-show{
+    display:none;
+}
 
 .sheet-inventory-item{
     display:block;
