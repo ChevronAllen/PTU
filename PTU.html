@@ -6,7 +6,219 @@
         "repeating_moves_mlContestType","repeating_moves_mlContestEffect","repeating_moves_mlEffects",
         "repeating_moves_mlID"
     ];
+    
+    let natures={
+        "composed":{"up":"HP","down":"HP"},"cuddly":{"up":"HP","down":"ATK"},"distracted":{"up":"HP","down":"DEF"},
+        "proud":{"up":"HP","down":"SPATK"},"decisive":{"up":"HP","down":"SPDEF"},"patient":{"up":"HP","down":"SPEED"},
+        "desperate":{"up":"ATK","down":"HP"},"hardy":{"up":"ATK","down":"ATK"},"lonely":{"up":"ATK","down":"DEF"},
+        "adamant":{"up":"ATK","down":"SPATK"},"naughty":{"up":"ATK","down":"SPDEF"},"brave":{"up":"ATK","down":"SPEED"},
+        "stark":{"up":"DEF","down":"HP"},"bold":{"up":"DEF","down":"ATK"},"docile":{"up":"DEF","down":"DEF"},"impish":{"up":"DEF","down":"SPATK"},
+        "lax":{"up":"DEF","down":"SPDEF"},"relaxed":{"up":"DEF","down":"SPEED"},"curious":{"up":"SPATK","down":"HP"},
+        "modest":{"up":"SPATK","down":"ATK"},"mild":{"up":"SPATK","down":"DEF"},"bashful":{"up":"SPATK","down":"SPATK"},
+        "rash":{"up":"SPATK","down":"SPDEF"},"quiet":{"up":"SPATK","down":"SPEED"},"dreamy":{"up":"SPDEF","down":"HP"},
+        "calm":{"up":"SPDEF","down":"ATK"},"gentle":{"up":"SPDEF","down":"DEF"},"careful":{"up":"SPDEF","down":"SPATK"},
+        "quirky":{"up":"SPDEF","down":"SPDEF"},"sassy":{"up":"SPDEF","down":"SPEED"},"skittish":{"up":"SPEED","down":"HP"},
+        "timid":{"up":"SPEED","down":"ATK"},"hasty":{"up":"SPEED","down":"DEF"},"jolly":{"up":"SPEED","down":"SPATK"},
+        "naive":{"up":"SPEED","down":"SPDEF"},"serious":{"up":"SPEED","down":"SPEED"}
+    };
+    
+    let weights=[
+        "0 – 25 lbs; 0 – 11 kg; ---","25 – 55 lbs; 11 – 25 kg; ---",
+        "55 – 110 lbs; 25 – 50 kg; ---","110 – 220 lbs; 50 – 100 kg; ---","220 – 440 lbs; 100 – 200 kg; ---",
+        " > 440lbs ; > 200kg; ---", " > 440lbs ; > 200kg; Heavy Metal"
+    ];
+    
+    on("change:weightClass " , function(e){
+        getAttrs(["weightClass"],function(v){
+            
+            var wc = parseInt(v["weightClass"])||0;
+            var w = "--- ; --- ; ---";
+            
+            if(wc > 0 && wc < 8){
+                w = weights[wc-1];
+            }
+            
+            setAttrs({
+                "weight": w
+            });
+        });
+    });
+    
+    on("change:nature",function(){
+        var update = {};
+        getAttrs(["nature"],function(v){
+            var nat = v["nature"] + "";
+            
+            nat = ('' + nat).toLowerCase().trim();
+            if(natures[nat] != null){
+                update["nature_high"] = natures[nat]["up"];
+                update["nature_low"]  = natures[nat]["down"];
+            }
+            
+            setAttrs(update);
+        });
+    });
+    
+    on("change:nature_high change:nature_low",function(){
+        var update = {};
+        
+        getAttrs(["nature_high","nature_low"],function(v){
+            var high = v["nature_high"];
+            var low  = v["nature_low"];
+            
+            for (var property in natures) {
+                if(natures[property]["up"] == high && natures[property]["down"] == low){
+                    
+                    console.log(property);
+                    update["nature"] = property.charAt(0).toUpperCase() + property.slice(1);
+                    
+                    setAttrs(update,{silent:true});
+                    break;
+                }
+            }
+            
+        });
+        
+    });
+    
+    
+    
+    on("change:SPEED_total change:Overland_bonus change:Swim_bonus",function(){
+        getAttrs(["CharType","SPEED_total","Overland_bonus"],function(v){
+            var char = parseInt(v["CharType"])||1;
+            if(char == 0){
+                
+                
+                
+            }
+        });
+    });
+    
+    
+    on("change:Athletics change:Acrobatics change:HJ_bonus change:LJ_bonus",function(){
+        getAttrs(["CharType"],function(v){
+            var char = parseInt(v["CharType"])||1;
+            if(char == 0){
+                
+                
+                
+            }
+        });
+    });
+    
 
+    on("clicked:lockMoves",function(){
+        var update = {};
+        getAttrs(["lockMovesKnown"], function(values){
+            var lock = parseInt(values["lockMovesKnown"]) || 0;
+            lock+=1;
+            console.log(`lockMovesKnown: ${lock}`);
+            if(lock == 0){
+                update["lockMovesKnown"] = lock % 2;
+            }else{
+                update["lockMovesKnown"] = lock % 2;
+            }
+            console.log(update);
+            setAttrs(update);
+        });
+    });
+    
+    on("change:PhysEvade change:PEB change:Eva",function(){
+        update={};
+        getAttrs(["PhysEvade","PEB","Eva"], function(values){
+            
+            base =  parseInt(values["PhysEvade"])||0;
+            bonus = parseInt(values["PEB"])||0;
+            stat =  parseInt(values["Eva"])||0;
+            
+            update["PhysEvade_calc"] = Math.min(base + bonus + stat,9);
+            
+            setAttrs(update);
+        });
+    });
+    on("change:SpecEvade change:ScEB change:Eva",function(){
+        update={};
+        getAttrs(["SpecEvade","ScEB","Eva"], function(values){
+            
+            base =  parseInt(values["SpecEvade"])||0;
+            bonus = parseInt(values["ScEB"])||0;
+            stat =  parseInt(values["Eva"])||0;
+            
+            update["SpecEvade_calc"] = Math.min(base + bonus + stat,9);
+            
+            setAttrs(update);
+        });
+    });
+    on("change:SpeedEvade change:SpEB change:Eva",function(){
+        update={};
+        getAttrs(["SpeedEvade","SpEB","Eva"], function(values){
+            
+            base =  parseInt(values["SpeedEvade"])||0;
+            bonus = parseInt(values["SpEB"])||0;
+            stat =  parseInt(values["Eva"])||0;
+            
+            update["SpeedEvade_calc"] = Math.min(base + bonus + stat,9);
+            
+            setAttrs(update);
+        });
+    });
+    
+    on("change:ap_max change:repeating_apcost:ap_cost remove:repeating_apcost sheet:opened", function(eventinfo){
+        
+        update = {};
+        attrs = [];
+        sum = 0;
+
+        
+        getSectionIDs("apcost", function(idArray){
+            for(i = 0; i < idArray.length; i++){
+               console.log(`repeating_apcost_${idArray[i]}_ap_cost`); 
+               attrs.push(`repeating_apcost_${idArray[i]}_ap_cost`);
+            }
+            
+            getAttrs(attrs.concat(["ap_max"]), function(values){
+                sum = parseInt(values["ap_max"])||0;
+                for(i = 0; i < attrs.length; i++){
+                    sum -= parseInt(values[attrs[i]])||0;
+                }   
+                setAttrs({
+                    "ap": sum
+                });
+            });
+        });
+        
+    });
+    
+     on("change:repeating_injuries:injury_damage remove:repeating_injuries sheet:opened", function(eventinfo){
+        
+        var attrs = [];
+        var sum = 0;
+        
+        getSectionIDs("injuries", function(idArray){
+            
+            for(i = 0; i < idArray.length; i++){
+               console.log(`repeating_injuries_${idArray[i]}_injury_damage`); 
+               attrs.push( `repeating_injuries_${idArray[i]}_injury_damage`);
+            }
+            
+            console.log(`attrs: ${attrs}`);
+            
+            getAttrs(attrs, function(values){
+                sum = 0;
+                for(i = 0; i < attrs.length; i++){
+                    var temp =(parseInt(values[attrs[i]]) || 0)
+                    console.log(`val: ${temp}`);
+                    sum = sum + temp;
+                }   
+                console.log(`sum: ${sum}`);
+                setAttrs({
+                    "Injuries": sum
+                });
+            });
+        });
+        
+    });
+    
     on("change:generic_db", function(){
         update = {};
         
@@ -39,8 +251,9 @@
         infoImport();
     });
     
+    
+    
     on("change:repeating_moves:mlKnown", function(eventinfo) {
-        
         
         var update = {};
         if(eventinfo.newValue == "1"){
@@ -48,8 +261,7 @@
             
             getAttrs(moveAttrs, function(values){
                 
-                
-                //removeRepeatingRow("repeating_movesKnown_" + values["repeating_moves_mlID"]);
+
                 console.log("build stats");
                 
                 update["repeating_movesKnown_"+ newID +"_mkName"]          = values["repeating_moves_mlName"];
@@ -160,10 +372,25 @@
         hpCalc();
     });
     
-    // Recalculate stats
-    on("change:base_hp change:hp change:base_atk change:atk change:atk_stage change:base_def change:def change:def_stage change:base_spdef change:spdef change:spdef_stage change:base_spatk change:spatk change:spatk_stage  change:base_speed change:speed change:speed_stage", function() {
-        statUp();
+    const stats = ['HP','ATK','DEF','SPATK','SPDEF','SPEED'];
+    stats.forEach(function (stat) {
+        on(`change:base_${stat} change:${stat} change:${stat}_Stage sheet:opened`, function () {
+            
+            getAttrs([`base_${stat}`,`${stat}`, `${stat}_Stage`], function (values) {
+                const base  = parseInt(values[`base_${stat}`], 10)||0; 
+                const alloc = parseInt(values[`${stat}`], 10)||0;
+                const stage = parseFloat(values[`${stat}_Stage`], 10)||1;
+                const calc = Math.floor((base+alloc)*stage);
+                
+                setAttrs({
+                    [stat + '_total']:  calc
+                });
+            });
+            
+        });
     });
+    
+    
     
     // Recalculate  Evasion
     on("change:def_total change:spdef_total change:speed_total change:eva", function() {
@@ -203,6 +430,10 @@
             setAttrs(update);
         });
     });
+    
+    var expCalc = function(){
+        
+    }
     
     var addMoveSummary = function(){
         update={};
@@ -284,71 +515,86 @@
 
     var bonCalc = function(x) {
         var mainBody = function(names, getlist){
-        getAttrs(getlist, function(v) {
-            var setlist = [];
-            for (var i=0; i < names.length; i++){
-                if (!v.hasOwnProperty(names[i]+"Type")){
-                    setlist.push(i);
+        
+            getAttrs(getlist, function(v) {
+                
+                var setlist = [];
+                
+                for (var i=0; i < names.length; i++){
+                    if (!v.hasOwnProperty(names[i]+"Type")){
+                        setlist.push(i);
+                    }
                 }
-            }
-            for (var i=setlist.length;i>0;i--){
-                names.splice(setlist[i-1],1)
-            }
-            setlist = {};
-            for (i=0;i<names.length;i++){
-                setlist[names[i]+"dam_B_t"]=v.dam_B;
-            }
-            if (v.lastctrue==1){
-                if (v.HitPoints/v.HitPoints_permmax<1/3){
-                    for (var i=0;i<names.length;i++){
-                        if (v.lastctype.toUpperCase().indexOf(v[names[i]+"Type"].toUpperCase())!==-1){
-                            setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+10;
+                
+                for (var i=setlist.length;i>0;i--){
+                    names.splice(setlist[i-1],1)
+                }
+                
+                setlist = {};
+                
+                for (i=0;i<names.length;i++){
+                    setlist[names[i]+"dam_B_t"]=v.dam_B;
+                }
+                
+                if (v.lastctrue==1){
+                    if (v.HitPoints/v.HitPoints_permmax<1/3){
+                        for (var i=0;i<names.length;i++){
+                            if (v.lastctype.toUpperCase().indexOf(v[names[i]+"Type"].toUpperCase())!==-1){
+                                setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+10;
+                            }
+                        }
+                    } else {
+                        for (var i=0;i<names.length;i++){
+                            if (v.lastctype.toUpperCase().indexOf(v[names[i]+"Type"].toUpperCase())!==-1){
+                                setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
+                            }
                         }
                     }
-                } else {
+                }
+                
+                if (v.aurastn==1){
                     for (var i=0;i<names.length;i++){
-                        if (v.lastctype.toUpperCase().indexOf(v[names[i]+"Type"].toUpperCase())!==-1){
+                        setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+3*v.Injuries;
+                    } 
+                } 
+                
+                if (v.typeatrue==1){
+                    for (var i=0;i<names.length;i++){
+                        if (v.typeatype.toUpperCase().indexOf(v[names[i]+"Type"].toUpperCase())!==-1){
                             setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
                         }
                     }
                 }
-            }
-            if (v.aurastn==1){
-                for (var i=0;i<names.length;i++){
-                    setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+3*v.Injuries;
-                } 
-            } 
-            if (v.typeatrue==1){
-                for (var i=0;i<names.length;i++){
-                    if (v.typeatype.toUpperCase().indexOf(v[names[i]+"Type"].toUpperCase())!==-1){
-                        setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
-                    }
-                }
-            }
-            if (v.flashfire==1){
-                for (var i=0;i<names.length;i++){
-                    if (v[names[i]+"Type"].toUpperCase()=="FIRE"){
-                        setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
-                    }
-                }
-            }
-            if (v.courage==1){
-                if (v.HitPoints/v.HitPoints_permmax<=1/3){
+                
+                if (v.flashfire==1){
                     for (var i=0;i<names.length;i++){
-                        setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
+                        if (v[names[i]+"Type"].toUpperCase()=="FIRE"){
+                            setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
+                        }
                     }
                 }
-            }
-            if (v.hustle==1){
-                for (var i=0;i<names.length;i++){
-                    setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+10;
+                
+                if (v.courage==1){
+                    if (v.HitPoints/v.HitPoints_permmax<=1/3){
+                        for (var i=0;i<names.length;i++){
+                            setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
+                        }
+                    }
                 }
-            }
-            setAttrs(setlist);
-        });
+                
+                if (v.hustle==1){
+                    for (var i=0;i<names.length;i++){
+                        setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+10;
+                    }
+                }
+                
+                setAttrs(setlist);
+            });
         }
+        
         var getlist;
         var names;
+        
         if (x.sourceAttribute.indexOf("_type")!==-1){
             getlist=["dam_B",x.sourceAttribute.charAt(0).toUpperCase()+x.sourceAttribute.slice(1,x.sourceAttribute.indexOf("type"))+"Type","lastctrue","lastctype","HitPoints","HitPoints_permmax","flashfire","typeatrue","typeatype","aurastn","Injuries","Courage","hustle"];
             names = x.sourceAttribute.substring(0,x.sourceAttribute.indexOf("type"));
@@ -583,224 +829,219 @@
     }   
     
     var infoImport = function() {
+        console.log("entered");
         getAttrs(["input"], function (v) {
+            
             var char = JSON.parse(v["input"]);
+            
             var x; var t; var rmoves; var rcaps; var redges; var rabils; var rfeats; var i;
             
             getSectionIDs("repeating_moves", function(idarray) {
-            rmoves = idarray;
-            getSectionIDs("repeating_capabilities", function(idarray) {
-            rcaps = idarray;
-            getSectionIDs("repeating_edges", function(idarray) {
-            redges = idarray;
-            getSectionIDs("repeating_features", function(idarray) {
-            rfeats = idarray;
-            getSectionIDs("repeating_abilities", function(idarray) {
-            rabils = idarray;
+                rmoves = idarray;
             
-            if (rmoves==undefined){rmoves=[];}
-            if (rcaps==undefined){rcaps=[];}
-            if (redges==undefined){redges=[];}
-            if (rfeats==undefined){rfeats=[];}
-            if (rabils==undefined){rabils=[];}
-            
-            for (var property in char) {
-                if (char.hasOwnProperty(property)) {
-                    if (property.match(/Move\d/g)!=null) {
-                        
-                        t = {};
-                        i=generateRowID();
-                        
-                        for (var prop in char[property]){
-                            if (char[property].hasOwnProperty(prop)){
+                getSectionIDs("repeating_capabilities", function(idarray) {
+                    rcaps = idarray;
+
+                    getSectionIDs("repeating_edges", function(idarray) {
+                        redges = idarray;
+
+                        getSectionIDs("repeating_features", function(idarray) {
+                            rfeats = idarray;
+
+                            getSectionIDs("repeating_abilities", function(idarray) {
+                                rabils = idarray;
+
+
+                                if (rmoves==undefined){rmoves=[];}
+                                if (rcaps ==undefined){rcaps=[];}
+                                if (redges==undefined){redges=[];}
+                                if (rfeats==undefined){rfeats=[];}
+                                if (rabils==undefined){rabils=[];}
                                 
+                                t = {};
                                 
-                                x = "repeating_moves_" + i + "_ml";
-                                //t[x] = char[property][prop];
-                                
-                                
-                                switch(prop){
-                                    case "Name":
-                                        t[x + "Name"] = char[property][prop];
-                                        console.log(char[property][prop]);
-                                        break;
-                                    case "Type":
-                                        t[x + "Type"] = char[property][prop];
-                                        break;
-                                    case "Freq":
-                                        list = char[property][prop].match(/([a-wyz\-]+)(\s*[x]\s*)?(\d+)?/i);
-                                        if(list.length <= 2){
-                                            // has no use count
-                                            t[x + "Frequency"] = list[1];
-                                        }else if(list.length < 4){
-                                            //number missing
-                                            t[x + "Frequency"] = list[1];
-                                            t[x + "Uses_max"] = 1;
-                                        }else{
-                                            // frequesncy and uses
-                                            t[x + "Frequency"] = list[1];
-                                            t[x + "Uses_max"] = list[3];
-                                        }
+                                for (var property in char) {
+                                    if (char.hasOwnProperty(property)) {
                                         
-                                        break;
-                                    case "AC":
-                                        t[x + "AC"] = parseInt(char[property][prop])||0;
-                                        break;
-                                    case "DB":
-                                        t[x + "DB"] = parseInt(char[property][prop])||0;
-                                        break;
-                                    case "DType":
-                                        t[x + "Cat"] = char[property][prop];
-                                        break;
-                                    case "Range":
-                                        t[x + "Range"] = char[property][prop];
-                                        break;
-                                    case "Effects":
-                                        t[x + "Effects"] = char[property][prop];
-                                        break;
-                                    case "Contest Type":
-                                        t[x + "ContestEffect"] = char[property][prop];
-                                        break;
-                                    case "Contest Effect":
-                                        t[x + "ContestType"] = char[property][prop];
-                                        break;
-                                    default:
-                                        break;
+                                        if (property.match(/Move\s*\d*/gi)!=null) {
+                                        // Import Moves
+                                            console.log("Found Move");
+                                            //t = {};
+                                            i = generateRowID();
+                                            
+                                            for (var prop in char[property]){
+                                                if (char[property].hasOwnProperty(prop)){
+                                                    
+                                                    x = "repeating_moves_" + i + "_ml";
+                    
+                                                    switch(prop){
+                                                        case "Name":
+                                                            t[x + "Name"] = char[property][prop];
+                                                            console.log(char[property][prop]);
+                                                            break;
+                                                        case "Type":
+                                                            t[x + "Type"] = char[property][prop];
+                                                            break;
+                                                        case "Freq":
+                                                            list = char[property][prop].match(/([a-wyz\-]+)(\s*[x]\s*)?(\d+)?/i);
+                                                            if(list.length <= 2){
+                                                                // has no use count
+                                                                t[x + "Frequency"] = list[1];
+                                                                t[x + "Uses_max"] = 1;
+                                                            }else if(list.length < 4){
+                                                                //number missing
+                                                                t[x + "Frequency"] = list[1];
+                                                                t[x + "Uses_max"] = 1;
+                                                            }else{
+                                                                // frequesncy and uses
+                                                                t[x + "Frequency"] = list[1];
+                                                                t[x + "Uses_max"] = parseInt(list[3])||1;
+                                                            }
+                                                            
+                                                            break;
+                                                        case "AC":
+                                                            t[x + "AC"] = parseInt(char[property][prop])||0;
+                                                            break;
+                                                        case "DB":
+                                                            t[x + "DB"] = parseInt(char[property][prop])||0;
+                                                            break;
+                                                        case "DType":
+                                                            t[x + "Cat"] = char[property][prop];
+                                                            break;
+                                                        case "Range":
+                                                            t[x + "Range"] = char[property][prop];
+                                                            break;
+                                                        case "Effects":
+                                                            t[x + "Effects"] = char[property][prop];
+                                                            break;
+                                                        case "Contest Type":
+                                                            t[x + "ContestEffect"] = char[property][prop];
+                                                            break;
+                                                        case "Contest Effect":
+                                                            t[x + "ContestType"] = char[property][prop];
+                                                            break;
+                                                        default:
+                                                            break;
+                                                    }
+                                                    
+                                                }
+                                            }
+                                            //setAttrs(t);
+                                            
+                                        } else if (property.match(/Feature\s*\d*/gi)!=null) {
+                                            // Import Features
+                                            console.log("Found Feature");
+                                            
+                                            i = Number(property.substring(7));
+                                            //t = {};
+                                            if (i<2){
+                                                for (var prop in char[property]){
+                                                    if (char[property].hasOwnProperty(prop)){
+                                                        x = "Feature".concat(prop);
+                                                        t[x] = char[property][prop];
+                                                    }
+                                                }
+                                                //setAttrs(t);
+                                            } else if (i<2+rfeats.length){
+                                                for (var prop in char[property]){
+                                                    if (char[property].hasOwnProperty(prop)){
+                                                        x = "repeating_features_".concat(rfeats[i-2]).concat("_Feature_").concat(prop);
+                                                        t[x] = char[property][prop];
+                                                    }
+                                                }
+                                                //setAttrs(t);
+                                            } else {
+                                                i=generateRowID();
+                                                for (var prop in char[property]){
+                                                    if (char[property].hasOwnProperty(prop)){
+                                                        x = "repeating_features_".concat(i).concat("_Feature_").concat(prop);
+                                                        t[x] = char[property][prop];
+                                                    }
+                                                }
+                                                //setAttrs(t);
+                                            }
+                                        } else if (property.match(/Ability\s*\d*/gi)!=null) {
+                                            console.log("Found Ability");
+                                            
+                                            i=generateRowID();
+                                            for (var prop in char[property]){
+                                                if (char[property].hasOwnProperty(prop)){
+                                                    x = "repeating_abilities_".concat(i).concat("_Ability_").concat(prop);
+                                                    t[x] = char[property][prop];
+                                                }
+                                            }
+                                            
+                                        } else if (property.match(/Edge\s*\d*/gi)!=null) {
+                                            console.log("Found Edge");
+                                            
+                                            i=generateRowID();
+                                            for (var prop in char[property]){
+                                                if (char[property].hasOwnProperty(prop)){
+                                                    x = "repeating_edges_".concat(i).concat("_Edge").concat(prop);
+                                                    t[x] = char[property][prop];
+                                                }
+                                            }
+                                             
+                                        } 
+                                        else if (property.match(/Capabilities/i)){
+                                            console.log("Found Capability");
+                                            x = 0;
+                                            for (var prop in char[property]) {
+                                                if (char[property].hasOwnProperty(prop)) {
+                                                    if (prop=="Overland"||prop=="Swim"||prop=="HJ"||prop=="LJ"||prop=="Power") {
+                                                        //t={};
+                                                        t[prop]=char[property][prop];
+                                                        //setAttrs(t);
+                                                    }  else if (Number.isInteger(char[property][prop])){
+                                                        //t={};
+                                                        if (x<rcaps.length-1) {
+                                                            t["repeating_capabilities_".concat(rcaps[x]).concat("_Capability")]=prop;
+                                                            t["repeating_capabilities_".concat(rcaps[x]).concat("_Capability_Rank")]=char[property][prop];
+                                                            //setAttrs(t);
+                                                        } else {
+                                                            i=generateRowID();
+                                                            t["repeating_capabilities_".concat(i).concat("_Capability")]=prop;
+                                                            t["repeating_capabilities_".concat(i).concat("_Capability_Rank")]=char[property][prop];
+                                                            //setAttrs(t);
+                                                        }
+                                                        x++;
+                                                    } else {
+                                                        //t={};
+                                                        if (x<rcaps.length-1) {
+                                                            t["repeating_capabilities_".concat(rcaps[x]).concat("_Capability")]=prop;
+                                                            //setAttrs(t);
+                                                        } else {
+                                                            i=generateRowID();
+                                                            t["repeating_capabilities_".concat(i).concat("_Capability")]=prop;
+                                                            //setAttrs(t);
+                                                        }
+                                                        x++;
+                                                    }
+                                                }
+                                            }
+                                        } else if(property.match(/nickname/i)){
+                                            t["character_name"] = char[property];
+                                        }else {
+                                            t[property]= char[property] ;
+                                        }
+                                    }
                                 }
                                 
-                            }
-                        }
-                        setAttrs(t);
-                        
-                    } else if (property.match(/Feature\d/g)!=null) {
-                        i = Number(property.substring(7));
-                        t = {};
-                        if (i<2){
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "Feature".concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
-                        } else if (i<2+rfeats.length){
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "repeating_features_".concat(rfeats[i-2]).concat("_Feature_").concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
-                        } else {
-                            i=generateRowID();
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "repeating_features_".concat(i).concat("_Feature_").concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
-                        }
-                    } else if (property.match(/Ability\d/g)!=null) {
-                        i = Number(property.substring(7));
-                        t = {};
-                        if (i<2){
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "Ability".concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
-                        } else if (i<2+rabils.length){
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "repeating_abilities_".concat(rabils[i-2]).concat("_Ability_").concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
-                        } else {
-                            i=generateRowID();
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "repeating_abilities_".concat(i).concat("_Ability_").concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
-                        }
-                    } else if (property.match(/Edge\d/g)!=null) {
-                        i = Number(property.substring(4));
-                        t = {};
-                        if (i<=redges.length){
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "repeating_edges_".concat(redges[i-1]).concat("_Edge").concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
-                        } else {
-                            i=generateRowID();
-                            for (var prop in char[property]){
-                                if (char[property].hasOwnProperty(prop)){
-                                    x = "repeating_edges_".concat(i).concat("_Edge").concat(prop);
-                                    t[x] = char[property][prop];
-                                }
-                            }
-                            setAttrs(t);
-                        }
-                    } 
-                    else if (property=="Capabilities"){
-                        x = 0;
-                        for (var prop in char[property]) {
-                            if (char[property].hasOwnProperty(prop)) {
-                                if (prop=="Overland"||prop=="Swim"||prop=="HJ"||prop=="LJ"||prop=="Power") {
-                                    t={};
-                                    t[prop]=char[property][prop];
-                                    setAttrs(t);
-                                }  else if (Number.isInteger(char[property][prop])){
-                                    t={};
-                                    if (x<rcaps.length-1) {
-                                        t["repeating_capabilities_".concat(rcaps[x]).concat("_Capability")]=prop;
-                                        t["repeating_capabilities_".concat(rcaps[x]).concat("_Capability_Rank")]=char[property][prop];
-                                        setAttrs(t);
-                                    } else {
-                                        i=generateRowID();
-                                        t["repeating_capabilities_".concat(i).concat("_Capability")]=prop;
-                                        t["repeating_capabilities_".concat(i).concat("_Capability_Rank")]=char[property][prop];
-                                        setAttrs(t);
-                                    }
-                                    x++;
-                                } else {
-                                    t={};
-                                    if (x<rcaps.length-1) {
-                                        t["repeating_capabilities_".concat(rcaps[x]).concat("_Capability")]=prop;
-                                        setAttrs(t);
-                                    } else {
-                                        i=generateRowID();
-                                        t["repeating_capabilities_".concat(i).concat("_Capability")]=prop;
-                                        setAttrs(t);
-                                    }
-                                    x++;
-                                }
-                            }
-                        }
-                    } else {
-                        t={};
-                        t[property]=char[property];
-                        setAttrs(t);}
-                }
-            }
-            });});});});});
+                                setAttrs(t);
+                                //console.log(t);
+                            });
+                        });
+                    });
+                });
+            });
         });
     };
+
 
     var statUp = function(){
         getAttrs(["base_HP","HP","base_ATK","ATK","ATK_Stage","base_DEF","DEF","DEF_Stage","base_SPATK","SPATK","SPATK_Stage","base_SPDEF","SPDEF","SPDEF_Stage","base_SPEED","SPEED","SPEED_Stage"], function(v) {
         setAttrs({
-          HP_total: 1*v.base_HP + 1*v.HP,
+          HP_total: 1* v.base_HP + 1*v.HP,
           ATK_total: Math.floor((1*v.base_ATK + 1*v.ATK)*v.ATK_Stage),
           DEF_total: Math.floor((1*v.base_DEF*1 + v.DEF*1)*v.DEF_Stage),
           SPATK_total: Math.floor((1*v.base_SPATK + 1*v.SPATK)*v.SPATK_Stage),
@@ -809,24 +1050,18 @@
         });
         });
     };
-    
+  
     var evaUp = function () {
         getAttrs(["DEF_total","SPDEF_total","SPEED_total", "Eva"], function(v) {
-        def = Math.min(Math.floor(v["DEF_total"]/5),6);
-        sdef = Math.min(Math.floor(v["SPDEF_total"]/5),6);
-        speed = Math.min(Math.floor(v["SPEED_total"]/5),6);
-        eva = v["Eva"];
-        setAttrs({
-          PE: def,
-          PEB: eva,
-          PhysEvade: Math.min(def*1 + eva*1,9),
-          ScE: sdef,
-          ScEB: eva,
-          SpecEvade: Math.min(sdef*1 + eva*1,9),
-          SpE: speed,
-          SpEB: eva,
-          SpeedEvade: Math.min(speed*1 + eva*1,9)
-        });
+            def = Math.min(Math.floor(v["DEF_total"]/5),6);
+            sdef = Math.min(Math.floor(v["SPDEF_total"]/5),6);
+            speed = Math.min(Math.floor(v["SPEED_total"]/5),6);
+            eva = v["Eva"];
+            setAttrs({
+                PhysEvade: Math.min(def*1 + eva*1,9),
+                SpecEvade: Math.min(sdef*1 + eva*1,9),
+                SpeedEvade: Math.min(speed*1 + eva*1,9)
+            });
         });
     }; 
     
@@ -1165,15 +1400,14 @@
 </div>
 <br />
 <div>
-    
     <div class="sheet-oldtab">
-            <input type="radio" name="attr_CharType" class="sheet-oldtab" value="0" checked="checked"/>
-            <span title="Trainer" ></span>
-        </div>
-        <div class="sheet-oldtab">
-            <input type="radio" name="attr_CharType" class="sheet-oldtab" value="1" />
-            <span title="Pokemon" ></span>
-        </div>
+        <input type="radio" name="attr_CharType" class="sheet-oldtab" value="1" />
+        <span title="Trainer" ></span>
+    </div>
+    <div class="sheet-oldtab">
+        <input type="radio" name="attr_CharType" class="sheet-oldtab" value="0" checked/>
+        <span title="Pokemon" ></span>
+    </div>
 </div>
 
 <input type="hidden" name="attr_tab" class="sheet-oldtab" value="1" />
@@ -1201,131 +1435,208 @@
                 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                 <div class="sheet-row ">
                     <div style="width:30%">
-                        <span>Name</span>
+                        <span class='sheet-label'>Name</span>
                     </div><div style="width:70%">
                         <span><input type="text" name="attr_character_name" style="width:100%"\></span>
                     </div>
                 </div>
                 <div class="sheet-row sheet-pokemon">
                     <div style="width:30%">
-                        <span>Species</span>
+                        <span class='sheet-label' >Species</span>
                     </div><div style="width:70%">
                         <span><input type="text" name="attr_species" style="width:100%"\></span>
                     </div>
                 </div>
                 <div class="sheet-row sheet-pokemon">
                     <div style="width:30%">
-                        <span>Type</span>
+                        <span class='sheet-label' >Type</span>
                     </div><div style="width:30%">
-                        <select style="width:100%" name='attr_type1'>
-                            <option value="Untyped">-</option>
-                        </select>
+                        <input type="text" name='attr_type1' value='-' style="text-align:center" />
+                        <!--select style="width:100%" name='attr_type1'>
+                            <option value="None" selected="selected">-</option>
+                            <option>Normal</option>
+                            <option>Bug</option>
+                            <option>Dark</option>
+                            <option>Dragon</option>
+                            <option>Electric</option>
+                            <option>Fairy</option>
+                            <option>Fighting</option>
+                            <option>Fire</option>
+                            <option>Flying</option>
+                            <option>Ghost</option>
+                            <option>Grass</option>
+                            <option>Ground</option>
+                            <option>Ice</option>
+                            <option>Poison</option>
+                            <option>Psychic</option>
+                            <option>Rock</option>
+                            <option>Steel</option>
+                            <option>Water</option>
+                        </select-->
                     </div><div style="width:10%;text-align:center">
                         /
                     </div><div style="width:30%">
-                        <select style="width:100%" name='attr_type2'>
-                            <option value="Untyped">-</option>
-                        </select>
+                        <input type="text" name='attr_type2' value='-' style="text-align:center" />
+                        <!--select style="width:100%" name='attr_type2'>
+                            <option value="None" selected="selected">-</option>
+                            <option>Normal</option>
+                            <option>Bug</option>
+                            <option>Dark</option>
+                            <option>Dragon</option>
+                            <option>Electric</option>
+                            <option>Fairy</option>
+                            <option>Fighting</option>
+                            <option>Fire</option>
+                            <option>Flying</option>
+                            <option>Ghost</option>
+                            <option>Grass</option>
+                            <option>Ground</option>
+                            <option>Ice</option>
+                            <option>Poison</option>
+                            <option>Psychic</option>
+                            <option>Rock</option>
+                            <option>Steel</option>
+                            <option>Water</option>
+                        </select-->
                     </div>
                 </div>
                 <div class="sheet-row">
+                    <input type="hidden" name="attr_CharType" class="sheet-creature" value="10" min='0' />
                     <div style="width:30%">
-                        <span>Gender</span>
+                        <span class='sheet-label' >Gender</span>
                     </div><div style="width:40%">
                         <span><input type="text" name="attr_gender" style="width:100%"\></span>
-                    </div><div style="width:10%">
-                        <span>Age</span>
-                    </div><div style="width:20%">
-                        <span><input type="number" name="attr_gender" style="width:100%"\></span>
+                    </div><div class="sheet-trainer" style="width:10%">
+                        <span class='sheet-label' >Age</span>
+                    </div ><div style="width:20%" class="sheet-trainer">
+                        <span ><input type="number" name="attr_age"  style="width:100%"\></span>
                     </div>
                 </div>
                 <div class="sheet-row sheet-trainer">
                     <div style="width:30%">
-                        <span>Background</span>
+                        <span class='sheet-label' >Background</span>
                     </div><div style="width:60%">
-                        <span><input type="text" name="attr_gender" style="width:100%"\></span>
-                    </div>
-                    <div style="width:10%">
-                        <span></span>
-                    </div>
-                    <div style="width:100%">
-                        <span></span>
+                        <span><input type="text" name="attr_background" style="width:100%"\></span>
+                    </div><div style="width:10%">
+                        <span class="sheet-background sheet-hide-container">
+                            <input type="hidden" name="attr_background_show" class="sheet-hide-swap" value="1"/>
+                            <input type="checkbox" name="attr_background_show" value="1" checked/>
+                            <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Expand-Icon.png" class="sheet-a"/>
+                            <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Collapse-Icon.png" class="sheet-b"/>
+                        </span>
+                    </div><input type="hidden" name="attr_background_show" class="sheet-hide-swap" value="1"/>
+                    
+                    <div style="width:100%" class="sheet-a">
+                        <div>
+                            <span>Adept</span>
+                            <input type="text" name="attr_background_adept" />
+                        </div>
+                        <div>
+                            <span>Novice</span>
+                            <input type="text" name="attr_background_adept" />
+                        </div>
+                        <div>
+                            <span>Pathetic</span>
+                            <textarea name="attr_background_pathetic" ></textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:30%">
-                        <span>Level</span>
+                        <span class='sheet-label' >Level</span>
                     </div><div style="width:30%">
-                        <span><input type="number" name="attr_level" style="width:100%" \></span>
+                        <span><input type="number" name="attr_level" style="width:100%" value="1" min='1' \></span>
                     </div>
                 </div>
                 
                 <div class="sheet-row">
                     <div style="width:30%">
-                        <span>EXP</span>
+                        <span class='sheet-label' >EXP</span>
                     </div><div style="width:30%">
-                        <span><input type="number" name="attr_exp" style="width:100%" \></span>
+                        <span><input type="number" name="attr_exp" style="width:100%"  value="0" min='0'\></span>
                     </div><div style="width:10%;text-align:center">
                         /
                     </div><div style="width:30%">
-                        <span class="sheet-field" name="attr_exp_max" style="width:100%" >0</span>
+                        <span> <input type="number" name="attr_exp_max" style="width:100%" value="10" min='0'> </span>
                     </div>
                 </div>
                 <div class="sheet-row sheet-pokemon">
                     <div style="width:30%">
-                        <span>Nature</span>
+                        <span class='sheet-label' >Nature</span>
                     </div><div style="width:70%">
-                        <span><input type="text" name="attr_nature" style="width:100%"\></span>
+                        <span><input type="text" name="attr_nature" style="width:100%;text-align:center;"\></span> 
+                    </div>
+                    <div style="width:50%">
+                        <span class='sheet-label'>High </span>
+                        <select name="attr_nature_high" style="width:auto" >
+                            <option value="HP"    >+HP</option>
+                            <option value="ATK"   >+ATK</option>
+                            <option value="DEF"   >+DEF</option>
+                            <option value="SPATK" >+SPATK</option>
+                            <option value="SPDEF" >+SPDEF</option>
+                            <option value="SPEED" >+SPEED</option>
+                        </select>
+                    </div><div style="width:50%">
+                        <span class='sheet-label'>Low </span>
+                        <select name="attr_nature_low" style="width:auto">
+                            <option value="HP"    >-HP</option>
+                            <option value="ATK"   >-ATK</option>
+                            <option value="DEF"   >-DEF</option>
+                            <option value="SPATK" >-SPATK</option>
+                            <option value="SPDEF" >-SPDEF</option>
+                            <option value="SPEED" >-SPEED</option>
+                        </select>
                     </div>
                 </div>
                 <div class="sheet-row sheet-pokemon">
                     <div style="width:30%">
-                        <span>Held Item</span>
+                        <span class='sheet-label' >Held Item</span>
                     </div><div style="width:70%">
                         <span><input type="text" name="attr_heldItem" \></span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:30%">
-                        <span>Height</span>
+                        <span class='sheet-label' >Height/Size</span>
                     </div><div style="width:70%">
-                        <span><input type="text" name="attr_height" \></span>
+                        <span><input type="text" name="attr_height" style="text-align:center" \></span>
                     </div>
                 
                     <div style="width:30%">
-                        <span>Weight</span>
+                        <span class='sheet-label' >Weight</span>
                     </div><div style="width:50%">
-                        <span><input type="text" name="attr_weight" style="width:100%" \></span>
+                        <span><input type="text" name="attr_weight" style="width:100%;text-align:center" \></span>
                     </div><div style="width:20%">
-                        <span name="attr_weightClass" class="sheet-field" style="width:100%;display:inline-block;text-align:center" >0</span>
+                        <span><input type="number" name="attr_weightClass" style="width:100%" value='4' min='0' \></span>
                     </div>
                 </div>
                 
                 
                 <div class="sheet-row sheet-trainer">
                     <div style="width:30%">
-                        <span>AP</span>
+                        <span class='sheet-label' >AP</span>
                     </div><div style="width:30%">
-                        <span><input type="number" name="attr_ap" style="width:100%" \></span>
+                        <span class="sheet-field" name="attr_ap" style="width:100%" ></span>
+                        
                     </div><div style="width:10%;text-align:center">
                         /
                     </div><div style="width:30%">
-                        <span class="sheet-field" name="attr_ap_max" style="width:100%" ></span>
+                        <span> <input type="number" name="attr_ap_max" style="width:100%"  \> </span>
                     </div>
                 </div>
                 <div class="sheet-row sheet-trainer">
                     <fieldset class="repeating_apCost">
                         <div class="sheet-ap-item ">
                             <div style="width:30%">
-                                <select name="attr_ap_reason" style="width:100%">
+                                <select name="attr_ap_reason" style="width:100%" value='Spent' >
                                     <option>Spent</option>
                                     <option>Drained</option>
                                     <option>Bound</option>
                                 </select>
                             </div><div style="width:20%">
-                                <input type="number" name="attr_ap_cost" style="width:100%"/>    
+                                <input type="number" name="attr_ap_cost" style="width:100%" value='0' />    
                             </div><div style="width:50%">
-                                <input type="text" name="attr_ap_descr" style="width:100%"/>    
+                                <input type="text" name="attr_ap_descr" style="width:100%" placeholder='description'/>    
                             </div>
                             
                         </div>
@@ -1345,14 +1656,14 @@
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>HP</td>
-                    <td align="center"><input type='number' name='attr_base_HP' value = 0 ></td>
+                    <td align="center"><input type='number' name='attr_base_HP' value ='10' ></td>
                     <td align='center'><input type='number' name='attr_HP' value = 0 ></td>
                     <td>&nbsp;</td>
                     <td align='center'><span class="sheet-field" name="attr_HP_total" style="width:100%" >0</span></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>ATK</td>
-                    <td align="center"><input type='number' name='attr_base_ATK' value = 0 ></td>
+                    <td align="center"><input type='number' name='attr_base_ATK' value='5' ></td>
                     <td align='center'><input type='number' name='attr_ATK' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_ATK_Stage'>
                         <option value='0.4'>-6</option>
@@ -1373,7 +1684,7 @@
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>DEF</td>
-                    <td align="center"><input type='number' name='attr_base_DEF' value = 0 ></td>
+                    <td align="center"><input type='number' name='attr_base_DEF' value='5' ></td>
                     <td align='center'><input type='number' name='attr_DEF' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_DEF_Stage'>
                         <option value='0.4'>-6</option>
@@ -1394,7 +1705,7 @@
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>SPATK</td>
-                    <td align="center"><input type='number' name='attr_base_SPATK' value = 0 ></td>
+                    <td align="center"><input type='number' name='attr_base_SPATK' value='5' ></td>
                     <td align='center'><input type='number' name='attr_SPATK' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_SPATK_Stage'>
                         <option value='0.4'>-6</option>
@@ -1415,7 +1726,7 @@
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>SPDEF</td>
-                    <td align="center"><input type='number' name='attr_base_SPDEF' value = 0 ></td>
+                    <td align="center"><input type='number' name='attr_base_SPDEF' value='5' ></td>
                     <td align='center'><input type='number' name='attr_SPDEF' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_SPDEF_Stage'>
                         <option value='0.4'>-6</option>
@@ -1436,7 +1747,7 @@
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>SPEED</td>
-                    <td align="center"><input type='number' name='attr_base_SPEED' value = 0 ></td>
+                    <td align="center"><input type='number' name='attr_base_SPEED' value='5' ></td>
                     <td align='center'><input type='number' name='attr_SPEED' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_SPEED_Stage'>
                         <option value='0.4'>-6</option>
@@ -1474,7 +1785,7 @@
                         <option value='5'>5</option>
                         <option value='6'>6</option>
                     </select></td>
-                    <td align='center'><span class="sheet-field" style="width:100%" name="attr_Acc_red">0</span></td>
+                    <td align='center'><span class="sheet-field" style="width:100%" name="attr_Acc">0</span></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>Evasion Bonus</td>
@@ -1495,7 +1806,7 @@
                         <option value='5'>5</option>
                         <option value='6'>6</option>
                     </select></td>
-                    <td align='center'><span class="sheet-field" style="width:100%" name="attr_Eva_red">0</span></td>
+                    <td align='center'><span class="sheet-field" style="width:100%" name="attr_Eva">0</span></td>
                 </tr>
                 <tr>
                     <td colspan="2" class='sheet-table-header'>Damage Bonus/Penalty:</td>
@@ -1524,48 +1835,48 @@
                 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                 <div class="sheet-row">
                     <div style="width:50%">
-                        <span>Temporary Hit Points</span>
+                        <span class='sheet-label' >Temporary Hit Points</span>
                     </div><div style="width:30%">
-                        <span><input type="number" name="attr_TempHitPoints" style="width:100%"\></span>
+                        <span><input type="number" name="attr_TempHitPoints" style="width:100%" value='0' \></span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:50%">
-                        <span>Current Hit Point</span>
+                        <span class='sheet-label' >Current Hit Point</span>
                     </div><div style="width:30%">
-                        <span><input type="number" name="attr_HitPoints" style="width:100%"\></span>
+                        <span><input type="number" name="attr_HitPoints" style="width:100%" value='0' \></span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:50%">
-                        <span>Current Max Hit Points</span>
+                        <span class='sheet-label' >Current Max Hit Points</span>
                     </div><div style="width:30%">
-                        <span><input type="number" name="attr_HitPoints_max" style="width:100%"\></span>
+                        <span><input type="number" name="attr_HitPoints_max" style="width:100%" value='10' \></span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:50%">
-                        <span>Max Hit Points</span>
+                        <span class='sheet-label' >Max Hit Points</span>
                     </div><div style="width:30%">
-                        <span><input type="number" name="attr_HitPoints_permmax" style="width:100%"\></span>
+                        <span><input type="number" name="attr_HitPoints_permmax" style="width:100%" value='10'\></span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:50%">
-                        <span>Injuries</span>
+                        <span class='sheet-label' >Injuries</span>
                     </div><div style="width:30%">
-                        <span><input type="number" name="attr_Injuries" style="width:100%"\></span>
+                        <span><input type="number" name="attr_Injuries" style="width:100%" value='0' \></span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <fieldset class="repeating_injuries">
                         <div class="sheet-injury-item" >
                             <div style="display:inline-block;width:15%;" >
-                                <input type="number" name="attr_injury_damage" style="width:100%" />
+                                <input type="number" name="attr_injury_damage" style="width:100%" value='0' />
                             </div><div style="display:inline-block;width:10%;" >
                                 
                             </div><div style="display:inline-block;width:70%" >
-                                <input type="text" name="attr_injury_descr" style="width:100%" />
+                                <input type="text" name="attr_injury_descr" style="width:100%" placeholder='description'/>
                             </div>
                         </div>
                     </fieldset>
@@ -1580,48 +1891,48 @@
             <div class="sheet-table sheet-basic-info">
                 <div class="sheet-row">
                     <div style="width:25%">
-                        <span>75%</span>
+                        <span class='sheet-label' >75%</span>
                     </div><div style="width:20%">
                         <span class="sheet-field" name="attr_a75_hp" style="width:100%"></span>
                     </div><div style="width:10%">
                     </div><div style="width:25%">
-                        <span>50%</span>
+                        <span class='sheet-label' >50%</span>
                     </div><div style="width:20%">
                         <span class="sheet-field" name="attr_a50_hp" style="width:100%"></span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:25%">
-                        <span>25%</span>
+                        <span class='sheet-label' >25%</span>
                     </div><div style="width:20%">
                         <span class="sheet-field" name="attr_a25_hp" style="width:100%"></span>
                     </div><div style="width:10%">
                     </div><div style="width:25%">
-                        <span>1/3rd</span>
+                        <span class='sheet-label' >1/3rd</span>
                     </div><div style="width:20%">
                         <span class="sheet-field" name="attr_a13_hp" style="width:100%"></span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:25%">
-                        <span>1/6th</span>
+                        <span class='sheet-label' >1/6th</span>
                     </div><div style="width:20%">
                         <span class="sheet-field" name="attr_a16_hp" style="width:100%"></span>
                     </div><div style="width:10%">
                     </div><div style="width:25%">
-                        <span>1/8th</span>
+                        <span class='sheet-label' >1/8th</span>
                     </div><div style="width:20%">
                         <span class="sheet-field" name="attr_a18_hp" style="width:100%"></span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:25%">
-                        <span>1/10th (Tick)</span>
+                        <span class='sheet-label' >1/10th (Tick)</span>
                     </div><div style="width:20%">
                         <span class="sheet-field" name="attr_a110_hp" style="width:100%"></span>
                     </div><div style="width:10%">
                     </div><div style="width:25%">
-                        <span>1/6th</span>
+                        <span class='sheet-label' >1/6th</span>
                     </div><div style="width:20%">
                         <span class="sheet-field" name="attr_a116_hp" style="width:100%"></span>
                     </div>
@@ -1636,7 +1947,7 @@
             <div class="sheet-table sheet-basic-info">
                 <div class="sheet-row">
                     <div style="width:30%">
-                        Physical Evasion
+                        <span class='sheet-label' >Physical Evasion</span>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -1644,12 +1955,14 @@
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <span class="sheet-field" style="width:100%" name='attr_PhysEvade'>0</span>
+                        <input type="hidden" name="attr_PhysEvade" />
+                        <input type="hidden" name="attr_PhysEvade_calc" />
+                        <span class="sheet-field" style="width:100%" name='attr_PhysEvade_calc'>0</span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:30%">
-                        Special Evasion
+                        <span class='sheet-label' >Special Evasion</span>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -1657,12 +1970,14 @@
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <span class="sheet-field" style="width:100%" name='attr_SpecEvade'>0</span>
+                        <input type="hidden" name="attr_SpecEvade" />
+                        <input type="hidden" name="attr_SpecEvade_calc" />
+                        <span class="sheet-field" style="width:100%" name='attr_SpecEvade_calc'>0</span>
                     </div>
                 </div>
                 <div class="sheet-row">
                     <div style="width:30%">
-                        <span>Speed Evasion</span>
+                        <span class='sheet-label' >Speed Evasion</span>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -1670,7 +1985,9 @@
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <span class="sheet-field" style="width:100%" name='attr_SpeedEvade'>0</span>
+                        <input type="hidden" name="attr_SpeedEvade" />
+                        <input type="hidden" name="attr_SpeedEvade_calc" />
+                        <span class="sheet-field" style="width:100%" name='attr_SpeedEvade_calc'>0</span>
                     </div>
                 </div>
             </div>
@@ -1683,7 +2000,7 @@
                 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                 <div class="sheet-row ">
                     <div style="width:30%">
-                        <span>Overland</span>
+                        <span class='sheet-label' >Overland</span>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -1691,12 +2008,13 @@
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
+                        <input type="hidden" name="attr_Overland"  value="0" />
                         <span name="attr_Overland" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
                     <div style="width:30%">
-                        <span>Swim</span>
+                        <span class='sheet-label' >Swim</span>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -1704,12 +2022,13 @@
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
+                        <input type="hidden" name="attr_Swim"  value="0" />
                         <span name="attr_Swim" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
                     <div style="width:30%">
-                        <span>Long Jump</span>
+                        <span class='sheet-label' >Long Jump</span>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -1717,12 +2036,13 @@
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
+                        <input type="hidden" name="attr_LJ"  value="0" />
                         <span name="attr_LJ" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
                     <div style="width:30%">
-                        <span>High Jump</span>
+                        <span class='sheet-label' >High Jump</span>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -1730,12 +2050,13 @@
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
+                        <input type="hidden" name="attr_HJ"  value="0" />
                         <span name="attr_HJ" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
                     <div style="width:30%">
-                        <span>Power</span>
+                        <span class='sheet-label' >Power</span>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -1743,12 +2064,13 @@
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
+                        <input type="hidden" name="attr_Power"  value="0" />
                         <span name="attr_Power" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
                     <div style="width:30%">
-                        <span>Throw</span>
+                        <span class='sheet-label' >Throw</span>
                     </div><div style="width:20%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -1756,6 +2078,7 @@
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
+                        <input type="hidden" name="attr_Throw"  value="0" />
                         <span name="attr_Throw" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
@@ -1884,9 +2207,13 @@
         </div>
     </div>
     
-    <h3 class="sheet-header">Known Moves</h3>
+    <h3 class="sheet-header">
+        Known Moves
+        <button type="action" name="act_lockMoves" style="font-family: 'Pictos';color:black">(</button>
+    </h3>
     
     <div class="sheet-movesKnown">
+        <input type='hidden' name="attr_lockMovesKnown" value="1" />
         
         <fieldset class="repeating_movesKnown">
             <input type="hidden" name="attr_mkID" />
@@ -1898,7 +2225,7 @@
                     <span name="attr_mkFrequency" class="sheet-freq">Frequency</span>
                     
                     <input type="hidden" name="attr_mkFrequency" class="sheet-freq" value="Physical" />
-                    <span class="sheet-uses">
+                    <span class="sheet-uses sheet-move-uses">
                         <input type="number" name="attr_mkUses" />
                         <span>/</span>
                         <span name="attr_mkUses_max">0</span>
@@ -1914,7 +2241,8 @@
                     <div class="">
                         <span name="attr_mkAC">AC</span> <span name="attr_mkCrit">Crit</span>
                     </div>
-                    <div class="">
+                    <input type='hidden' name="attr_mkDB" value='' />
+                    <div class="sheet-move-DB">
                         <span name="attr_mkDB">DB</span> <span name="attr_mkDB_roll">Roll</span>
                     </div>
                     <div class="">
@@ -2086,7 +2414,7 @@
                         
                     </div><div style="width:70%" class="sheet-move-body" >
                         <div>
-                            <span>Range: <input type="text" name="attr_mlRange" placeholder="6," /></span>
+                            <span>Range: <input type="text" name="attr_mlRange" placeholder="Distance, Targets" /></span>
                         </div>
                         <div>
                             <span>AC: <input type="number" name="attr_mlAC" value="4" /></span>
@@ -2274,25 +2602,45 @@
     
     </div>
     <br/>
-    <div class='sheet-3colrow'>
-        <div class='sheet-col'>
+    
+    
+    <div class='sheet-ability-features-edges'>
+        <div class='sheet-edges'>
             <h3 class='sheet-header'>Edges</h3>
-            <br />
-            <table class='sheet-table'>
+            <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
+            <table class='sheet-table sheet-pokemon'>
                 <tr>
                     <td class='sheet-table-header'>Remaining Tutor Points</td>
                     <td><input type='number' name='attr_TutorPoints'/></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>Max Tutor Points</td>
-                    <td><input type='number' name='attr_TutorPoints_max' value='((1-@{CharType}))*(floor(@{Level} / 5)+1)'/></td>
+                    <td><input type='number' name='attr_TutorPoints_max' value='((1-@{CharType}))*(floor(@{Level} / 5)+1)' disabled/></td>
                 </tr>
             </table>
             <fieldset class='repeating_edges'>
-                <br/>
-                <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"/><span></span>
-                <h4 class='sheet-minihead'>Edge</h4>
-                <table class='sheet-table'>
+                
+                <input type="checkbox" class="sheet-arrow " name="attr_EdgeHide"  value="1" /><span></span>
+                
+                <div class='sheet-minihead'>
+                    <input type="text" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
+                </div>
+                
+                <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                
+                <div class="sheet-a">
+                    <div>
+                        <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
+                    </div>
+                    <div>
+                        <span class="sheet-label">Cost </span><input type="number" name="attr_EdgeCost" value='0' />
+                    </div>
+                    <div>
+                        <textarea name='attr_EdgeInfo' ></textarea>
+                    </div>
+                </div>
+                
+                <!--table class='sheet-table'>
                     <tr>
                         <td class='sheet-table-header'>Name:</td>
                         <td><input class='sheet-shortfield' name='attr_EdgeName' type='text'></td>
@@ -2313,39 +2661,41 @@
                         <td class='sheet-table-header'>Display:</td>
                         <td><button type='roll' value='&{template:PTU} {{dis=Edge}} {{desc=@{EdgeInfo}}} {{nick=@{nickname}}} {{name=@{EdgeName}}} {{prereq=@{FeatureTarget}}} {{cost=@{FeatureTarget}}}' name='roll_EdgeRoll' /> Show</td>
                       </tr>
-                </table>
+                </table-->
             </fieldset>
         </div>
-        <div class='sheet-col'>
+        <div class='sheet-features'>
             <h3 class='sheet-header'>Features</h3>
-            <br />
-            <input type="checkbox" class="sheet-arrow" name="attr_FeatureHide"/><span></span>
-            <h4 class='sheet-minihead'>Feature</h4>
-            <table class='sheet-table'>
-                <tr>
-                    <td class='sheet-table-header'>Name:</td>
-                    <td><input class='sheet-shortfield' name='attr_FeatureName' type='text'></td>
-                </tr>
-                <tr class="sheet-featlist">
-                    <td class='sheet-table-header'>Frequency:</td>
-                    <td><input class='sheet-shortfield' name='attr_FeatureFreq' type='text'></td>
-                </tr>
-                <tr class="sheet-featlist">
-                    <td class='sheet-table-header'>Target:</td>
-                    <td><input class='sheet-shortfield' name='attr_FeatureTarget' type='text'></td>
-                </tr>
-                <tr class="sheet-featlist">
-                    <td class='sheet-table-header'>Other Info:</td>
-                    <td><textarea class='sheet-textarea-b' name='attr_FeatureInfo'></textarea></td>
-                </tr>
-                <tr class="sheet-featlist">
-                    <td class='sheet-table-header'>Display:</td>
-                    <td><button type='roll' value='&{template:PTU} {{dis=Feature}} {{desc=@{FeatureInfo}}} {{nick=@{nickname}}} {{name=@{FeatureName}}} {{freq=@{FeatureFreq}}} {{tar=@{FeatureTarget}}}' name='roll_FeatRoll' /> Show</td>
-                </tr>
-            </table>
+            
             <fieldset class='repeating_features'>
-                <br/>
-                <input type="checkbox" class="sheet-arrow" name="attr_Feature_Hide"/><span></span>
+                
+                <input type="checkbox" class="sheet-arrow " name="attr_Feature_Hide"  value="1" /><span></span>
+                <input type='hidden' class='sheet-hide-swap' name="attr_Feature_Hide" value='0' />
+                
+                <div class='sheet-minihead'>
+                    <input type="text" name="attr_Feature_Name" placeholder="Feature Name" style="width:100%" />
+                </div>
+                
+                
+                <div class="sheet-a">
+                    <div>
+                        <input type="text" name="attr_Feature_Prereq" placeholder="Prerequisite" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Feature_Freq" placeholder="Frequency" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Feature_Target" placeholder="Target" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Feature_Triger" placeholder="Trigger" style="width:100%" />
+                    </div>
+                    <div>
+                        <textarea name='attr_Feature_Info' ></textarea>
+                    </div>
+                </div>
+                
+                <!--input type="checkbox" class="sheet-arrow" name="attr_Feature_Hide"/><span></span>
                 <h4 class='sheet-minihead'>Feature</h4>
                 <table class='sheet-table'>
                     <tr>
@@ -2368,39 +2718,36 @@
                         <td class='sheet-table-header'>Display:</td>
                         <td><button type='roll' value='&{template:PTU} {{dis=Feature}} {{desc=@{Feature_Info}}} {{nick=@{nickname}}} {{name=@{Feature_Name}}} {{freq=@{Feature_Freq}}} {{tar=@{Feature_Target}}}' name='roll_FeatRoll' /> Show</td>
                     </tr>
-                </table>
+                </table-->
             </fieldset>
         </div>
-        <div class='sheet-col'>
+        <div class='sheet-abilities'>
             <h3 class="sheet-header">Abilities</h3>
-            <br />
-            <input type="checkbox" class="sheet-arrow" name="attr_AbilityHide"/><span></span>
-            <h4 class='sheet-minihead'>Ability</h4>
-            <table class='sheet-table'>
-                <tr>
-                    <td class='sheet-table-header'>Name:</td>
-                    <td><input class='sheet-shortfield' name='attr_AbilityName' type='text'></td>
-                </tr>
-                <tr class="sheet-featlist">
-                    <td class='sheet-table-header'>Frequency:</td>
-                    <td><input class='sheet-shortfield' name='attr_AbilityFreq' type='text'></td>
-                </tr>
-                <tr class="sheet-featlist">
-                    <td class='sheet-table-header'>Target:</td>
-                    <td><input class='sheet-shortfield' name='attr_AbilityTarget' type='text'></td>
-                </tr>
-                <tr class="sheet-featlist">
-                    <td class='sheet-table-header'>Other Info:</td>
-                    <td><textarea class='sheet-textarea-b' name='attr_AbilityInfo'></textarea></td>
-                </tr>
-                <tr class="sheet-featlist">
-                    <td class='sheet-table-header'>Display:</td>
-                    <td><button type='roll' value='&{template:PTU} {{dis=Ability}} {{desc=@{AbilityInfo}}} {{nick=@{nickname}}} {{name=@{AbilityName}}} {{freq=@{AbilityFreq}}} {{tar=@{AbilityTarget}}}' name='roll_AbilRoll' /> Show</td>
-                </tr>
-            </table>
+            
             <fieldset class='repeating_abilities'>
-                <br/>
-                <input type="checkbox" class="sheet-arrow" name="attr_Ability_Hide"/><span></span>
+
+
+                <input type="checkbox" class="sheet-arrow " name="attr_Ability_Hide"  value="1" /><span></span>
+                <input type='hidden' class='sheet-hide-swap' name="attr_Ability_Hide" value='0' />
+                
+                <div class='sheet-minihead'>
+                    <input type="text" name="attr_Ability_Name" placeholder="Ability Name" style="width:100%" />
+                </div>
+                
+                
+                <div class="sheet-a">
+                    <div>
+                        <input type="text" name="attr_Ability_Freq" placeholder="Frequency" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Ability_Target" placeholder="Target" style="width:100%" />
+                    </div>
+                    <div>
+                        <textarea name='attr_Ability_Info' ></textarea>
+                    </div>
+                </div>
+                
+                <!--input type="checkbox" class="sheet-arrow" name="attr_Ability_Hide"/><span></span>
                 <h4 class='sheet-minihead'>Ability</h4>
                 <table class='sheet-table'>
                     <tr>
@@ -2424,14 +2771,14 @@
                         <td class='sheet-table-header'>Display:</td>
                         <td><button type='roll' value='&{template:PTU} {{dis=Ability}} {{desc=@{Ability_Info}}} {{nick=@{nickname}}} {{name=@{Ability_Name}}} {{freq=@{Ability_Freq}}} {{tar=@{Ability_Target}}}' name='roll_AbilRoll' /> Show</td>
                     </tr>
-                </table>
+                </table-->
             </fieldset>
         </div>
     </div>
     
     <br/>
     
-    <div class='sheet-row'>
+    <div class='sheet-row sheet-inventory'>
         <h3 class="sheet-header">Inventory</h3>
         
         <div class="sheet-inventory-money">
@@ -2446,8 +2793,8 @@
                     <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
                     <input type="checkbox" name="attr_InventoryHide" value="1" />
                     
-                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/reworked/Expand-Icon.png" class="sheet-a" />
-                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/reworked/Collapse-Icon.png"   class="sheet-b" />
+                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Expand-Icon.png" class="sheet-a" />
+                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Collapse-Icon.png"   class="sheet-b" />
                 </span>
                 <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
                 <input type="number" name='attr_InventoryQuantity' value="1" />
@@ -2635,30 +2982,48 @@
             </tr>
         </table>
         <br>
-        <div >
+        <div class="sheet-movesKnown">
+        
             <fieldset class="repeating_movesKnown">
+                <input type="hidden" name="attr_mkID" />
+                
                 <div class="sheet-table sheet-moveKnown-item">
-                    <div class="sheet-row">
-                        <span>Name</span>
+                    <input type="hidden" name="attr_mkType" class="sheet-move-type" />
+                    <div class=" sheet-move-header">
+                        <span name="attr_mkName" class="sheet-name">Name</span>
+                        <span name="attr_mkFrequency" class="sheet-freq">Frequency</span>
+                        
+                        <input type="hidden" name="attr_mkFrequency" class="sheet-freq" value="Physical" />
+                        <span class="sheet-uses">
+                            <input type="number" name="attr_mkUses" />
+                            <span>/</span>
+                            <span name="attr_mkUses_max">0</span>
+                        </span>
                     </div>
-                    <div class="sheet-row">
-                        <span>Frequency</span>
-                    </div>
-                    <div class="sheet-row">
-                        <span>AC</span> <span>Crit</span>
-                    </div>
-                    <div class="sheet-row">
-                        <span>DB</span> <span>Roll</span>
-                    </div>
-                    <div class="sheet-row">
-                        <div style="width:50%">
-                            <button type="roll">Accuracy</button>
-                        </div><div style="width:50%">
-                            <button type="roll">Damage</button>
+                    <div class="sheet-move-body">
+                        <button type="roll" class="sheet-btn-accuracy"></button>
+                        <button type="roll" class="sheet-btn-damage"></button>
+                        <button type="roll" class="sheet-btn-show"></button>
+                        <div class="">
+                            <span>Range:</span><span name="attr_mkRange"></span>
+                        </div>
+                        <div class="">
+                            <span name="attr_mkAC">AC</span> <span name="attr_mkCrit">Crit</span>
+                        </div>
+                        <div class="">
+                            <span name="attr_mkDB">DB</span> <span name="attr_mkDB_roll">Roll</span>
+                        </div>
+                        <div class="">
+                            <div style="width:50%">
+                                
+                            </div><div style="width:50%">
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
             </fieldset>
+            
         </div>
     </div>    
 </div>

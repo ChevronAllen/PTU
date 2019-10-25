@@ -2,7 +2,7 @@
     min-width:840px;
     max-width:900px;
     margin: 0 auto;
-    --field-color:yellow;
+    --field-color:lightgrey;
 }
 #page-wrap {
   /*width: 1024px;*/
@@ -29,6 +29,12 @@ input:not(.sheet-buttons)::-webkit-outer-spin-button {
   margin: 0; 
 }
 
+.sheet-label{
+    color:black;
+    font-weight:bold;
+    font-size:10pt;
+    padding-left:5px;
+}
 
 span.sheet-field{
     display:inline-block;
@@ -39,14 +45,18 @@ span.sheet-field{
     vertical-align: middle;
     border:1px solid black;
     background-color:var(--field-color);
+    font-weight:bold;
+    min-width:75px;
 }
 
 textarea{
     margin:0;
+    resize:vertical;
+    width:100%;
 }
 
-.sheet-creature[value="0"] ~ .sheet-pokemon,
-.sheet-creature[value="1"] ~ .sheet-trainer{
+.sheet-creature[value="1"] ~ .sheet-pokemon,
+.sheet-creature[value="0"] ~ .sheet-trainer{
     display:none;
 }
 
@@ -177,6 +187,13 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
   z-index: 1;
 }
 
+.sheet-background.sheet-hide-container{
+    position:relative;
+    display:block;
+    width:30px;
+    height:30px;
+}
+
 /* Moves */
 .sheet-generic-rolls > div{
     display:block;
@@ -215,7 +232,8 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
 .sheet-movesKnown{
     position:relative;
     width:100%;
-    min-height:150px;
+    min-height:100px;
+    margin: 5px 0px;
 }
 .sheet-movesKnown  .sheet-move-item{
     
@@ -227,10 +245,10 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     justify-content:space-around;
 }
 .sheet-movesKnown .repitem{
-    border:1px solid black;
+    
 }
-.sheet-movesKnown .repcontrol{
-    /*display:none;*/
+.sheet-movesKnown  input[value="1"] ~ .repcontrol{
+    display:none;
 }
 
 .sheet-cat{
@@ -243,6 +261,7 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     background-repeat:no-repeat;
     background-size:contain;
 }
+
 span.sheet-uses{
     position: absolute;
     top: 0px;
@@ -253,15 +272,7 @@ span.sheet-freq{
     right: 90px;
 }
 
-.sheet-moveKnown-item .sheet-freq[value="Physical"] + .sheet-cat{
-    background-image:url('https://raw.githubusercontent.com/ChevronAllen/PTU/master/physical.png');
-}
-.sheet-moveKnown-item .sheet-freq[value="Special"] + .sheet-cat{
-    background-image:url('https://raw.githubusercontent.com/ChevronAllen/PTU/master/special.png');
-}
-.sheet-moveKnown-item .sheet-freq[value="Support"] + .sheet-cat{
-    background-image:url('https://raw.githubusercontent.com/ChevronAllen/PTU/master/support.png');
-}
+
 .sheet-moveKnown-item {
     position:relative;
     
@@ -303,11 +314,16 @@ span.sheet-freq{
 }
 
 
-.sheet-move-item input[value="At-Will"] + .sheet-move-uses,
-.sheet-move-item input[value="EOT"] + .sheet-move-uses,
-.sheet-move-item input[value="Static"] + .sheet-move-uses{
+input[value="At-Will"] + .sheet-move-uses,
+input[value="EOT"] + .sheet-move-uses,
+input[value="Static"] + .sheet-move-uses{
     display:none;
 }
+input[value=""] + .sheet-move-DB,
+input[value="0"] + .sheet-move-DB{
+    display:none;
+}
+
 .sheet-move-item .sheet-field{
     min-width:80px;
 }
@@ -380,6 +396,46 @@ span.sheet-freq{
     display:none;
 }
 
+
+/* Abilities Features Edges */
+.sheet-ability-features-edges{
+    position:relative;
+    display:grid;
+    grid-template-areas: "edges features abilities";
+    grid-template-columns: 30% 40% 30%;
+    grid-column-gap: 2px;
+    width:100%;
+    
+}
+
+.sheet-edges{
+    position:relative;
+    grid-area:edges;
+}
+.sheet-features{
+    position:relative;
+    grid-area:features;
+}
+.sheet-abilities{
+    position:relative;
+    grid-area:abilities;
+}
+
+.sheet-ability-features-edges .repitem{
+    position:relative;
+    display:block;
+    border:1px solid #6c6c6c;
+    margin:0 0 1px;
+}
+.sheet-ability-features-edges input{
+    color:black;
+    font-weight: bold;
+    font-size:9pt;
+    padding:0 2px;
+}
+.sheet-ability-features-edges textarea{
+    height: 60px;
+}
 .sheet-inventory-item{
     display:block;
     position:relative;
@@ -407,7 +463,7 @@ span.sheet-freq{
     width:30px;
     height:30px;
 }
-.sheet-inventory-item .sheet-hide-container input{
+.sheet-hide-container input{
     display:inline-block;
     width:100%;
     height:100%;
@@ -415,13 +471,13 @@ span.sheet-freq{
     z-index:1;
     opacity:0;
 }
-.sheet-inventory-item .sheet-hide-container img{
+.sheet-hide-container img{
     display:inline-block;
     width:100%;
     height:100%;
 }
-.sheet-inventory-item .sheet-hide-swap[value="1"] ~ .sheet-a,
-.sheet-inventory-item .sheet-hide-swap[value="0"] ~ .sheet-b{
+.sheet-hide-swap[value="1"] ~ .sheet-a,
+.sheet-hide-swap[value="0"] ~ .sheet-b{
     display:none;
 }
 
@@ -747,9 +803,18 @@ div.sheet-center-img{
 }
 
 .sheet-minihead{
- color: white;
- background: gray;
- text-align: center;
+    color: white;
+    background: gray;
+    text-align: center;
+}
+.sheet-minihead input{
+    font-size: 8pt;
+    height: 100%;
+    display: block;
+    width: 80% !important;
+    background: none;
+    border: none;
+    color: white;
 }
 
 .sheet-bold{
