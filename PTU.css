@@ -168,10 +168,6 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     margin: 25px 0;      
 }
 
-.sheet-tab {
-  /*float: left; */
-}
-
 .sheet-tab label {
   background: #eee; 
   padding: 10px; 
@@ -226,10 +222,6 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     margin:0 auto;
 }
 
-.sheet-movesList{
-    
-}
-
 .sheet-movesList .sheet-move-item{
     position:relative;
     display:block;
@@ -264,18 +256,14 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     min-height:100px;
     margin: 5px 0px;
 }
-.sheet-movesKnown  .sheet-move-item{
-    
-}
+
 .sheet-movesKnown .repcontainer{
     display:grid;
     grid-template-columns:270px 270px 270px;
     grid-row-gap:5px;
     justify-content:space-around;
 }
-.sheet-movesKnown .repitem{
-    
-}
+
 .sheet-movesKnown  input[value="1"] ~ .repcontrol{
     display:none;
 }
@@ -468,9 +456,6 @@ button[type=roll].sheet-blank-roll-button::before { content: ''; }
 }
 
 /* Edit Repcontrol */
-.sheet-ability-features-edges .btn{
-    
-}
 .sheet-ability-features-edges .repcontrol_del{
     position:relative;
     z-index:3;
@@ -710,7 +695,7 @@ input.sheet-arrow:checked ~ table tr.sheet-featlist {
 	border: 2px solid #B31515;
 }
 
-..sheet-rolltemplate-PTU .inlinerollresult.importantroll
+.sheet-rolltemplate-PTU .inlinerollresult.importantroll
 .sheet-rolltemplate-PTU_Move .inlinerollresult.importantroll {
 	border: 2px solid #4A57ED;
 }
