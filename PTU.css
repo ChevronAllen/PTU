@@ -9,6 +9,18 @@
 .sheet-move-button{
     float:right;
 }
+.sheet-move-cat ~ .sheet-move-physical,
+.sheet-move-cat ~ .sheet-move-special,
+.sheet-move-cat ~ .sheet-move-status{
+    display:none;
+}
+.sheet-move-cat[value='Physical'] ~ .sheet-move-physical,
+.sheet-move-cat[value='Special'] ~ .sheet-move-special,
+.sheet-move-cat[value='Status'] ~ .sheet-move-status{
+    display:block;
+}
+
+
 button[type="roll"]{
     margin:0px;
 }
