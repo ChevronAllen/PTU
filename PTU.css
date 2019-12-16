@@ -522,12 +522,24 @@ button[type=roll].sheet-blank-roll-button::before { content: ''; }
     position:relative;
 }
 .sheet-ability button{
+    
+}
+ 
+.sheet-ability.sheet-minihead > .sheet-hide-swap[value='1'] ~ button{
     position:absolute;
     left:30px;
     top: 0px;
     width: calc(100% - 30px);
     height:100%;
     opacity:0;
+}
+.sheet-ability.sheet-minihead > .sheet-hide-swap[value='0'] ~ button{
+    position:absolute;
+    right:0px;
+    top: 0px;
+    width: 30px;
+    height:100%;
+    opacity:1;
 }
 
 .sheet-inventory .itemcontrol{

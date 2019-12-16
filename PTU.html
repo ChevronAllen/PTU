@@ -86,11 +86,10 @@
     on("sheet:opened change:CharType change:Overland_bonus change:Swim_bonus change:Throw_bonus change:Power_bonus change:HJ_bonus change:LJ_bonus change:Athletics change:Acrobatics ",function(){
         var update = {};
         
-        getAttrs(["CharType","Overland_bonus", "Swim_bonus","Throw_bonus", "Power_bonus", "HJ_bonus" ,"LJ_bonus", "Athletics", "Acrobatics"],function(v){
+        getAttrs(["CharType", "Overland", "Overland_bonus", "Swim", "Swim_bonus", "Throw", "Throw_bonus", "Power", "Power_bonus", "HJ", "HJ_bonus" ,"LJ", "LJ_bonus", "Athletics", "Acrobatics"],function(v){
             
             var char = parseInt(v["CharType"])||0;
             
-            if(char == 1){
                 //Overland = 3 + [(Athl + Acro)/2]
                 
                 var bonus_o = parseInt(v["Overland_bonus"])||0;
@@ -103,11 +102,15 @@
                 
                 var acro = parseInt(v["Acrobatics"])||0;
                 var athl = parseInt(v["Athletics"])||0;
+            
+            if(char == 1){
                 
                 var hj = 0;
                 var lj = Math.floor(acro/2);
                 var overland = 3 + Math.floor((athl+acro)/2);
                 var power = 4;
+                
+                
                 
                 if(athl > 3){ power += 1;}
                 if(athl > 4){ power += 1;}
@@ -129,9 +132,24 @@
                 update["HJ_calc"]       = hj + bonus_h; 
                 update["LJ_calc"]       = lj + bonus_l;
                 
+            }else{
+                
+                var overland = parseInt(v["Overland"])||0;
+                var swim     = parseInt(v["Swim"])||0;
+                var hj       = parseInt(v["HJ"])||0;
+                var lj       = parseInt(v["LJ"])||0;
+                var power    = parseInt(v["Power"])||0;
+                var thrown   = parseInt(v["Throw"])||0;
+                
+                update["Overland_calc"]  = (overland + bonus_o);
+                update["Swim_calc"]      = (swim + bonus_s);
+                update["HJ_calc"]        = (hj + bonus_h);
+                update["LJ_calc"]        = (lj + bonus_l);
+                update["Power_calc"]     = (power + bonus_p);
+                update["Throw_calc"]     = (thrown + bonus_t);
+            }
                 setAttrs(update);
                 
-            }
         });
     });
 
@@ -304,6 +322,7 @@
 
                 console.log("build stats");
                 
+                update["repeating_moves_mlID"]                             = newID;
                 update["repeating_movesKnown_"+ newID +"_mkName"]          = values["repeating_moves_mlName"];
                 update["repeating_movesKnown_"+ newID +"_mkType"]          = values["repeating_moves_mlType"];
                 update["repeating_movesKnown_"+ newID +"_mkCat"]           = values["repeating_moves_mlCat"];
@@ -318,18 +337,18 @@
                 update["repeating_movesKnown_"+ newID +"_mkEffects"]       = values["repeating_moves_mlEffects"];
                 update["repeating_movesKnown_"+ newID +"_mkUses_max"]      = values["repeating_moves_mlUses_max"];
             
-                console.log("start update ");
-                
+                //console.log("start update ");
+                /*
                 console.log(update);
                 
                 setAttrs({
                     "repeating_moves_mlID" : newID
                 });
-                
+                */
                 setAttrs(update,{silent: true});
                 
                 
-                console.log("end update");
+                //console.log("end update");
                 
             });
             
@@ -2786,7 +2805,7 @@
                             </select>
                         </div>
                         <div>
-                            <input name="attr_mlContestEffect" placeholder="Contest Effect" style="text-align:center"/>
+                            <input type='text' name="attr_mlContestEffect" placeholder="Contest Effect" style="text-align:center"/>
                         </div>
                         
                         
@@ -3031,7 +3050,7 @@
                         
                         <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
                         
-                        <button type='roll' class="sheet-b" value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
+                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
                         
                         <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
                     </div>
@@ -3043,8 +3062,6 @@
                             <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
                         </div>
                         
-                        
-                        
                         <div>
                             <span class="sheet-label">Cost </span>
                             <input type="number" name="attr_EdgeCost" value='0' />
@@ -3054,28 +3071,7 @@
                         </div>
                     </div>
                     
-                    <!--table class='sheet-table'>
-                        <tr>
-                            <td class='sheet-table-header'>Name:</td>
-                            <td><input class='sheet-shortfield' name='attr_EdgeName' type='text'></td>
-                        </tr>
-                        <tr class="sheet-featlist">
-                            <td class='sheet-table-header'>Prerequisites:</td>
-                            <td><input class='sheet-shortfield' name='attr_EdgePrereq' type='text'></td>
-                        </tr>
-                        <tr class="sheet-featlist">
-                            <td class='sheet-table-header'>TP Cost:</td>
-                            <td><input class='sheet-shortfield' name='attr_EdgeCost' type='text'></td>
-                        </tr>
-                        <tr class="sheet-featlist">
-                            <td class='sheet-table-header'>Other Info:</td>
-                            <td><textarea class='sheet-textarea-b' name='attr_EdgeInfo'></textarea></td>
-                        </tr>
-                          <tr class="sheet-featlist">
-                            <td class='sheet-table-header'>Display:</td>
-                            <td><button type='roll' value='&{template:PTU} {{dis=Edge}} {{desc=@{EdgeInfo}}} {{nick=@{nickname}}} {{name=@{EdgeName}}} {{prereq=@{FeatureTarget}}} {{cost=@{FeatureTarget}}}' name='roll_EdgeRoll' /> Show</td>
-                          </tr>
-                    </table-->
+                    
                 </fieldset>
             </div>
             
@@ -3087,7 +3083,7 @@
                         
                         <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
                         
-                        <button type='roll' class="sheet-b" value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
+                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{message= @{EdgeInfo} }} " ></button>
                         
                         <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
                     </div>
@@ -3116,7 +3112,7 @@
                 <div class='sheet-minihead sheet-ability'>
                     <input type='hidden' class='sheet-hide-swap' name="attr_Feature_Hide" value='0' />
                     <input type="checkbox" class="sheet-arrow " name="attr_Feature_Hide"  value="1" /><span></span>
-                    <button type='roll' class="sheet-b" value="&{template:PTU} {{title= @{Feature_Name} }} {{prerequisite= @{Feature_Prereq} }} {{frequency= @{Feature_Freq} }} {{target= @{Feature_Target} }} {{trigger= @{Feature_Trigger} }} {{message= @{Feature_Info} }} "></button>
+                    <button type='roll' value="&{template:PTU} {{title= @{Feature_Name} }} {{prerequisite= @{Feature_Prereq} }} {{frequency= @{Feature_Freq} }} {{target= @{Feature_Target} }} {{trigger= @{Feature_Trigger} }} {{message= @{Feature_Info} }} "></button>
                     <input type="text" class="sheet-ability-name" name="attr_Feature_Name" placeholder="Feature Name" style="width:100%" />
                 </div>
                 
@@ -3176,7 +3172,7 @@
                 <div class='sheet-minihead sheet-ability'>
                     <input type='hidden' class='sheet-hide-swap' name="attr_Ability_Hide" value='0' />
                     <input type="checkbox" class="sheet-arrow " name="attr_Ability_Hide"  value="1" /><span></span>
-                    <button type='roll' class="sheet-b" value="@{whisper} &{template:PTU} {{title= @{Ability_Name} }} {{frequency= @{Ability_Freq} }} {{target= @{Ability_Target} }} {{trigger= @{Ability_Trigger} }} {{message= @{Ability_Info} }} "></button>
+                    <button type='roll' value="@{whisper} &{template:PTU} {{title= @{Ability_Name} }} {{frequency= @{Ability_Freq} }} {{target= @{Ability_Target} }} {{trigger= @{Ability_Trigger} }} {{message= @{Ability_Info} }} "></button>
                     <input type="text" class="sheet-ability-name" name="attr_Ability_Name" placeholder="Ability Name" style="width:100%" />
                 </div>
                 
