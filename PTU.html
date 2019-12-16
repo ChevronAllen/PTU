@@ -3021,55 +3021,90 @@
                 </tr>
             </table>
             
-            <fieldset class='repeating_edges'>
-                
-                <div class='sheet-minihead sheet-ability'>
+            <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
+           
+           <div class='sheet-pokemon'>
+                <fieldset class='repeating_edges'>
+                    
+                    <div class='sheet-minihead sheet-ability'>
+                        <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                        
+                        <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
+                        
+                        <button type='roll' class="sheet-b" value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
+                        
+                        <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
+                    </div>
+                    
+                    
                     <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
-                    
-                    <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
-                    
-                    <button type='roll' class="sheet-b" value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
-                    
-                    <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
-                </div>
-                
-                
-                <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
-                <div class="sheet-a">
-                    <div>
-                        <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
+                    <div class="sheet-a">
+                        <div>
+                            <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
+                        </div>
+                        
+                        
+                        
+                        <div>
+                            <span class="sheet-label">Cost </span>
+                            <input type="number" name="attr_EdgeCost" value='0' />
+                        </div>
+                        <div>
+                            <textarea name='attr_EdgeInfo' ></textarea>
+                        </div>
                     </div>
-                    <div>
-                        <span class="sheet-label">Cost </span><input type="number" name="attr_EdgeCost" value='0' />
+                    
+                    <!--table class='sheet-table'>
+                        <tr>
+                            <td class='sheet-table-header'>Name:</td>
+                            <td><input class='sheet-shortfield' name='attr_EdgeName' type='text'></td>
+                        </tr>
+                        <tr class="sheet-featlist">
+                            <td class='sheet-table-header'>Prerequisites:</td>
+                            <td><input class='sheet-shortfield' name='attr_EdgePrereq' type='text'></td>
+                        </tr>
+                        <tr class="sheet-featlist">
+                            <td class='sheet-table-header'>TP Cost:</td>
+                            <td><input class='sheet-shortfield' name='attr_EdgeCost' type='text'></td>
+                        </tr>
+                        <tr class="sheet-featlist">
+                            <td class='sheet-table-header'>Other Info:</td>
+                            <td><textarea class='sheet-textarea-b' name='attr_EdgeInfo'></textarea></td>
+                        </tr>
+                          <tr class="sheet-featlist">
+                            <td class='sheet-table-header'>Display:</td>
+                            <td><button type='roll' value='&{template:PTU} {{dis=Edge}} {{desc=@{EdgeInfo}}} {{nick=@{nickname}}} {{name=@{EdgeName}}} {{prereq=@{FeatureTarget}}} {{cost=@{FeatureTarget}}}' name='roll_EdgeRoll' /> Show</td>
+                          </tr>
+                    </table-->
+                </fieldset>
+            </div>
+            
+            <div class='sheet-trainer'>
+                <fieldset class='repeating_edges'>
+                    
+                    <div class='sheet-minihead sheet-ability'>
+                        <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                        
+                        <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
+                        
+                        <button type='roll' class="sheet-b" value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
+                        
+                        <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
                     </div>
-                    <div>
-                        <textarea name='attr_EdgeInfo' ></textarea>
+                    
+                    
+                    <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                    <div class="sheet-a">
+                        <div>
+                            <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
+                        </div>
+                        
+                        <div>
+                            <textarea name='attr_EdgeInfo' ></textarea>
+                        </div>
                     </div>
-                </div>
-                
-                <!--table class='sheet-table'>
-                    <tr>
-                        <td class='sheet-table-header'>Name:</td>
-                        <td><input class='sheet-shortfield' name='attr_EdgeName' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Prerequisites:</td>
-                        <td><input class='sheet-shortfield' name='attr_EdgePrereq' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>TP Cost:</td>
-                        <td><input class='sheet-shortfield' name='attr_EdgeCost' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Other Info:</td>
-                        <td><textarea class='sheet-textarea-b' name='attr_EdgeInfo'></textarea></td>
-                    </tr>
-                      <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Display:</td>
-                        <td><button type='roll' value='&{template:PTU} {{dis=Edge}} {{desc=@{EdgeInfo}}} {{nick=@{nickname}}} {{name=@{EdgeName}}} {{prereq=@{FeatureTarget}}} {{cost=@{FeatureTarget}}}' name='roll_EdgeRoll' /> Show</td>
-                      </tr>
-                </table-->
-            </fieldset>
+                </fieldset>
+            </div>
         </div>
         <div class='sheet-features'>
             <h3 class='sheet-header'>Features</h3>

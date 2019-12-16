@@ -75,7 +75,7 @@ textarea{
 
 .sheet-creature[value="1"] ~ .sheet-pokemon,
 .sheet-creature[value="0"] ~ .sheet-trainer{
-    display:none;
+    display:none !important;
 }
 
 .sheet-oldtab1,
@@ -461,9 +461,9 @@ button[type=roll].sheet-blank-roll-button::before { content: ''; }
     position:relative;
     display:grid;
     grid-template-areas: "edges features abilities";
-    grid-template-columns: 30% 40% 30%;
-    grid-column-gap: 15px;
-    width:100%;
+    grid-template-columns: 30% 38% 30%;
+    grid-column-gap: 1%;
+    width: 100%;
     
 }
 
@@ -530,9 +530,15 @@ button[type=roll].sheet-blank-roll-button::before { content: ''; }
     opacity:0;
 }
 
+.sheet-inventory .itemcontrol{
+    z-index:1;
+}
+
 .sheet-inventory-item{
     display:block;
     position:relative;
+    width:700px;
+    margin:2px auto;
 }
 .sheet-inventory-item input[type="number"]{
     display:inline-block;
@@ -542,7 +548,7 @@ button[type=roll].sheet-blank-roll-button::before { content: ''; }
 }
 .sheet-inventory-item input[type="text"]{
     display:inline-block;
-    width:730px;
+    width:600px;
 }
 .sheet-inventory-item textarea{
     display:block;
@@ -559,9 +565,9 @@ button[type=roll].sheet-blank-roll-button::before { content: ''; }
 }
 .sheet-hide-container input{
     display:inline-block;
+    position:absolute;
     width:100%;
     height:100%;
-    position:absolute;
     z-index:1;
     opacity:0;
 }
