@@ -78,6 +78,23 @@ textarea{
     display:none !important;
 }
 
+/*
+.sheet-creature[value='0'] ~ .sheet-oldtab1,
+.sheet-creature[value='0'] ~ .sheet-oldtab2,
+.sheet-creature[value='0'] ~ .sheet-oldtab3,
+.sheet-creature[value='0'] ~ .sheet-oldtab4,
+.sheet-creature[value='0'] ~ .sheet-oldtab5{
+    background: #d6d5c9;
+}
+*/
+.sheet-creature[value='1'] ~ .sheet-oldtab1,
+.sheet-creature[value='1'] ~ .sheet-oldtab2,
+.sheet-creature[value='1'] ~ .sheet-oldtab3,
+.sheet-creature[value='1'] ~ .sheet-oldtab4,
+.sheet-creature[value='1'] ~ .sheet-oldtab5{
+    background: #98b2d555;
+}
+
 .sheet-oldtab1,
 .sheet-oldtab2,
 .sheet-oldtab3,
@@ -92,6 +109,8 @@ input.sheet-oldtab[value="3"] ~ .sheet-oldtab3,
 input.sheet-oldtab[value="4"] ~ .sheet-oldtab4,
 input.sheet-oldtab[value="5"] ~ .sheet-oldtab5{
     display:block !important;
+    padding-top:10px;
+    padding-bottom:10px;
 }
 
 
@@ -147,7 +166,7 @@ div.sheet-oldtab > input.sheet-oldtab {
     z-index: 1;
 }
 div.sheet-oldtab > input.sheet-oldtab + span{
-    display:inline-block;
+    display:inline;
 
     font-size: 13px;
     font-weight: bold;
@@ -155,7 +174,7 @@ div.sheet-oldtab > input.sheet-oldtab + span{
     background: #fff;
     border: solid 1px #a8a8a8;
     border-radius: 4px;
-    padding:0 2px;
+    padding:2px 6px;
     min-width:100px;
     
 }
@@ -864,9 +883,20 @@ textarea.sheet-import{
 }
 
 .sheet-header{
+    position:relative;
  color: white;
  background: black;
  text-align: center;
+}
+.sheet-header > input[type='checkbox']{
+    position:absolute;
+    top:0px;
+    left:0px;
+    display:block;
+    width:100%;
+    height:100%;
+    z-index:2;
+    opacity:0;
 }
 
 .sheet-table-header{
