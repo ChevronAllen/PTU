@@ -108,21 +108,36 @@
         
         getAttrs(["CharType", "Overland", "Overland_bonus", "Swim", "Swim_bonus", "Throw", "Throw_bonus", "Power", "Power_bonus", "HJ", "HJ_bonus" ,"LJ", "LJ_bonus", "Athletics", "Acrobatics"],function(v){
             
-            var char = parseInt(v["CharType"])||0;
+            //var char = parseInt(v["CharType"])||0;
             
-                //Overland = 3 + [(Athl + Acro)/2]
-                
-                var bonus_o = parseInt(v["Overland_bonus"])||0;
-                var bonus_s = parseInt(v["Swim_bonus"])||0;
-                var bonus_t = parseInt(v["Throw_bonus"])||0;
-                var bonus_p = parseInt(v["Power_bonus"])||0;
-                var bonus_h = parseInt(v["HJ_bonus"]) || 0;
-                var bonus_l = parseInt(v["LJ_bonus"]) || 0;
-                
-                
-                var acro = parseInt(v["Acrobatics"])||0;
-                var athl = parseInt(v["Athletics"])||0;
+            //Overland = 3 + [(Athl + Acro)/2]
             
+            var overland = parseInt(v["Overland"])||0;
+            var swim     = parseInt(v["Swim"])||0;
+            var hj       = parseInt(v["HJ"])||0;
+            var lj       = parseInt(v["LJ"])||0;
+            var power    = parseInt(v["Power"])||0;
+            var thrown   = parseInt(v["Throw"])||0;
+
+            var bonus_o = parseInt(v["Overland_bonus"])||0;
+            var bonus_s = parseInt(v["Swim_bonus"])||0;
+            var bonus_t = parseInt(v["Throw_bonus"])||0;
+            var bonus_p = parseInt(v["Power_bonus"])||0;
+            var bonus_h = parseInt(v["HJ_bonus"]) || 0;
+            var bonus_l = parseInt(v["LJ_bonus"]) || 0;
+            
+            
+            //var acro = parseInt(v["Acrobatics"])||0;
+            //var athl = parseInt(v["Athletics"])||0;
+
+            update["Overland_calc"]  = (overland + bonus_o);
+            update["Swim_calc"]      = (swim + bonus_s);
+            update["HJ_calc"]        = (hj + bonus_h);
+            update["LJ_calc"]        = (lj + bonus_l);
+            update["Power_calc"]     = (power + bonus_p);
+            update["Throw_calc"]     = (thrown + bonus_t);
+
+            /*
             if(char == 1){
                 
                 var hj = 0;
@@ -168,7 +183,8 @@
                 update["Power_calc"]     = (power + bonus_p);
                 update["Throw_calc"]     = (thrown + bonus_t);
             }
-                setAttrs(update, {silent: true});
+            */
+            setAttrs(update, {silent: true});
                 
         });
     });
@@ -2297,6 +2313,7 @@
                 <div class="sheet-row">
                     <div style="width:50%">
                         <span class='sheet-label' >Current Hit Point</span>
+                        <button type='roll' name='act_calcDamage'></button>
                     </div><div style="width:30%">
                         <span><input type="number" name="attr_HitPoints" style="width:100%" value='0' \></span>
                     </div>
@@ -2457,7 +2474,8 @@
                     <div style="width:40%">
                         <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Overland</span>
-                        <input type="number" name='attr_Overland' class="sheet-pokemon" value='0' />
+                        <!--<input type="number" name='attr_Overland' class="sheet-pokemon" value='0' />-->
+                        <input type="number" name='attr_Overland' value='0' />
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -2473,7 +2491,8 @@
                     <div style="width:40%">
                         <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Swim</span>
-                        <input type="number" name='attr_Swim' class='sheet-pokemon' value='0' />
+                        <!--<input type="number" name='attr_Swim' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_Swim' value='0' />
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -2489,7 +2508,8 @@
                     <div style="width:40%">
                         <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Long Jump</span>
-                        <input type="number" name='attr_LJ' class='sheet-pokemon' value='0' />
+                        <!--<input type="number" name='attr_LJ' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_LJ' value='0' />
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -2505,7 +2525,8 @@
                     <div style="width:40%">
                         <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >High Jump</span>
-                        <input type="number" name='attr_HJ' class='sheet-pokemon' value='0' />
+                        <!--<input type="number" name='attr_HJ' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_HJ' value='0' />
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -2521,7 +2542,8 @@
                     <div style="width:40%">
                         <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Power</span>
-                        <input type="number" name='attr_Power' class='sheet-pokemon' value='0' />
+                        <!--<input type="number" name='attr_Power' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_Power' value='0' />
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -2537,7 +2559,8 @@
                     <div style="width:40%">
                         <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Throw</span>
-                        <input type="number" name='attr_Throw' class='sheet-pokemon' value='0' />
+                        <!--<input type="number" name='attr_Throw' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_Throw' value='0' />
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
@@ -2844,10 +2867,11 @@
                     <input type="number" name="attr_generic_db" value="4" min="0" style="width:100%"/>
                 </div>
                 <div style="width:70px;">
+                    <input type="hidden" name="attr_generic_db_roll" value="1d8+6" />
                     <span class="sheet-field" name="attr_generic_db_roll">1d8+6</span>
                 </div>
                 <div style="width:100px;">
-                    <button type="roll" name="roll_generic_db" value="@{whisper} &{template:PTU}{{title=@{character_name}'s Damage}}{{damage= [[@{generic_db_roll} + 0]] }}">Damage</button>
+                    <button type="roll" name="roll_generic_db" value="@{whisper} &{template:PTU}{{title=@{character_name}'s Damage}}{{damage= [[@{generic_db_roll} + ?{Class|None, 0|Physical, @{ATK_total}|Special, @{SPATK_total}} ]]  }}">Damage</button>
                 </div>
                 <div style="width:10px;"></div>
                 <div style="width:100px;">

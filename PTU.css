@@ -794,12 +794,24 @@ div.sheet-table  div.sheet-row{
     -webkit-box-sizing:border-box;
     box-sizing:border-box;
 }
+/*
 div.sheet-table.sheet-basic-info  .sheet-row:nth-child(even){
     background-color: #E5E5E5;
 }
 div.sheet-table.sheet-basic-info  .sheet-row:nth-child(odd){
     background-color: white;
 }
+*/
+.sheet-table tr:nth-child(even),
+.sheet-table .sheet-row:nth-child(even){
+    background-color: #E5E5E5;
+}
+.sheet-table tr:nth-child(odd),
+.sheet-table .sheet-row:nth-child(odd){
+
+    background-color: white;
+}
+
 div.sheet-table .sheet-row  div{
     display:inline-block;
     width:100%;
