@@ -2956,9 +2956,9 @@
                         
                         <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
                         
-                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} ]] }}"></button>
-                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} ]] }}"></button>
-                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                     
                     </div>
                     
