@@ -1499,7 +1499,7 @@
             {{#rollGreater() ac 0}}
                 <tr>
                     <td colspan="2">
-                        <span class="tcat">AC: </span>{{ar}} ≥ {{ac}} + Target Evasion</td>
+                        <span class="tcat">AC: </span>{{ar}} ≥ Target Evasion</td>
                 </tr>
                 <tr><td colspan="2"><span class="tcat">Crits On: </span>{{critsOn}}+</td></tr>
             {{/rollGreater() ac 0}}
@@ -2109,7 +2109,7 @@
             <h3 class="sheet-header">Stats</h3>
             
             <!-- Stats -->
-            <table class='sheet-table'>
+            <table class='sheet-table sheet-basic-info'>
                 <tr>
                     <th>Stat</th>
                     <th>Base Stat</th>
@@ -2943,7 +2943,7 @@
                         <span class="sheet-label"> Crit On: </span> <span name="attr_mkCrit"></span>
                         
                         
-                        <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} - @{Acc} ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
+                        <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} + (@{Acc} - (@{mkAC}) ) ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
                         
                     </div>
                     
@@ -3052,7 +3052,7 @@
                             <div>
                                 <span>AC: <input type="number" name="attr_struggleAC" value='4' /></span>
                                 <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> </span>
-                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC}]] }} {{ar= [[1d20cs>@{struggleCrit}]] }} {{critsOn= [[@{struggleCrit} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
+                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC}]] }} {{ar= [[1d20cs>@{struggleCrit} + (@{Acc} - @{struggleAC})]] }} {{critsOn= [[@{struggleCrit} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
@@ -3159,14 +3159,14 @@
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' />
                                 
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
                             </div>
                             <div>
                                 <span>AC: <input type="number" name="attr_mlAC" value='2' /></span>
                                 <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> </span>
-                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC}]] }} {{ar= [[1d20cs>@{mlCrit}]] }} {{critsOn= [[@{mlCrit} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
+                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC}]] }} {{ar= [[1d20cs>@{mlCrit} + (@{Acc} - @{mlAC}) ]] }} {{critsOn= [[@{mlCrit} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_mlDB_roll" value='0' />
@@ -3183,9 +3183,9 @@
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' />
                                 
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + 0 ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                             </div>
                         </div>
                     </div>
