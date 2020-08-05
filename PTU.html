@@ -1,4 +1,5 @@
 <script type="text/worker">
+
     let moveAttrs = [ 
         "repeating_moves_mlKnown","repeating_moves_mlName","repeating_moves_mlType","repeating_moves_mlFrequency",
         "repeating_moves_mlCat","repeating_moves_mlRange","repeating_moves_mlAC","repeating_moves_mlCrit",
@@ -55,7 +56,7 @@
                 update["nature_low"]  = natures[nat]["down"];
             }
             
-            setAttrs(update);
+            setAttrs(update, {silent: true});
         });
     });
     
@@ -76,37 +77,119 @@
                     break;
                 }
             }
+        });
+        
+    });
+    
+    on("change:level change:CharType", function(){
+        var update = {};
+        
+        getAttrs(["level", "CharType"],function(v){
             
+            var level = parseInt( v["level"]) || 0;
+            var char = parseInt( v["CharType"]) || 0;
+            
+            if(char == 0){
+                var exp = expCalc(level+1);
+            }else{
+                var exp = 10;
+            }
+                update["exp_max"] = exp;
+            
+            setAttrs(update);
         });
         
     });
     
     
     
-    on("change:SPEED_total change:Overland_bonus change:Swim_bonus",function(){
-        getAttrs(["CharType","SPEED_total","Overland_bonus"],function(v){
-            var char = parseInt(v["CharType"])||1;
-            if(char == 0){
-                
-                
-                
-            }
-        });
-    });
-    
-    
-    on("change:Athletics change:Acrobatics change:HJ_bonus change:LJ_bonus",function(){
-        getAttrs(["CharType"],function(v){
-            var char = parseInt(v["CharType"])||1;
-            if(char == 0){
-                
-                
-                
-            }
-        });
-    });
-    
+    on("sheet:opened change:CharType change:Overland change:Overland_bonus change:Swim change:Swim_bonus change:Throw change:Throw_bonus change:Power change:Power_bonus change:HJ change:HJ_bonus change:LJ change:LJ_bonus change:Athletics change:Acrobatics",function(){
+        var update = {};
+        
+        getAttrs(["CharType", "Overland", "Overland_bonus", "Swim", "Swim_bonus", "Throw", "Throw_bonus", "Power", "Power_bonus", "HJ", "HJ_bonus" ,"LJ", "LJ_bonus", "Athletics", "Acrobatics"],function(v){
+            
+            //var char = parseInt(v["CharType"])||0;
+            
+            //Overland = 3 + [(Athl + Acro)/2]
+            
+            var overland = parseInt(v["Overland"])||0;
+            var swim     = parseInt(v["Swim"])||0;
+            var hj       = parseInt(v["HJ"])||0;
+            var lj       = parseInt(v["LJ"])||0;
+            var power    = parseInt(v["Power"])||0;
+            var thrown   = parseInt(v["Throw"])||0;
 
+            var bonus_o = parseInt(v["Overland_bonus"])||0;
+            var bonus_s = parseInt(v["Swim_bonus"])||0;
+            var bonus_t = parseInt(v["Throw_bonus"])||0;
+            var bonus_p = parseInt(v["Power_bonus"])||0;
+            var bonus_h = parseInt(v["HJ_bonus"]) || 0;
+            var bonus_l = parseInt(v["LJ_bonus"]) || 0;
+            
+            
+            //var acro = parseInt(v["Acrobatics"])||0;
+            //var athl = parseInt(v["Athletics"])||0;
+
+            update["Overland_calc"]  = (overland + bonus_o);
+            update["Swim_calc"]      = (swim + bonus_s);
+            update["HJ_calc"]        = (hj + bonus_h);
+            update["LJ_calc"]        = (lj + bonus_l);
+            update["Power_calc"]     = (power + bonus_p);
+            update["Throw_calc"]     = (thrown + bonus_t);
+
+            /*
+            if(char == 1){
+                
+                var hj = 0;
+                var lj = Math.floor(acro/2);
+                var overland = 3 + Math.floor((athl+acro)/2);
+                var power = 4;
+                
+                
+                
+                if(athl > 3){ power += 1;}
+                if(athl > 4){ power += 1;}
+                
+                if(acro >= 4){hj += 1;}
+                if(acro >= 6){hj += 1;}
+                
+                update["Overland"]  = overland; 
+                update["Swim"]      = Math.floor(overland/2);
+                update["Throw"]     = 4 + athl;
+                update["Power"]     = power;
+                update["HJ"]        = hj; 
+                update["LJ"]        = lj;
+                
+                update["Overland_calc"] = (overland + bonus_o); 
+                update["Swim_calc"]     = Math.floor(overland/2) + bonus_s;
+                update["Throw_calc"]    = (4 + athl + bonus_t);
+                update["Power_calc"]    = (power + bonus_p);
+                update["HJ_calc"]       = hj + bonus_h; 
+                update["LJ_calc"]       = lj + bonus_l;
+                
+            }else{
+                
+                var overland = parseInt(v["Overland"])||0;
+                var swim     = parseInt(v["Swim"])||0;
+                var hj       = parseInt(v["HJ"])||0;
+                var lj       = parseInt(v["LJ"])||0;
+                var power    = parseInt(v["Power"])||0;
+                var thrown   = parseInt(v["Throw"])||0;
+                
+                update["Overland_calc"]  = (overland + bonus_o);
+                update["Swim_calc"]      = (swim + bonus_s);
+                update["HJ_calc"]        = (hj + bonus_h);
+                update["LJ_calc"]        = (lj + bonus_l);
+                update["Power_calc"]     = (power + bonus_p);
+                update["Throw_calc"]     = (thrown + bonus_t);
+            }
+            */
+            setAttrs(update, {silent: true});
+                
+        });
+    });
+
+    
     on("clicked:lockMoves",function(){
         var update = {};
         getAttrs(["lockMovesKnown"], function(values){
@@ -123,44 +206,63 @@
         });
     });
     
-    on("change:PhysEvade change:PEB change:Eva",function(){
-        update={};
-        getAttrs(["PhysEvade","PEB","Eva"], function(values){
-            
-            base =  parseInt(values["PhysEvade"])||0;
-            bonus = parseInt(values["PEB"])||0;
-            stat =  parseInt(values["Eva"])||0;
-            
-            update["PhysEvade_calc"] = Math.min(base + bonus + stat,9);
+    on("clicked:hideMoveList", function(){
+        var update = {};
+        getAttrs(["hideMoveList"], function(values){
+            var lock = parseInt(values["hideMoveList"]) || 0;
+            lock+=1;
+           
+            update["hideMoveList"] = lock % 2;
             
             setAttrs(update);
         });
     });
-    on("change:SpecEvade change:ScEB change:Eva",function(){
-        update={};
-        getAttrs(["SpecEvade","ScEB","Eva"], function(values){
+    
+    
+    on("change:TutorPoints_bonus change:Level", function(eventinfo){
+        
+        getAttrs(["TutorPoints_bonus", "Level"], function(values){
             
-            base =  parseInt(values["SpecEvade"])||0;
-            bonus = parseInt(values["ScEB"])||0;
-            stat =  parseInt(values["Eva"])||0;
+            bonus  = parseInt(values["TutorPoints_bonus"]) || 0;
+            level  = parseInt(values["Level"]) || 0;
             
-            update["SpecEvade_calc"] = Math.min(base + bonus + stat,9);
+            sum =  Math.floor( (level > 1 ? level:1) / 5 ) + 1  + bonus;   
             
-            setAttrs(update);
+            //console.log(`bonus:${bonus} , level:${level} , t:${t} , sum:${sum}`);
+            
+            setAttrs({
+                'TutorPoints_max': sum
+            });
         });
+        
     });
-    on("change:SpeedEvade change:SpEB change:Eva",function(){
-        update={};
-        getAttrs(["SpeedEvade","SpEB","Eva"], function(values){
+    
+    on("remove:repeating_edges change:repeating_edges:EdgeCost change:TutorPoints_max sheet:opened", function(eventinfo){
+        
+        update = {};
+        attrs = [];
+        sum = 0;
+
+        
+        getSectionIDs("edges", function(idArray){
+            for(i = 0; i < idArray.length; i++){
+               console.log(`repeating_edges_${idArray[i]}_EdgeCost`); 
+               attrs.push(`repeating_edges_${idArray[i]}_EdgeCost`);
+            }
             
-            base =  parseInt(values["SpeedEvade"])||0;
-            bonus = parseInt(values["SpEB"])||0;
-            stat =  parseInt(values["Eva"])||0;
-            
-            update["SpeedEvade_calc"] = Math.min(base + bonus + stat,9);
-            
-            setAttrs(update);
+            getAttrs(attrs.concat(["TutorPoints_max"]), function(values){
+                sum = parseInt(values["TutorPoints_max"])||0;
+                
+                for(i = 0; i < attrs.length; i++){
+                    sum -= parseInt(values[attrs[i]])||0;
+                }
+                
+                setAttrs({
+                    'TutorPoints': sum
+                });
+            });
         });
+        
     });
     
     on("change:ap_max change:repeating_apcost:ap_cost remove:repeating_apcost sheet:opened", function(eventinfo){
@@ -189,7 +291,8 @@
         
     });
     
-     on("change:repeating_injuries:injury_damage remove:repeating_injuries sheet:opened", function(eventinfo){
+    /*
+    on("change:repeating_injuries:injury_damage remove:repeating_injuries sheet:opened", function(eventinfo){
         
         var attrs = [];
         var sum = 0;
@@ -218,45 +321,49 @@
         });
         
     });
-    
-    on("change:generic_db", function(){
-        update = {};
-        
-        getAttrs(["generic_db"],function(values){
-            db = parseInt(values["generic_db"]) || 0;
-            x = dbCalc(db);
-            
-            update["generic_db_roll"] = "" + x.amount + "" + x.dice + " + " + x.bonus;
-            
-            setAttrs(update);
-        });
-        
-    });
-    
-    on("change:struggle_db", function(){
-        update = {};
-        
-        getAttrs(["struggle_db"],function(values){
-            db = parseInt(values["struggle_db"]) || 0;
-            x = dbCalc(db);
-            
-            update["struggle_db_roll"] = "" + x.amount + "" + x.dice + " + " + x.bonus;
-            
-            setAttrs(update);
-        });
-        
-    });
+    */
     
     on("change:input", function() {
         infoImport();
     });
     
+    on("change:repeating_moves", function(eventinfo){
     
+        console.log(eventinfo.sourceAttribute.substring(39));
+        
+        var source = eventinfo.sourceAttribute.substring(39);
+        var v;
+        var update = {};
+        
+        if(source === "known"){ return;}
+        
+        console.log("repeating_moves_mk"+source);
+        
+        getAttrs(["repeating_moves_ml"+source, "repeating_moves_mlID"], function(values){
+            var v = values[`repeating_moves_ml${source}`];
+            var id = values["repeating_moves_mlID"];
+            
+            console.log(v);
+            console.log(id);
+            
+            if(id != "" && values["repeating_moves_mlID"] != null){
+               
+                console.log("repeating_movesKnown_" + id + "_mk" + source);
+                
+                update["repeating_movesKnown_" + id + "_mk" + source] = v;
+               
+            }
+            setAttrs(update,{silent: true});
+        });
+        
+    
+    });
     
     on("change:repeating_moves:mlKnown", function(eventinfo) {
         
         var update = {};
         if(eventinfo.newValue == "1"){
+            
             var newID = generateRowID();
             
             getAttrs(moveAttrs, function(values){
@@ -264,6 +371,7 @@
 
                 console.log("build stats");
                 
+                update["repeating_moves_mlID"]                             = newID;
                 update["repeating_movesKnown_"+ newID +"_mkName"]          = values["repeating_moves_mlName"];
                 update["repeating_movesKnown_"+ newID +"_mkType"]          = values["repeating_moves_mlType"];
                 update["repeating_movesKnown_"+ newID +"_mkCat"]           = values["repeating_moves_mlCat"];
@@ -273,22 +381,23 @@
                 update["repeating_movesKnown_"+ newID +"_mkCrit"]          = values["repeating_moves_mlCrit"];
                 update["repeating_movesKnown_"+ newID +"_mkDB"]            = values["repeating_moves_mlDB"];
                 update["repeating_movesKnown_"+ newID +"_mkDB_roll"]       = values["repeating_moves_mlDB_roll"];
-                update["repeating_movesKnown_"+ newID +"_mkDamageBonus"]   = values["repeating_moves_mlDamageBonus"];
                 update["repeating_movesKnown_"+ newID +"_mkContestType"]   = values["repeating_moves_mlContestType"];
                 update["repeating_movesKnown_"+ newID +"_mkContestEffect"] = values["repeating_moves_mlContestEffect"];
                 update["repeating_movesKnown_"+ newID +"_mkEffects"]       = values["repeating_moves_mlEffects"];
                 update["repeating_movesKnown_"+ newID +"_mkUses_max"]      = values["repeating_moves_mlUses_max"];
             
-                console.log("start update ");
-                
+                //console.log("start update ");
+                /*
                 console.log(update);
                 
-                setAttrs(update);
                 setAttrs({
                     "repeating_moves_mlID" : newID
                 });
+                */
+                setAttrs(update,{silent: true});
                 
-                console.log("end update");
+                
+                //console.log("end update");
                 
             });
             
@@ -322,37 +431,8 @@
         
     });
     
-    on("change:repeating_moves", function(eventinfo){
-    
-        console.log(eventinfo.sourceAttribute.substring(39));
-        
-        var source = eventinfo.sourceAttribute.substring(39);
-        var v;
-        var update = {};
-        
-        console.log("repeating_moves_mk"+source);
-        
-        getAttrs(["repeating_moves_ml"+source, "repeating_moves_mlID"], function(values){
-            v = values["repeating_moves_ml"+source];
-            
-            console.log(v);
-            
-            console.log(values["repeating_moves_mlID"]);
-            
-            if(values["repeating_moves_mlID"] != "" && values["repeating_moves_mlID"] != null){
-               
-                console.log("repeating_movesKnown_" + values["repeating_moves_mlID"] + "_mk" + source);
-                
-                update["repeating_movesKnown_" + values["repeating_moves_mlID"] + "_mk" + source] = v;
-               
-            }
-            setAttrs(update);
-        });
-        
-    
-    });
    
-    
+    /*
     // Change Character Mode
     on("change:chartype", function() {
         getAttrs(["Chartype"], function(values) {
@@ -371,6 +451,7 @@
         });
         hpCalc();
     });
+    */
     
     const stats = ['HP','ATK','DEF','SPATK','SPDEF','SPEED'];
     stats.forEach(function (stat) {
@@ -393,56 +474,121 @@
     
     
     // Recalculate  Evasion
-    on("change:def_total change:spdef_total change:speed_total change:eva", function() {
+    on("sheet:opened change:def_total change:spdef_total change:speed_total change:eva change:PEB change:ScEB change:SpEB", function() {
         evaUp();
     });
     
     // Recalculate HP on level or injury
-    on("change:level change:chartype change:hp_total change:injuries", function() {
+    on("sheet:opened change:level change:chartype change:hp_total change:injuries", function() {
         hpCalc();
     });
     
     // Recalculate AP on level change
-    on("change:level", function() {
+    on("sheet:opened change:level", function() {
         apCalc();
     });
     
-    // Add marked moves to quicklist
-    on("change:repeating_moves", function(){
-        
-    });
-    
-    // Add marked moves to quicklist
-    on("change:repeating_moves:mlKnown", function(){
-        
-    });
+
     
     
     on("change:repeating_moves:mlDB", function() {
         update={};
+        
         getAttrs(["repeating_moves_mlDB"], function(values) {
             //console.log("Works");
-            db = parseInt(values["repeating_moves_mlDB"]) || 0;
-            x = dbCalc(db);
             
-            update["repeating_moves_mlDB_roll"] = "" + x.amount + "" + x.dice + " + " + x.bonus ;
+            var db = parseInt(values["repeating_moves_mlDB"]) || 0;
+            var x = dbCalc(db);
+            var roll = "";
+            if(db >= 0){
+                roll = "" + x.amount + "" + x.dice + " + " + x.bonus ;
+                update["repeating_moves_mlDB_roll"] = roll;
+            }
+            setAttrs(update);
+            
+        });
+    });
+    
+    on("change:repeating_moves:mlStab", function(eventinfo){
+        update={};
+        getAttrs(["repeating_moves_mlDB"], function(value){
+            var stab = parseInt(eventinfo.newValue) || 0;
+            var db = parseInt(value["repeating_moves_mlDB"]) || 0;
+
+            
+            if(stab == 1){
+                db = Math.min(28, db + 2);
+                
+            }else if(stab == 0){
+                db =  Math.max(1, db - 2);
+            }
+            
+            update["repeating_moves_mlDB"] = db;
             
             setAttrs(update);
         });
     });
     
-    var expCalc = function(){
-        
-    }
-    
-    var addMoveSummary = function(){
+    /*
+    on("change:repeating_moves:mlDB_roll", function() {
         update={};
         
-        getAttrs([""], function(){
-                
+        //console.log("Works");
+        
+        update["repeating_moves_mlDB"] = "";
+        setAttrs(update, {silent:true});
+        
+    });
+    */
+    
+    on("change:generic_db", function(){
+        update = {};
+        
+        getAttrs(["generic_db"],function(values){
+            db = parseInt(values["generic_db"]) || 0;
+            x = dbCalc(db);
+            
+            
+            update["generic_db_roll"] = "" + x.amount + "" + x.dice + " + " + x.bonus;
+            
+            
+            setAttrs(update);
         });
         
-    }
+    });
+    
+    on("change:struggle_db", function(){
+        update = {};
+        
+        getAttrs(["struggle_db"],function(values){
+           
+            var db = parseInt(values["struggle_db"]) || 0;
+            var x = dbCalc(db);
+            var roll = "";
+            
+            if(db > 0){
+                roll = "" + x.amount + "" + x.dice + " + " + x.bonus ;
+                update["struggle_db_roll"] = roll;
+                setAttrs(update, {silent:true});
+            }
+            
+
+        });
+        
+    });
+    
+    on("change:struggle_db_roll", function(){
+        update = {};
+        
+
+        update["struggle_db"] = "" ;
+        
+        setAttrs(update,{silent: true});
+        
+        
+    });
+    
+    
     
     var dieBCalc = function(x){
         var mainBody = function(names,getlist){
@@ -533,20 +679,20 @@
                 setlist = {};
                 
                 for (i=0;i<names.length;i++){
-                    setlist[names[i]+"dam_B_t"]=v.dam_B;
+                    setlist[names[i]+"dmg_bonus_t"]=v.dmg_bonus;
                 }
                 
                 if (v.lastctrue==1){
                     if (v.HitPoints/v.HitPoints_permmax<1/3){
                         for (var i=0;i<names.length;i++){
                             if (v.lastctype.toUpperCase().indexOf(v[names[i]+"Type"].toUpperCase())!==-1){
-                                setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+10;
+                                setlist[names[i]+"dmg_bonus_t"]=setlist[names[i]+"dmg_bonus_t"]+10;
                             }
                         }
                     } else {
                         for (var i=0;i<names.length;i++){
                             if (v.lastctype.toUpperCase().indexOf(v[names[i]+"Type"].toUpperCase())!==-1){
-                                setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
+                                setlist[names[i]+"dmg_bonus_t"]=setlist[names[i]+"dmg_bonus_t"]+5;
                             }
                         }
                     }
@@ -554,14 +700,14 @@
                 
                 if (v.aurastn==1){
                     for (var i=0;i<names.length;i++){
-                        setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+3*v.Injuries;
+                        setlist[names[i]+"dmg_bonus_t"]=setlist[names[i]+"dmg_bonus_t"]+3*v.Injuries;
                     } 
                 } 
                 
                 if (v.typeatrue==1){
                     for (var i=0;i<names.length;i++){
                         if (v.typeatype.toUpperCase().indexOf(v[names[i]+"Type"].toUpperCase())!==-1){
-                            setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
+                            setlist[names[i]+"dmg_bonus_t"]=setlist[names[i]+"dmg_bonus_t"]+5;
                         }
                     }
                 }
@@ -569,7 +715,7 @@
                 if (v.flashfire==1){
                     for (var i=0;i<names.length;i++){
                         if (v[names[i]+"Type"].toUpperCase()=="FIRE"){
-                            setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
+                            setlist[names[i]+"dmg_bonus_t"]=setlist[names[i]+"dmg_bonus_t"]+5;
                         }
                     }
                 }
@@ -577,14 +723,14 @@
                 if (v.courage==1){
                     if (v.HitPoints/v.HitPoints_permmax<=1/3){
                         for (var i=0;i<names.length;i++){
-                            setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+5;
+                            setlist[names[i]+"dmg_bonus_t"]=setlist[names[i]+"dmg_bonus_t"]+5;
                         }
                     }
                 }
                 
                 if (v.hustle==1){
                     for (var i=0;i<names.length;i++){
-                        setlist[names[i]+"dam_B_t"]=setlist[names[i]+"dam_B_t"]+10;
+                        setlist[names[i]+"dmg_bonus_t"]=setlist[names[i]+"dmg_bonus_t"]+10;
                     }
                 }
                 
@@ -596,11 +742,11 @@
         var names;
         
         if (x.sourceAttribute.indexOf("_type")!==-1){
-            getlist=["dam_B",x.sourceAttribute.charAt(0).toUpperCase()+x.sourceAttribute.slice(1,x.sourceAttribute.indexOf("type"))+"Type","lastctrue","lastctype","HitPoints","HitPoints_permmax","flashfire","typeatrue","typeatype","aurastn","Injuries","Courage","hustle"];
+            getlist=["dmg_bonus",x.sourceAttribute.charAt(0).toUpperCase()+x.sourceAttribute.slice(1,x.sourceAttribute.indexOf("type"))+"Type","lastctrue","lastctype","HitPoints","HitPoints_permmax","flashfire","typeatrue","typeatype","aurastn","Injuries","Courage","hustle"];
             names = x.sourceAttribute.substring(0,x.sourceAttribute.indexOf("type"));
             names = [names.charAt(0).toUpperCase()+names.slice(1)];
         } else {
-            getlist=["dam_B","Struggle_Type","Move1_Type","Move2_Type","Move3_Type","Move4_Type","Move5_Type","Move6_Type","lastctrue","lastctype","HitPoints","HitPoints_permmax","flashfire","typeatrue","typeatype","aurastn","Injuries","Courage","hustle"];
+            getlist=["dmg_bonus","Struggle_Type","Move1_Type","Move2_Type","Move3_Type","Move4_Type","Move5_Type","Move6_Type","lastctrue","lastctype","HitPoints","HitPoints_permmax","flashfire","typeatrue","typeatype","aurastn","Injuries","Courage","hustle"];
             names = ["Struggle_","Move1_","Move2_","Move3_","Move4_","Move5_","Move6_"];
         }
         if (names.length > 1){
@@ -835,6 +981,7 @@
             var char = JSON.parse(v["input"]);
             
             var x; var t; var rmoves; var rcaps; var redges; var rabils; var rfeats; var i;
+            t = {};
             
             getSectionIDs("repeating_moves", function(idarray) {
                 rmoves = idarray;
@@ -858,15 +1005,16 @@
                                 if (rfeats==undefined){rfeats=[];}
                                 if (rabils==undefined){rabils=[];}
                                 
-                                t = {};
+                                
                                 
                                 for (var property in char) {
                                     if (char.hasOwnProperty(property)) {
                                         
-                                        if (property.match(/Move\s*\d*/gi)!=null) {
+                                        console.log(`${property}`);
+                                            
+                                        if (property.match(/Move\s*\d*/gi) != null) {
                                         // Import Moves
-                                            console.log("Found Move");
-                                            //t = {};
+                                            
                                             i = generateRowID();
                                             
                                             for (var prop in char[property]){
@@ -903,7 +1051,7 @@
                                                             t[x + "AC"] = parseInt(char[property][prop])||0;
                                                             break;
                                                         case "DB":
-                                                            t[x + "DB"] = parseInt(char[property][prop])||0;
+                                                            t[x + "DB"] = char[property][prop];
                                                             break;
                                                         case "DType":
                                                             t[x + "Cat"] = char[property][prop];
@@ -1025,6 +1173,8 @@
                                             t[property]= char[property] ;
                                         }
                                     }
+                                    
+                                    
                                 }
                                 
                                 setAttrs(t);
@@ -1052,34 +1202,54 @@
     };
   
     var evaUp = function () {
-        getAttrs(["DEF_total","SPDEF_total","SPEED_total", "Eva"], function(v) {
-            def = Math.min(Math.floor(v["DEF_total"]/5),6);
-            sdef = Math.min(Math.floor(v["SPDEF_total"]/5),6);
-            speed = Math.min(Math.floor(v["SPEED_total"]/5),6);
-            eva = v["Eva"];
-            setAttrs({
-                PhysEvade: Math.min(def*1 + eva*1,9),
-                SpecEvade: Math.min(sdef*1 + eva*1,9),
-                SpeedEvade: Math.min(speed*1 + eva*1,9)
-            });
+        var update = {};
+        getAttrs(["DEF_total","SPDEF_total","SPEED_total", "Eva", "PEB","ScEB", "SpEB"], function(v) {
+            
+            var def   = parseInt(v["DEF_total"])   || 0;
+            var sdef  = parseInt(v["SPDEF_total"]) || 0;
+            var speed = parseInt(v["SPEED_total"]) || 0;
+            
+            var eva   = parseInt(v["Eva"]) || 0;
+            
+            var peb  = parseInt(v["PEB"]) ||0;
+            var sceb = parseInt(v["ScEB"])||0;
+            var speb = parseInt(v["SpEB"])||0;
+            
+            def   = Math.min(Math.floor(  def/5),6);
+            sdef  = Math.min(Math.floor( sdef/5),6);
+            speed = Math.min(Math.floor(speed/5),6);
+
+            update["PhysEvade_calc"]  = Math.min( eva + peb  + def,  9);
+            update["SpecEvade_calc"]  = Math.min( eva + sceb + sdef, 9);
+            update["SpeedEvade_calc"] = Math.min( eva + speb + speed,9);
+            
+            setAttrs(update);
         });
     }; 
     
     var hpCalc = function (){
         getAttrs(["Level","CharType","HP_Total", "Injuries"], function(v) {
-            x = Math.floor(v.Level*(1*v.CharType + 1) + v.HP_Total*3 + 10);
+            
+            var level = parseInt(v["Level"]) || 0;
+            var char  = parseInt(v["CharType"]) || 0;
+            var hp    = parseInt(v["HP_Total"]) || 0;
+            var injuries = parseInt(v["Injuries"]) || 0;
+            
+            var x = Math.floor(level * (char + 1) + hp * 3 + 10);
+            
             setAttrs({
-                HitPoints_max:Math.floor(x * (1-1*v.Injuries/10)),
-                HitPoints_permmax:x,
-                a75_hp:Math.floor(x*0.75),
-                a50_hp:Math.floor(x*0.5),
-                a25_hp:Math.floor(x*0.25),
-                a13_hp:Math.floor(x*(1/3)),
-                a16_hp:Math.floor(x*(1/6)),
-                a18_hp:Math.floor(x*(1/8)),
+                HitPoints_max: Math.floor(x * (1 - (injuries/10) ) ),
+                HitPoints_permmax: x,
+                a75_hp: Math.floor(x*0.75),
+                a50_hp: Math.floor(x*0.5),
+                a25_hp: Math.floor(x*0.25),
+                a13_hp: Math.floor(x*(1/3)),
+                a16_hp: Math.floor(x*(1/6)),
+                a18_hp: Math.floor(x*(1/8)),
                 a110_hp:Math.floor(x*(1/10)),
                 a116_hp:Math.floor(x*(1/16))
             });
+            
         });
     };
     
@@ -1093,9 +1263,9 @@
     };
     
     var dbCalc = function (v){
-        if (isNaN(v)){
+        if (isNaN(v) || v == 0){
             return {amount:"0",dice:"d0",bonus:"0"};
-        } else if (v>14){
+        }else if (v>14){
             if (v>21){
                 if (v>24){
                     if (v>26){
@@ -1198,155 +1368,413 @@
         }
     };
     
+    var expCalc = function(v){
+        let exp = 0;
+        switch(v){
+            case 1:  exp = 0; break;
+            case 2:  exp = 10; break;
+            case 3:  exp = 20; break;
+            case 4:  exp = 30; break;
+            case 5:  exp = 40; break;
+            case 6:  exp = 50; break;
+            case 7:  exp = 60; break;
+            case 8:  exp = 70; break;
+            case 9:  exp = 80; break;
+            case 10: exp = 90; break;
+            case 11: exp = 110; break;
+            case 12: exp = 135; break;
+            case 13: exp = 160; break;
+            case 14: exp = 190; break;
+            case 15: exp = 220; break;
+            case 16: exp = 250; break;
+            case 17: exp = 285; break;
+            case 18: exp = 320; break;
+            case 19: exp = 360; break;
+            case 20: exp = 400; break;
+            case 21: exp = 460; break;
+            case 22: exp = 530; break;
+            case 23: exp = 600; break;
+            case 24: exp = 670; break;
+            case 25: exp = 745; break;
+            case 26: exp = 820; break;
+            case 27: exp = 900; break;
+            case 28: exp = 990; break;
+            case 29: exp = 1075; break;
+            case 30: exp = 1165; break;
+            case 31: exp = 1260; break;
+            case 32: exp = 1355; break;
+            case 33: exp = 1455; break;
+            case 34: exp = 1555; break;
+            case 35: exp = 1660; break;
+            case 36: exp = 1770; break;
+            case 37: exp = 1880; break;
+            case 38: exp = 1995; break;
+            case 39: exp = 2110; break;
+            case 40: exp = 2230; break;
+            case 41: exp = 2355; break;
+            case 42: exp = 2480; break;
+            case 43: exp = 2610; break;
+            case 44: exp = 2740; break;
+            case 45: exp = 2875; break;
+            case 46: exp = 3015; break;
+            case 47: exp = 3155; break;
+            case 48: exp = 3300; break;
+            case 49: exp = 3445; break;
+            case 50: exp = 3645; break;
+            case 51: exp = 3850; break;
+            case 52: exp = 4060; break;
+            case 53: exp = 4270; break;
+            case 54: exp = 4485; break;
+            case 55: exp = 4705; break;
+            case 56: exp = 4930; break;
+            case 57: exp = 5160; break;
+            case 58: exp = 5390; break;
+            case 59: exp = 5625; break;
+            case 60: exp = 5865; break;
+            case 61: exp = 6110; break;
+            case 62: exp = 6360; break;
+            case 63: exp = 6610; break;
+            case 64: exp = 6865; break;
+            case 65: exp = 7125; break;
+            case 66: exp = 7390; break;
+            case 67: exp = 7660; break;
+            case 68: exp = 7925; break;
+            case 69: exp = 8205; break;
+            case 70: exp = 8485; break;
+            case 71: exp = 8770; break;
+            case 72: exp = 9060; break;
+            case 73: exp = 9350; break;
+            case 74: exp = 9645; break;
+            case 75: exp = 9945; break;
+            case 76: exp = 10250; break;
+            case 77: exp = 10560; break;
+            case 78: exp = 10870; break;
+            case 79: exp = 11185; break;
+            case 80: exp = 11505; break;
+            case 81: exp = 11910; break;
+            case 82: exp = 12320; break;
+            case 83: exp = 12735; break;
+            case 84: exp = 13155; break;
+            case 85: exp = 13580; break;
+            case 86: exp = 14010; break;
+            case 87: exp = 14445; break;
+            case 88: exp = 14885; break;
+            case 89: exp = 15330; break;
+            case 90: exp = 15780; break;
+            case 91: exp = 16235; break;
+            case 92: exp = 16695; break;
+            case 93: exp = 17160; break;
+            case 94: exp = 17630; break;
+            case 95: exp = 18105; break;
+            case 96: exp = 18585; break;
+            case 97: exp = 19070; break;
+            case 98: exp = 19560; break;
+            case 99: exp = 20055; break;
+            case 100: exp = 20555; break;
+            default: exp = 0; break;
+        }
+    
+        return exp;
+    }
+    
 </script>
+
 <rolltemplate class="sheet-rolltemplate-PTU">
-    <table>
+    <table class='sheet-template-table' >
         {{^title}}
         {{^dis}}
         {{^skill}}
-            <tr><th colspan="2">{{nick}} uses<br/>{{name}}!</th></tr>
-            {{#AC}}
-            {{^phy}}
-            {{^spec}}
-            {{^status}}
-                <tr><td colspan="2"><span class="tcat">AC: </span>{{AR}} ≥ {{AC}} + Target Evasion</td></tr>
+        {{#nick}}
+            <tr>
+                <th colspan="2">{{nick}} uses<br/>{{name}}!</th>
+            </tr>
+        {{/nick}}
+        {{^nick}}
+            <tr>
+                <th colspan="2">{{name}}!</th>
+            </tr>
+        {{/nick}}
+        
+        {{#ac}}
+            {{#rollGreater() ac 0}}
+                <tr>
+                    <td colspan="2">
+                        <span class="tcat">AC: </span>{{ar}} ≥ Target Evasion</td>
+                </tr>
                 <tr><td colspan="2"><span class="tcat">Crits On: </span>{{critsOn}}+</td></tr>
-            {{/status}}
-            {{#status}}
-                {{#rollGreater() AR status}}
-                <tr><td class="sheet-hit" colspan="2">Hit!</td></tr>
-                {{/rollGreater() AR status}}
-                {{#rollTotal() AR status}}
-                <tr><td class="sheet-hit" colspan="2">Hit!</td></tr>
-                {{/rollTotal() AR status}}
-                {{#rollLess() AR status}}
-                <tr><td class="sheet-miss" colspan="2">Miss!</td></tr>
-                {{/rollLess() AR status}}
-                <tr><td colspan="2"><span class="tcat">AC: </span>{{AR}} ≥ {{AC}} + Target Evasion</td></tr>
-            {{/status}}
-            {{/spec}}
-            {{#spec}}
-                {{#rollGreater() AR spec}}
-                <tr><td class="sheet-hit" colspan="2">Hit!</td></tr>
-                {{/rollGreater() AR spec}}
-                {{#rollTotal() AR spec}}
-                <tr><td class="sheet-hit" colspan="2">Hit!</td></tr>
-                {{/rollTotal() AR spec}}
-                {{#rollLess() AR spec}}
-                <tr><td class="sheet-miss" colspan="2">Miss!</td></tr>
-                {{/rollLess() AR spec}}
-                <tr><td colspan="2"><span class="tcat">AC: </span>{{AR}} ≥ {{AC}} + Target Evasion</td></tr>
-            {{/spec}}
-            {{/phy}}
-            {{#phy}}
-                {{#rollGreater() AR phy}}
-                <tr><td class="sheet-hit" colspan="2">Hit!</td></tr>
-                {{/rollGreater() AR phy}}
-                {{#rollTotal() AR phy}}
-                <tr><td class="sheet-hit" colspan="2">Hit!</td></tr>
-                {{/rollTotal() AR phy}}
-                {{#rollLess() AR phy}}
-                <tr><td class="sheet-miss" colspan="2">Miss!</td></tr>
-                {{/rollLess() AR phy}}
-                <tr><td colspan="2"><span class="tcat">AC: </span>{{AR}} ≥ {{AC}} + Target Evasion</td></tr>
-            {{/phy}}
-            {{/AC}}
-            {{^AC}}
-                <tr><td colspan="2"><span class="tcat">AC: </span>No Check</td></tr>
-            {{/AC}}
-            <tr><td colspan="2"><span class="tcat">Type: </span>{{Type}}</td></tr>
-            <tr><td colspan="2"><span class="tcat">Frequency: </span>{{Frequency}}</td></tr>
-            {{#damage}}
-            {{^damage2}}
-                <tr>
-                    <td><span class="tcat">Damage: </span>{{damage}}</td><td><span class="tcat">Crit: </span>{{dmgcrit}}</td>
-                </tr>
-           {{/damage2}}
-            {{#damage2}}
-            {{^damage3}}
-                <tr>
-                    <td colspan="2"><span class="tcat">Second Damage Roll: </span>{{AR2}} ≥ {{AC2}} + Target Evasion</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Damage (One Hit): </span>{{damage}}</td><td><span class="tcat"> Crit (Add into other Damage): </span>{{dmgcrit}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Damage (Two Hits): </span>{{damage2}}</td><td><span class="tcat">Crit (Add into other Damage): </span>{{dmgcrit2}}</td>
-                </tr>
-            {{/damage3}}
-            {{#damage3}}
-            {{#roll}}
-                <tr>
-                    <td colspan="2"><span class="tcat">Roll for Number o' Hits: </span>{{roll}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Damage (Roll = 1): </span>{{damage}}</td><td><span class="tcat">Crit: </span>{{dmgcrit}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Damage (Roll = 2-3): </span>{{damage2}}</td><td><span class="tcat">Crit: </span>{{dmgcrit2}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Damage (Roll = 4-6): </span>{{damage3}}</td><td><span class="tcat">Crit: </span>{{dmgcrit3}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Damage (Roll = 7): </span>{{damage4}}</td><td><span class="tcat">Crit: </span>{{dmgcrit4}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Damage (Roll = 8): </span>{{damage5}}</td><td><span class="tcat">Crit: </span>{{dmgcrit5}}</td>
-                </tr>
-            {{/roll}}
-            {{^roll}}
-                <tr>
-                    <td><span class="tcat">First Turn: </span>{{damage}}</td><td><span class="tcat">Crit: </span>{{dmgcrit}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Second Turn: </span>{{damage2}}</td><td><span class="tcat">Crit: </span>{{dmgcrit2}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Third Turn: </span>{{damage3}}</td><td><span class="tcat">Crit: </span>{{dmgcrit3}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Fourth Turn: </span>{{damage4}}</td><td><span class="tcat">Crit: </span>{{dmgcrit4}}</td>
-                </tr>
-                <tr>
-                    <td><span class="tcat">Fifth+ Turn: </span>{{damage5}}</td><td><span class="tcat">Crit: </span>{{dmgcrit5}}</td>
-                </tr>
-            {{/roll}}
-            {{/damage3}}
-            {{/damage2}}
+            {{/rollGreater() ac 0}}
+        {{/ac}}
+            
+        {{^ac}}
+            <!--tr><td colspan="2"><span class="tcat">AC: </span>No Check</td></tr-->
+        {{/ac}}
+            
+        {{#type}}
+            <tr>
+                <td colspan="2"><span class="tcat">Type: </span>{{type}}</td>
+            </tr>
+        {{/type}}
+            
+        {{#frequency}}
+            <tr>
+                <td colspan="2"><span class="tcat">Frequency: </span>{{frequency}}</td>
+            </tr>
+        {{/frequency}}
+            
+        {{#damage}}
+            <tr>
+                <td><span class="tcat">Damage: </span>{{damage}}</td>
+                {{#rollGreater() ac 0}}
+                    {{#rollWasCrit() ar}}
+                        <span class="tcat">Crit: </span>{{dmgcrit}}</td>
+                    {{/rollWasCrit() ar}}
+                {{/rollGreater() ac 0}}
+            </tr>
+            {{#dmgcat}}
                 <tr>
                     <td colspan="2"><span class="tcat">Damage Category: </span>{{dmgcat}}</td>
                 </tr>
-            {{/damage}}
-            <tr>
-                <td colspan="2"><span class="tcat">Range: </span>{{range}}</td>
-            </tr>
+            {{/dmgcat}}
+        {{/damage}}
+            
+            {{#range}}
+                <tr>
+                    <td colspan="2"><span class="tcat">Range: </span>{{range}}</td>
+                </tr>
+            {{/range}}
+            
             {{#effect}}
-            <tr>
-                <td colspan="2"><span class="tcat">Effect: </span>{{effect}}</td>
-            </tr>
+                <tr>
+                    <td colspan="2">{{effect}}</td>
+                </tr>
             {{/effect}}
+            
         {{/skill}}
+        
         {{#skill}}
             <tr><th colspan="2">{{nick}}:<br/>Rolling {{skill}}</th></tr>
             <tr><td colspan="2"><span class="tcat">Result: </span>{{SL}}</td></tr>
         {{/skill}}
+        
         {{/dis}}
+        
         {{#dis}}
             <tr><th colspan="2">{{dis}}:<br/>{{name}}</th></tr>
-            <tr><td colspan="2"><span class="tcat">Frequency: </span>{{freq}}</td></tr>
+            <tr><td colspan="2"><span class="tcat">Frequency: </span>{{frequency}}</td></tr>
             {{#tar}}
             <tr><td colspan="2"><span class="tcat">Target: </span>{{tar}}</td></tr>
             {{/tar}}
             <tr><td colspan="2"><span class="tcat">Description: </span>{{desc}}</td></tr>
         {{/dis}}
         {{/title}}
+        
         {{#title}}
         <tr><th colspan="2">{{title}}</th></tr>
-        {{#allprops() title Message}}
+        {{#allprops() title message}}
             <tr><td class='sheet-table-header'>{{key}}</td><td>{{value}}</td></tr>
-        {{/allprops() title Message}}
+        {{/allprops() title message}}
+        {{#message}}
+            <tr><td colspan="2" >{{message}}</td></tr>
+        {{/message}}
         {{/title}}
+    </table>
+</rolltemplate>
+
+<rolltemplate class="sheet-rolltemplate-PTU_Move">
+    <table class='sheet-template-table' >
+        <tr>
+            <th colspan="2"><div>{{name}}</div></th>
+        </tr>
+        
+        {{#range}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Range</div></td>
+            <td colspan="1"><div>{{range}}</div></td>
+        </tr>
+        {{/range}}
+        
+        {{#frequency}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Frequency</div></td>
+            <td colspan="1"><div>{{frequency}}</div></td>
+        </tr>
+        {{/frequency}}
+        
+        {{#type}}
+        <tr class='sheet-roll-type'>
+            <td colspan="1"><div class="sheet-label">Type</div></td>
+            <td colspan="1"><div>{{type}}</div></td>
+        </tr>
+        {{/type}}
+        
+        {{#cat}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Category</div></td>
+            <td colspan="1"><div>{{cat}}</div></td>
+        </tr>
+        {{/cat}}
+        
+        {{^ac}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">AC</div></td>
+            <td colspan="1"><div>No Check</div></td>
+        </tr>
+        {{/ac}}
+        
+        {{#ac}}
+        {{#rollGreater() ac 0}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">AC</div></td>
+            <td colspan="1"><div>{{ar}} &ge; {{^evasion}} Target Evasion {{/evasion}}{{#evasion}} {{evasion}} {{/evasion}}</div></td>
+        </tr>
+        <tr>
+            <td colspan="1"><div class="sheet-label">Crit On</div></td>
+            <td colspan="1"><div>{{critsOn}}+ </div></td>
+        </tr>
+        {{/rollGreater() ac 0}}
+        {{/ac}}
+        
+        
+        {{#rollGreater() db 0}}
+        {{#db}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">DB {{db}}</div></td>
+            <td colspan="1"><div>{{db_roll}} {{#roll}}= {{roll}} {{/roll}}</div></td>
+        </tr>
+        {{/db}}
+        {{/rollGreater() db 0}}
+        
+        
+        {{^db}}
+        {{#damage}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Damage</div></td>
+            <td colspan="1"><div>{{damage}} </div></td>
+        </tr>
+        {{/damage}}
+        {{/db}}
+        
+        {{#contest_type}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Contest Type</div></td>
+            <td colspan="1"><div>{{contest_type}} </div></td>
+        </tr>
+        {{/contest_type}}
+        
+        {{#contest_effect}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Contest Effect</div></td>
+            <td colspan="1"><div>{{contest_effect}} </div></td>
+        </tr>
+        {{/contest_effect}}
+        
+        {{#effects}}
+        <tr>
+            <td colspan="2"><div class="sheet-label sheet-block" style="text-align:center;font-weight:bold">Effects</div></td>
+        </tr>
+        <tr>
+            <td colspan="2"><div class="sheet-spacing ">{{effects}} </div></td>
+        </tr>
+        {{/effects}}
+        
+    </table>
+</rolltemplate>
+
+<rolltemplate class="sheet-rolltemplate-PTU_Skill">
+    <table class='sheet-template-table' >
+        <tr>
+            <th colspan="2"><div>{{name}}</div></th>
+        </tr>
+        
+        {{#range}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Range</div></td>
+            <td colspan="1"><div>{{range}}</div></td>
+        </tr>
+        {{/range}}
+        
+        {{#frequency}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Frequency</div></td>
+            <td colspan="1"><div>{{frequency}}</div></td>
+        </tr>
+        {{/frequency}}
+        
+        {{#type}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Type</div></td>
+            <td colspan="1"><div>{{type}}</div></td>
+        </tr>
+        {{/type}}
+        
+        {{#cat}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Category</div></td>
+            <td colspan="1"><div>{{cat}}</div></td>
+        </tr>
+        {{/cat}}
+        
+        {{^ac}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">AC</div></td>
+            <td colspan="1"><div>No Check</div></td>
+        </tr>
+        {{/ac}}
+        
+        {{#ac}}
+        {{#rollGreater() ac 0}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">AC</div></td>
+            <td colspan="1"><div>{{ac}}</div></td>
+        </tr>
+        <tr>
+            <td colspan="1"><div class="sheet-label">Crit On</div></td>
+            <td colspan="1"><div>{{critsOn}}+ </div></td>
+        </tr>
+        {{/rollGreater() ac 0}}
+        {{/ac}}
+        
+        {{#rollGreater() db 0}}
+        {{#db}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">DB {{db}}</div></td>
+            <td colspan="1"><div>{{db_roll}} </div></td>
+        </tr>
+        {{/db}}
+        {{/rollGreater() db 0}}
+        
+        {{^db}}
+        {{#damage}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Damage</div></td>
+            <td colspan="1"><div>{{damage}} </div></td>
+        </tr>
+        {{/damage}}
+        {{/db}}
+        
+        {{#contest_type}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Contest Type</div></td>
+            <td colspan="1"><div>{{contest_type}} </div></td>
+        </tr>
+        {{/contest_type}}
+        
+        {{#contest_effect}}
+        <tr>
+            <td colspan="1"><div class="sheet-label">Contest Effect</div></td>
+            <td colspan="1"><div>{{contest_effect}} </div></td>
+        </tr>
+        {{/contest_effect}}
+        
+        {{#effects}}
+        <tr>
+            <td colspan="2"><div class="sheet-label sheet-block">Effects</div></td>
+        </tr>
+        <tr>
+            <td colspan="2"><div class="sheet-spacing ">{{effects}} </div></td>
+        </tr>
+        {{/effects}}
+        
     </table>
 </rolltemplate>
 
@@ -1360,7 +1788,11 @@
 <div class="sheet-oldtab-group">
     <div class="sheet-oldtab">
         <input type="radio" name="attr_tab" class="sheet-oldtab sheet-oldtab1" value="1"  checked="checked" />
-        <span title="Traditional Page"></span>
+        <span title="Core Page"></span>
+    </div>
+    <div class="sheet-oldtab">
+        <input type="radio" name="attr_tab" class="sheet-oldtab sheet-oldtab1" value="2" />
+        <span title="Notes Page"></span>
     </div>
     <!--div class="sheet-oldtab">
         <input type="radio" name="attr_tab" class="sheet-oldtab sheet-oldtab2" value="2"  />
@@ -1377,16 +1809,16 @@
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <span>
         <div class="sheet-oldtab">
-            <input type="radio" name="attr_whisper" class="sheet-oldtab" value=" " />
-            <span title="Public" ></span>
-        </div>
-        <div class="sheet-oldtab">
             <input type="radio" name="attr_whisper" class="sheet-oldtab" value="/w gm " checked="checked"/>
             <span title="GM" ></span>
         </div>
+        <div class="sheet-oldtab">
+            <input type="radio" name="attr_whisper" class="sheet-oldtab" value=" " />
+            <span title="Public" ></span>
+        </div>
     </span>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <span>
+    <!--span>
         <div class="sheet-oldtab">
             <input type="radio" name="attr_target" class="sheet-oldtab" value="0" checked="checked"/>
             <span title="Non-Targeted" ></span>
@@ -1395,20 +1827,26 @@
             <input type="radio" name="attr_target" class="sheet-oldtab" value="1" />
             <span title="Targeted" ></span>
         </div>
+    </span-->
+    
+    <span>
+        
+            <div class="sheet-oldtab">
+                <input type="radio" name="attr_CharType" class="sheet-oldtab" value="0" checked/>
+                <span title="Pokemon" ></span>
+            </div>
+            <div class="sheet-oldtab">
+                <input type="radio" name="attr_CharType" class="sheet-oldtab" value="1" />
+                <span title="Trainer" ></span>
+            </div>
+     
     </span>
+    
     
 </div>
 <br />
-<div>
-    <div class="sheet-oldtab">
-        <input type="radio" name="attr_CharType" class="sheet-oldtab" value="1" />
-        <span title="Trainer" ></span>
-    </div>
-    <div class="sheet-oldtab">
-        <input type="radio" name="attr_CharType" class="sheet-oldtab" value="0" checked/>
-        <span title="Pokemon" ></span>
-    </div>
-</div>
+
+
 
 <input type="hidden" name="attr_tab" class="sheet-oldtab" value="1" />
 <input type="hidden" name="attr_target" class="sheet-targeted" />
@@ -1420,6 +1858,7 @@
 -->
 
 <!-- Traditional -->
+<input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
 <div class="sheet-oldtab1">
     <div class="sheet-main-header">
         
@@ -1433,6 +1872,8 @@
             
             <div class="sheet-table sheet-basic-info">
                 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
+                
+                <!-- Name -->
                 <div class="sheet-row ">
                     <div style="width:30%">
                         <span class='sheet-label'>Name</span>
@@ -1440,6 +1881,8 @@
                         <span><input type="text" name="attr_character_name" style="width:100%"\></span>
                     </div>
                 </div>
+                
+                <!-- Species -->
                 <div class="sheet-row sheet-pokemon">
                     <div style="width:30%">
                         <span class='sheet-label' >Species</span>
@@ -1447,6 +1890,8 @@
                         <span><input type="text" name="attr_species" style="width:100%"\></span>
                     </div>
                 </div>
+                
+                <!-- Type -->
                 <div class="sheet-row sheet-pokemon">
                     <div style="width:30%">
                         <span class='sheet-label' >Type</span>
@@ -1500,8 +1945,10 @@
                         </select-->
                     </div>
                 </div>
+                
+                <!-- Gender | Age -->
                 <div class="sheet-row">
-                    <input type="hidden" name="attr_CharType" class="sheet-creature" value="10" min='0' />
+                    <input type="hidden" name="attr_CharType" class="sheet-creature" value="0"/>
                     <div style="width:30%">
                         <span class='sheet-label' >Gender</span>
                     </div><div style="width:40%">
@@ -1512,6 +1959,8 @@
                         <span ><input type="number" name="attr_age"  style="width:100%"\></span>
                     </div>
                 </div>
+                
+                <!-- Background -->
                 <div class="sheet-row sheet-trainer">
                     <div style="width:30%">
                         <span class='sheet-label' >Background</span>
@@ -1533,7 +1982,7 @@
                         </div>
                         <div>
                             <span>Novice</span>
-                            <input type="text" name="attr_background_adept" />
+                            <input type="text" name="attr_background_novice" />
                         </div>
                         <div>
                             <span>Pathetic</span>
@@ -1541,6 +1990,8 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Level -->
                 <div class="sheet-row">
                     <div style="width:30%">
                         <span class='sheet-label' >Level</span>
@@ -1549,6 +2000,7 @@
                     </div>
                 </div>
                 
+                <!-- EXP -->
                 <div class="sheet-row">
                     <div style="width:30%">
                         <span class='sheet-label' >EXP</span>
@@ -1560,6 +2012,8 @@
                         <span> <input type="number" name="attr_exp_max" style="width:100%" value="10" min='0'> </span>
                     </div>
                 </div>
+                
+                <!-- Nature -->
                 <div class="sheet-row sheet-pokemon">
                     <div style="width:30%">
                         <span class='sheet-label' >Nature</span>
@@ -1588,6 +2042,8 @@
                         </select>
                     </div>
                 </div>
+                
+                <!-- Held Item -->
                 <div class="sheet-row sheet-pokemon">
                     <div style="width:30%">
                         <span class='sheet-label' >Held Item</span>
@@ -1595,6 +2051,8 @@
                         <span><input type="text" name="attr_heldItem" \></span>
                     </div>
                 </div>
+                
+                <!-- Size | Weight -->
                 <div class="sheet-row">
                     <div style="width:30%">
                         <span class='sheet-label' >Height/Size</span>
@@ -1607,11 +2065,11 @@
                     </div><div style="width:50%">
                         <span><input type="text" name="attr_weight" style="width:100%;text-align:center" \></span>
                     </div><div style="width:20%">
-                        <span><input type="number" name="attr_weightClass" style="width:100%" value='4' min='0' \></span>
+                        <span><input type="number" name="attr_weightClass" style="width:100%"  min='0' \></span>
                     </div>
                 </div>
                 
-                
+                <!-- AP -->
                 <div class="sheet-row sheet-trainer">
                     <div style="width:30%">
                         <span class='sheet-label' >AP</span>
@@ -1624,6 +2082,8 @@
                         <span> <input type="number" name="attr_ap_max" style="width:100%"  \> </span>
                     </div>
                 </div>
+                
+                <!-- AP repeating -->
                 <div class="sheet-row sheet-trainer">
                     <fieldset class="repeating_apCost">
                         <div class="sheet-ap-item ">
@@ -1642,11 +2102,14 @@
                         </div>
                     </fieldset>
                 </div>
+                
             </div>
             
             <br />
             <h3 class="sheet-header">Stats</h3>
-            <table class='sheet-table'>
+            
+            <!-- Stats -->
+            <table class='sheet-table sheet-basic-info'>
                 <tr>
                     <th>Stat</th>
                     <th>Base Stat</th>
@@ -1812,7 +2275,7 @@
                     <td colspan="2" class='sheet-table-header'>Damage Bonus/Penalty:</td>
                     <td align="center">&nbsp;</td>
                     <td align="center">&nbsp;</td>
-                    <td align="center"><input type='number' value='0' name='attr_dam_B'/></td>
+                    <td align="center"><input type='number' value='0' name='attr_dmg_bonus'/></td>
                 </tr>
                 <tr>
                     <td colspan="2" class='sheet-table-header'>Damage Resistance:</td>
@@ -1823,15 +2286,22 @@
                 <tr>
                     <td colspan="3" class='sheet-table-header'>Add Initiative (Select Token First!):</td>
                     <td align="center"><input type ='number' value = '0' name='attr_init_bonus'></td>
-                    <td align="center"><button type='roll' value='@{selected|token_name} has [[@{selected|SPEED_Total}+@{selected|init_bonus}+?{Non-Speed modifier|0}&{tracker}]] speed.' name='roll_init' /></td>
+                    <td align="center"><button type='roll' value="@{whisper} &{template:PTU}{{title= @{character_name}'s Initiative }}{{message= [[@{SPEED_total} + @{init_bonus} + ([[1d20 ]] / 100) &{tracker}]] }}" name='roll_init' /></td>
                 </tr>
             </table>
+            
+            <h3 class="sheet-header">Notes</h3>
+            <div>
+                <textarea name='attr_notes' style="height: 300px;"></textarea>
+            </div>
+            
         </div>
         <div class='sheet-col'>
             
+            <!-- Health & Injuries -->
             <h3 class="sheet-header">HP</h3>
-            
             <div class="sheet-table sheet-basic-info">
+                <input type="hidden" name="attr_Injuries" value="0" />
                 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                 <div class="sheet-row">
                     <div style="width:50%">
@@ -1843,6 +2313,7 @@
                 <div class="sheet-row">
                     <div style="width:50%">
                         <span class='sheet-label' >Current Hit Point</span>
+                        <button type='roll' name='act_calcDamage'></button>
                     </div><div style="width:30%">
                         <span><input type="number" name="attr_HitPoints" style="width:100%" value='0' \></span>
                     </div>
@@ -1865,10 +2336,11 @@
                     <div style="width:50%">
                         <span class='sheet-label' >Injuries</span>
                     </div><div style="width:30%">
+                        <input type="hidden" name="attr_Injuries_max" value='10' \>
                         <span><input type="number" name="attr_Injuries" style="width:100%" value='0' \></span>
                     </div>
                 </div>
-                <div class="sheet-row">
+                <!--div class="sheet-row">
                     <fieldset class="repeating_injuries">
                         <div class="sheet-injury-item" >
                             <div style="display:inline-block;width:15%;" >
@@ -1880,14 +2352,14 @@
                             </div>
                         </div>
                     </fieldset>
-                </div>
+                </div-->
             </div>
             
             
             <br/>
             
+            <!-- HP Markers -->
             <h3 class='sheet-header'>HP Markers</h3>
-            
             <div class="sheet-table sheet-basic-info">
                 <div class="sheet-row">
                     <div style="width:25%">
@@ -1932,7 +2404,7 @@
                         <span class="sheet-field" name="attr_a110_hp" style="width:100%"></span>
                     </div><div style="width:10%">
                     </div><div style="width:25%">
-                        <span class='sheet-label' >1/6th</span>
+                        <span class='sheet-label' >1/16th</span>
                     </div><div style="width:20%">
                         <span class="sheet-field" name="attr_a116_hp" style="width:100%"></span>
                     </div>
@@ -1942,8 +2414,8 @@
             
             <br />
             
+            <!-- Evasions -->
             <h3 class="sheet-header">Evasions</h3>
-            
             <div class="sheet-table sheet-basic-info">
                 <div class="sheet-row">
                     <div style="width:30%">
@@ -1994,98 +2466,117 @@
                 
             <br />
             
+            <!-- Capabilities -->
             <h3 class="sheet-header">Capabilities</h3>
-            
             <div class="sheet-table sheet-basic-info">
                 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                 <div class="sheet-row ">
-                    <div style="width:30%">
+                    <div style="width:40%">
+                        <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Overland</span>
-                    </div><div style="width:20%">
+                        <!--<input type="number" name='attr_Overland' class="sheet-pokemon" value='0' />-->
+                        <input type="number" name='attr_Overland' value='0' />
+                    </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
                         <input type="number" name="attr_Overland_bonus"  style="width:100%" value="0" />
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <input type="hidden" name="attr_Overland"  value="0" />
-                        <span name="attr_Overland" style="width:100%" class="sheet-field">0</span>
+                        <input type="hidden" name="attr_Overland_calc"  value="0" />
+                        <span name="attr_Overland_calc" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
-                    <div style="width:30%">
+                    <div style="width:40%">
+                        <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Swim</span>
-                    </div><div style="width:20%">
+                        <!--<input type="number" name='attr_Swim' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_Swim' value='0' />
+                    </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
                         <input type="number" name="attr_Swim_bonus"  style="width:100%" value="0" />
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <input type="hidden" name="attr_Swim"  value="0" />
-                        <span name="attr_Swim" style="width:100%" class="sheet-field">0</span>
+                        <input type="hidden" name="attr_Swim_calc"  value="0" />
+                        <span name="attr_Swim_calc" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
-                    <div style="width:30%">
+                    <div style="width:40%">
+                        <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Long Jump</span>
-                    </div><div style="width:20%">
+                        <!--<input type="number" name='attr_LJ' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_LJ' value='0' />
+                    </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
                         <input type="number" name="attr_LJ_bonus"  style="width:100%" value="0"  />
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <input type="hidden" name="attr_LJ"  value="0" />
-                        <span name="attr_LJ" style="width:100%" class="sheet-field">0</span>
+                        <input type="hidden" name="attr_LJ_calc"  value="0" />
+                        <span name="attr_LJ_calc" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
-                    <div style="width:30%">
+                    <div style="width:40%">
+                        <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >High Jump</span>
-                    </div><div style="width:20%">
+                        <!--<input type="number" name='attr_HJ' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_HJ' value='0' />
+                    </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
                         <input type="number" name="attr_HJ_bonus"  style="width:100%" value="0"  />
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <input type="hidden" name="attr_HJ"  value="0" />
-                        <span name="attr_HJ" style="width:100%" class="sheet-field">0</span>
+                        <input type="hidden" name="attr_HJ_calc"  value="0" />
+                        <span name="attr_HJ_calc" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
-                    <div style="width:30%">
+                    <div style="width:40%">
+                        <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Power</span>
-                    </div><div style="width:20%">
+                        <!--<input type="number" name='attr_Power' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_Power' value='0' />
+                    </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
                         <input type="number" name="attr_Power_bonus"  style="width:100%" value="0"  />
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <input type="hidden" name="attr_Power"  value="0" />
-                        <span name="attr_Power" style="width:100%" class="sheet-field">0</span>
+                        <input type="hidden" name="attr_Power_calc"  value="0" />
+                        <span name="attr_Power_calc" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
-                    <div style="width:30%">
+                    <div style="width:40%">
+                        <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                         <span class='sheet-label' >Throw</span>
-                    </div><div style="width:20%">
+                        <!--<input type="number" name='attr_Throw' class='sheet-pokemon' value='0' />-->
+                        <input type="number" name='attr_Throw' value='0' />
+                    </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
                     </div><div style="width:10%">
                         <input type="number" name="attr_Throw_bonus"  style="width:100%" value="0"  />
                     </div><div style="width:20%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <input type="hidden" name="attr_Throw"  value="0" />
-                        <span name="attr_Throw" style="width:100%" class="sheet-field">0</span>
+                        <input type="hidden" name="attr_Throw_calc"  value="0" />
+                        <span name="attr_Throw_calc" style="width:100%" class="sheet-field">0</span>
                     </div>
                 </div>
                 <div class="sheet-row ">
                     <fieldset class="repeating_capabilities">
                         <div class="sheet-cap-item">
-                            <div style="width:70%">
+                            
+                            <div style="width:10%"></div><div style="width:60%">
                                 <input type="text" name="attr_Capability" />
                             </div><div style="width:10%"></div><div style="width:20%">
                                 <input type="number" name="attr_Capability_Rank" />
@@ -2094,95 +2585,278 @@
                     </fieldset>
                 </div>
             </div>
+            
+            <!-- Status Effects -->
             <h3 class="sheet-header">Status Conditions</h3>
             <h4 class='sheet-minihead'>Persistent Statuses</h4>
             <table class='sheet-table sheet-status-table'>
-                <tr>
-                    <td class='sheet-table-header'>Burned:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_burn'/></td>
-                    <td class='sheet-table-header'>Frozen:</td>
-                    <td><input type='checkbox' name='attr_st_froz'/></td>
+                <tr >
+                    <td style="width:25%" >
+                        <input type='checkbox' value='1' name='attr_st_burn' title="Defense -2 CS. 1 Tick per Standard Action"/>
+                        <span>Burned</span>
+                    </td>
+                    <td style="width:25%" >
+                        <input type='checkbox' value='1' name='attr_st_froz' title="No Action, No Evasion. DC 16 Save Check" />
+                        <span>Frozen</span>
+                    </td>
+                
+                    <td style="width:25%" >
+                        <input type='checkbox' value='1' name='attr_st_para'  title="Speed -4 CS. DC 5 Save to act" />
+                        <span>Paralysis</span>
+                    </td>
+                    <td  style="width:25%" >
+                        <input type='checkbox' value='1' name='attr_st_pois'  title="Sp Def -2 CS. 1 Tick Per Standard Taken/Skipped" />
+                        <span>Poisoned </span>
+                    </td>
                 </tr>
-                <tr>
-                    <td class='sheet-table-header'>Paralysis:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_para'/></td>
-                    <td class='sheet-table-header'>Poisoned:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_pois'/></td>
+                 <tr>
+                    <td colspan='4'>
+                        <input type='checkbox' value='2' name='attr_st_pois'  title="Lose 5,10,20,40... HP" />
+                        <span>Badly Poisoned</span>
+                    </td>
                 </tr>
             </table>
             <h4 class='sheet-minihead'>Volatile Statuses</h4>
             <table class='sheet-table sheet-status-table'>
                 <tr>
-                    <td class='sheet-table-header'>Bad Sleep:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_bads'/></td>
-                    <td class='sheet-table-header'>Confused:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_conf'/></td>
+                    <td style="width:50%" >
+                        <input type='checkbox' value='1' name='attr_st_bads'  title="2 ticks per Sleep Save" />
+                        <span>Bad Sleep</span>
+                    </td>
+                    <td style="width:50%" >
+                        <input type='checkbox' value='1' name='attr_st_conf'  title="Confusion Effects on pg 247 Core" />
+                        <span>Confused</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td class='sheet-table-header'>Cursed:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_curs'/></td>
-                    <td class='sheet-table-header'>Disabled:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_disa'/></td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_curs'  title="2 ticks per Standard Action Taken" />
+                        <span>Cursed</span>
+                    </td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_disa'  title="Disables a  move. Stacks" />
+                        <span>Disabled</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td class='sheet-table-header'>Rage:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_rage'/></td>
-                    <td class='sheet-table-header'>Flinch:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_flin'/></td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_rage'  title="Must use damaging Phys/Spec move or Struggle" />
+                        <span>Rage</span>
+                    </td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_flin'  title="Skip Actions on your next turn" />
+                        <span>Flinch</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td class='sheet-table-header'>Infatuation:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_infa'/></td>
-                    <td class='sheet-table-header'>Sleep:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_slee'/></td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_infa'  title="Infatuation Effects on pg 247 Core" />
+                        <span>Infatuation</span>
+                    </td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_slee'  title="DC 16 Save Check" />
+                        <span>Sleep</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td class='sheet-table-header'>Suppressed:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_supp'/></td>
+                    <td colspan='2'>
+                        <input type='checkbox' value='1' name='attr_st_supp'  title="No PP UPs. Move Frequency ↓" />
+                        <span>Suppressed</span>
+                    </td>
                 </tr>
             </table>
             <h4 class='sheet-minihead'>Other Statuses</h4>
             <table class='sheet-table sheet-status-table'>
                 <tr>
-                    <td class='sheet-table-header'>Fainted:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_fain'/></td>
-                    <td class='sheet-table-header'>Blindness:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_blin'/></td>
+                    <td style="width:50%" >
+                        <input type='checkbox' value='1' name='attr_st_fain'  title="Fainted Effects on pg 248 Core" />
+                        <span>Fainted</span>
+                    </td>
+                    <td style="width:50%">
+                        <input type='checkbox' value='1' name='attr_st_blin'  title="-6 Accuracy penalty. DC 10 Acro on Rough/Slow terrain" />
+                        <span>Blindness</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td class='sheet-table-header'>Total Blindness:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_tota'/></td>
-                    <td class='sheet-table-header'>Slowed:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_slow'/></td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_tota'  title="-10 Accuracy penalty. No Priority/Interrupts" />
+                        <span>Total Blindness</span>
+                    </td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_slow'  title="Half Movement (min 1)" />
+                        <span>Slowed</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td class='sheet-table-header'>Stuck:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_stuc'/></td>
-                    <td class='sheet-table-header'>Trapped:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_trap'/></td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_stuc'  title="No Shift. No Speed Evasion." />
+                        <span>Stuck</span>
+                    </td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_trap'  title="Cannot be Recalled" />
+                        <span>Trapped</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td class='sheet-table-header'>Tripped:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_trip'/></td>
-                    <td class='sheet-table-header'>Vulnerable:</td>
-                    <td><input type='checkbox' value=1 name='attr_st_vuln'/></td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_trip'  title="Spend Shift action to stand" />
+                        <span>Tripped</span>
+                    </td>
+                    <td colspan='1'>
+                        <input type='checkbox' value='1' name='attr_st_vuln'  title="No Evasion" />
+                        <span>Vulnerable</span>
+                    </td>
                 </tr>
             </table>
             <h4 class='sheet-minihead'>Custom Statuses</h4>
             <fieldset class='repeating_statuses'>
-                <table class='sheet-table sheet-status-table'>
-                    <td class="sheet-table-header"><input class='sheet-shortfield' type='text' name='attr_status_name1'/></td>
-                    <td><input type='checkbox' value=1 name='attr_status_state1'/></td>
-                    <td class="sheet-table-header"><input class='sheet-shortfield' type='text' name='attr_status_name2'/></td>
-                    <td><input type='checkbox' value=1 name='attr_status_state2'/></td>
+                <table class='sheet-table'>
+                    <td class="sheet-table-header" style="width:70%">
+                        <input type='text' name='attr_status_name'/>
+                    </td>
+                    <td>
+                        <input type='checkbox' value='1' name='attr_status_state'/>
+                    </td>
                 </table>
             </fieldset>
+            
+            
         </div>
     </div>
     <br />
     
+    <!-- Skills -->
+    <div class='sheet-row'>
+        <h3 class="sheet-header">Skills</h3>
+        <br />
+        <table class='sheet-left-half-table' STYLE="margin-bottom: 20px;">
+            <tr align = "center">
+                <th class='sheet-minihead'>Skill Name</th>
+                <th class='sheet-minihead'>Rank</th>
+                <th class='sheet-minihead'>Other Modifiers</th>
+                <th class='sheet-minihead'>Roll</th>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Acrobatics</td>
+                <td><input type='number' name='attr_Acrobatics' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Acrobatics_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Acrobatics}} {{SL=[[@{Acrobatics}d6+@{Acrobatics_bonus}]]}}' name='roll_AcrobaticsCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Athletics</td>
+                <td><input type='number' name='attr_Athletics' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Athletics_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Athletics}} {{SL=[[@{Athletics}d6+@{Athletics_bonus}]]}}' name='roll_AthleticsCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Combat</td>
+                <td><input type='number' name='attr_Combat' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Combat_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Combat}} {{SL=[[@{Combat}d6+@{Combat_bonus}]]}}' name='roll_CombatCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Intimidate</td>
+                <td><input type='number' name='attr_Intimidate' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Intimidate_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intimidate}} {{SL=[[@{Intimidate}d6+@{Intimidate_bonus}]]}}' name='roll_IntimidateCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Stealth</td>
+                <td><input type='number' name='attr_Stealth' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Stealth_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Stealth}} {{SL=[[@{Stealth}d6+@{Stealth_bonus}]]}}' name='roll_StealthCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Survival</td>
+                <td><input type='number' name='attr_Survival' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Survival_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Survival}} {{SL=[[@{Survival}d6+@{Survival_bonus}]]}}' name='roll_SurvivalCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>General Education</td>
+                <td><input type='number' name='attr_GeneralEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_GeneralEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=GeneralEducation}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Medicine Education</td>
+                <td><input type='number' name='attr_MedicineEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_MedicineEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=MedicineEducation}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Occult Education</td>
+                <td><input type='number' name='attr_OccultEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_OccultEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=OccultEducation}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' /></td>
+            </tr>
+        </table>
+        <table class='sheet-right-half-table'>
+            <tr align = "center">
+                <th class='sheet-minihead'>Skill Name</th>
+                <th class='sheet-minihead'>Rank</th>
+                <th class='sheet-minihead'>Other Modifiers</th>
+                <th class='sheet-minihead'>Roll</th>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Pokemon Education</td>
+                <td><input type='number' name='attr_PokemonEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_PokemonEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=PokemonEducation}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Technology Education</td>
+                <td><input type='number' name='attr_TechnologyEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_TechnologyEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=TechnologyEducation}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Guile</td>
+                <td><input type='number' name='attr_Guile' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Guile_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Guile}} {{SL=[[@{Guile}d6+@{Guile_bonus}]]}}' name='roll_GuileCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Perception</td>
+                <td><input type='number' name='attr_Perception' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Perception_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Perception}} {{SL=[[@{Perception}d6+@{Perception_bonus}]]}}' name='roll_PerceptionCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Charm</td>
+                <td><input type='number' name='attr_Charm' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Charm_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Charm}} {{SL=[[@{Charm}d6+@{Charm_bonus}]]}}' name='roll_CharmCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Command</td>
+                <td><input type='number' name='attr_Command' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Command_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Command}} {{SL=[[@{Command}d6+@{Command_bonus}]]}}' name='roll_CommandCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Focus</td>
+                <td><input type='number' name='attr_Focus' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Focus_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Focus}} {{SL=[[@{Focus}d6+@{Focus_bonus}]]}}' name='roll_FocusCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Intuition</td>
+                <td><input type='number' name='attr_Intuition' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Intuition_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intuition}} {{SL=[[@{Intuition}d6+@{Intuition_bonus}]]}}' name='roll_IntuitionCheck' /></td>
+            </tr>
+        </table> <!--
+        </tr>
+        </table> -->
+    
+    </div>
+    <br/>
+    
     <!-- Moves -->
     <div class="sheet-generic-rolls">
+        
+        <!-- Generic Damage -->
         <div class="sheet-table">
             <div class="sheet-row">
                 <div style="width:10px;"></div>
@@ -2193,252 +2867,550 @@
                     <input type="number" name="attr_generic_db" value="4" min="0" style="width:100%"/>
                 </div>
                 <div style="width:70px;">
+                    <input type="hidden" name="attr_generic_db_roll" value="1d8+6" />
                     <span class="sheet-field" name="attr_generic_db_roll">1d8+6</span>
                 </div>
                 <div style="width:100px;">
-                    <button type="roll" name="roll_generic_db" value="">Damage</button>
+                    <button type="roll" name="roll_generic_db" value="@{whisper} &{template:PTU}{{title=@{character_name}'s Damage}}{{damage= [[@{generic_db_roll} + ?{Class|None, 0|Physical, @{ATK_total}|Special, @{SPATK_total}} + @{dmg_bonus} ]]  }}">Damage</button>
                 </div>
                 <div style="width:10px;"></div>
                 <div style="width:100px;">
-                    <button type="roll" name="roll_generic_accuracy" value="">Accuracy</button>
+                    <button type="roll" name="roll_generic_accuracy" value="@{whisper} &{template:PTU}{{title=@{character_name}'s Accuracy}}{{AC= [[1d20 + @{Acc}]] }}">Accuracy</button>
                 </div>
                 <div style="width:10px;"></div>
             </div>
         </div>
+        
     </div>
     
+    
+    <!-- Known Moves Summary -->
     <h3 class="sheet-header">
         Known Moves
         <button type="action" name="act_lockMoves" style="font-family: 'Pictos';color:black">(</button>
     </h3>
-    
     <div class="sheet-movesKnown">
         <input type='hidden' name="attr_lockMovesKnown" value="1" />
         
         <fieldset class="repeating_movesKnown">
-            <input type="hidden" name="attr_mkID" />
+            <input type="hidden" name="attr_mkID" value='0' />
+            <input type="hidden" name="attr_mkName" value='' />
+            <input type="hidden" name="attr_mkRange" value='' />
+            <input type="hidden" name="attr_mkCat" value='Physical' />
+            <input type="hidden" name="attr_mkCrit" value='0' />
+            <input type="hidden" name="attr_mkDB" value='0' />
+            <input type="hidden" name="attr_mkDB_roll" value='0' />
+            <input type="hidden" name="attr_mkContestType" value='' />
+            <input type="hidden" name="attr_mkContestEffect" value='' />
+            <input type="hidden" name="attr_mkEffects" value='' />
+            <input type="hidden" name="attr_mkDamage_diceCount" value='0' />
+            <input type="hidden" name="attr_mkDamage_diceType"  value='0' />
+            <input type="hidden" name="attr_mkDamage_diceBonus" value='0' />
             
             <div class="sheet-table sheet-moveKnown-item">
+                
                 <input type="hidden" name="attr_mkType" class="sheet-move-type" />
                 <div class=" sheet-move-header">
-                    <span name="attr_mkName" class="sheet-name">Name</span>
+                    <div class="sheet-name">
+                        <span name="attr_mkName" >Name </span>
+                        
+                        <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
+                        
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{ATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{SPATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + 0 ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        
+                    </div>
                     <span name="attr_mkFrequency" class="sheet-freq">Frequency</span>
                     
                     <input type="hidden" name="attr_mkFrequency" class="sheet-freq" value="Physical" />
                     <span class="sheet-uses sheet-move-uses">
-                        <input type="number" name="attr_mkUses" />
+                        <input type="number" name="attr_mkUses" value='0' />
                         <span>/</span>
                         <span name="attr_mkUses_max">0</span>
                     </span>
                 </div>
+                
                 <div class="sheet-move-body">
-                    <button type="roll" class="sheet-btn-accuracy"></button>
-                    <button type="roll" class="sheet-btn-damage"></button>
-                    <button type="roll" class="sheet-btn-show"></button>
+                    
                     <div class="">
-                        <span>Range:</span><span name="attr_mkRange"></span>
+                        <span class="sheet-label">Range:</span><span name="attr_mkRange">---</span>
                     </div>
-                    <div class="">
-                        <span name="attr_mkAC">AC</span> <span name="attr_mkCrit">Crit</span>
+                    
+                    <input type='hidden' name="attr_mkAC" value='' />
+                    <div class="sheet-move-AC">
+                        <span class="sheet-label"> AC: </span> <span name="attr_mkAC"></span> 
+                        <span class="sheet-label"> Crit On: </span> <span name="attr_mkCrit"></span>
+                        
+                        
+                        <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} + (@{Acc} - (@{mkAC}) ) ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
+                        
                     </div>
+                    
                     <input type='hidden' name="attr_mkDB" value='' />
                     <div class="sheet-move-DB">
-                        <span name="attr_mkDB">DB</span> <span name="attr_mkDB_roll">Roll</span>
-                    </div>
-                    <div class="">
-                        <div style="width:50%">
-                            
-                        </div><div style="width:50%">
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-        
-    </div>
-    
-    <h3 class="sheet-header">Move List</h3>
-    
-    <div class="sheet-movesList">
-        
-        <!-- Struggle -->
-        <div class="sheet-table sheet-move-item">
-                <input type="hidden" name="attr_struggleType" class="sheet-move-type" />
-                <!-- Header -->
-                <div class="sheet-row sheet-move-header" >
-                    <div style="width:40%">
-                        <span>Struggle</span>
-                    </div><div style="width:25%">
-                        <span class="sheet-move-freq">At-Will</span>
-                    </div><div style="width:10%">
-                    </div><div style="width:25%">
-                        <select name="attr_struggleCat">
-                            <option selected="selected">Physical</option>
-                            <option>Special</option>
-                            <option>Support</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="sheet-row">
-                    <div style="width:30%" class="sheet-move-side">
-                        <div>
-                            <select name="attr_struggleType">
-                                <option value="Untyped" selected="selected">-</option>
-                                <option>Normal</option>
-                                <option>Bug</option>
-                                <option>Dark</option>
-                                <option>Dragon</option>
-                                <option>Electric</option>
-                                <option>Fairy</option>
-                                <option>Fighting</option>
-                                <option>Fire</option>
-                                <option>Flying</option>
-                                <option>Ghost</option>
-                                <option>Grass</option>
-                                <option>Ground</option>
-                                <option>Ice</option>
-                                <option>Poison</option>
-                                <option>Psychic</option>
-                                <option>Rock</option>
-                                <option>Steel</option>
-                                <option>Water</option>
-                            </select>
-                        </div>
-                        <div>
-                            <select name="attr_struggleContestType">
-                                <option selected="selected">Cool</option>
-                                <option >Tough</option>
-                                <option >Beauty</option>
-                                <option >Smart</option>
-                                <option >Cute</option>
-                            </select>
-                        </div>
-                        <div>
-                            <input name="attr_struggleContestEffect" placeholder="Contest Effect"/>
-                        </div>
+                        <span class="sheet-label"> DB: </span> <span name="attr_mkDB">4</span> 
+                        <span class="sheet-field" name="attr_mkDB_roll">1d8 + 6</span>
                         
                         
-                    </div><div style="width:70%" class="sheet-move-body" >
-                        <div>
-                            <span>Range: <input type="text" name="attr_struggleRange"  /></span>
-                        </div>
-                        <div>
-                            <span>AC: <input type="number" name="attr_struggleAC" value="4" /></span>
-                            <span>Crit On: <input type="number" name="arrt_struggleCrit" value="20" /> </span>
-                        </div>
-                        <div>
-                            <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
-                            <span>DB: <input type="number" name="attr_struggle_db" value="4" /></span>
-                            <span class="sheet-field" name="attr_struggle_db_roll">1d8+6</span>
-                            <span> + <input type="text" name="attr_struggleDamageBonus" placeholder="Additional Damage" /></span>
-                        </div>
+                        
+                        <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
+                        
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                    
                     </div>
+                    
                 </div>
-                <div class="sheet-row">
-                    <textarea name="attr_struggleEffects" style="display:inline-block;max-width:100%"></textarea>
-                </div>
-            </div>
-            
-        <fieldset class="repeating_moves">
-            <input type="hidden" name="attr_mlID" />
-            <div class="sheet-table sheet-move-item">
-                <span class="sheet-movesKnown-Add">
-                    <input type="checkbox" name="attr_mlKnown" value="1" />
-                    <div></div>
-                </span>
                 
-                <!-- Header -->
-                <input type="hidden" name="attr_mlType" class="sheet-move-type" />
-                <div class="sheet-row sheet-move-header" >
-                    <div style="width:40%">
-                        <input type="text" placeholder="Move Name" name="attr_mlName" style="width:100%" />
-                    </div><div style="width:25%">
-                        <select name="attr_mlFrequency" class="sheet-move-freq">
-                            <option selected="selected">At-Will</option>
-                            <option>EOT</option>
-                            <option>Scene</option>
-                            <option>Daily</option>
-                            <option>Static</option>
-                            <option>Other</option>
-                        </select>
-                    </div><div style="width:10%">
-                        <input type="hidden" name="attr_mlFrequency" value="At-Will" />
-                        <input type="text" placeholder="Uses" name="attr_mlUses_max" class="sheet-move-uses" />
-                    </div><div style="width:25%">
-                        <select name="attr_mlCat">
-                            <option selected="selected">Physical</option>
-                            <option>Special</option>
-                            <option>Support</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="sheet-row">
-                    <div style="width:30%" class="sheet-move-side">
-                        <div>
-                            <select name="attr_mlType">
-                                <option value="Untyped" selected="selected">-</option>
-                                <option>Normal</option>
-                                <option>Bug</option>
-                                <option>Dark</option>
-                                <option>Dragon</option>
-                                <option>Electric</option>
-                                <option>Fairy</option>
-                                <option>Fighting</option>
-                                <option>Fire</option>
-                                <option>Flying</option>
-                                <option>Ghost</option>
-                                <option>Grass</option>
-                                <option>Ground</option>
-                                <option>Ice</option>
-                                <option>Poison</option>
-                                <option>Psychic</option>
-                                <option>Rock</option>
-                                <option>Steel</option>
-                                <option>Water</option>
-                            </select>
-                        </div>
-                        <div>
-                            <select name="attr_mlContestType">
-                                <option selected="selected">Cool</option>
-                                <option >Tough</option>
-                                <option >Beauty</option>
-                                <option >Smart</option>
-                                <option >Cute</option>
-                            </select>
-                        </div>
-                        <div>
-                            <input name="attr_mlContestEffect" placeholder="Contest Effect"/>
-                        </div>
-                        
-                        
-                    </div><div style="width:70%" class="sheet-move-body" >
-                        <div>
-                            <span>Range: <input type="text" name="attr_mlRange" placeholder="Distance, Targets" /></span>
-                        </div>
-                        <div>
-                            <span>AC: <input type="number" name="attr_mlAC" value="4" /></span>
-                            <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> </span>
-                        </div>
-                        <div>
-                            <input type="hidden" name="attr_mlDB_roll" />
-                            <span>DB: <input type="number" name="attr_mlDB" /></span>
-                            <span class="sheet-field" name="attr_mlDB_roll"></span>
-                            <span> + <input type="text" name="attr_mlDamageBonus" placeholder="Additional Damage" /></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="sheet-row">
-                    <textarea name="attr_mlEffects" style="display:inline-block;max-width:100%"></textarea>
-                </div>
             </div>
-            
         </fieldset>
+        
     </div>
     
+    <!-- Moves Learnset  -->
+    <h3 class="sheet-header">Move List
+        
+        <input type='hidden' class='sheet-hide-swap' name='attr_hideMoveList' value='0'/>
+        
+        <span class='sheet-a' >-</span>
+        <span class='sheet-b' >+</span>
+        <input type='checkbox' name='attr_hideMoveList' value='1' />
+    </h3>
+    <div class="sheet-movesList">
+        <input type='hidden' class='sheet-hide-swap' name='attr_hideMoveList' value='0' />
+        
+            <!-- Struggle -->
+            <div class="sheet-table sheet-move-item">
+                    <input type="hidden" name="attr_struggleFreq" value='At-Will' />
+                    <input type="hidden" name="attr_struggleType" class="sheet-move-type" value ='Normal' />
+                    <!-- Header -->
+                    <div class="sheet-row sheet-move-header" >
+                        <div style="width:40%">
+                            <span>Struggle</span>
+                        </div><div style="width:25%">
+                            <span class="sheet-move-freq">At-Will</span>
+                        </div><div style="width:10%">
+                        </div><div style="width:25%">
+                            <select name="attr_struggleCat">
+                                <option selected="selected">Physical</option>
+                                <option >Special</option>
+                                <option >Status</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sheet-row">
+                        <div style="width:30%" class="sheet-move-side">
+                            <div>
+                                <select name="attr_struggleType">
+                                    <option value="Untyped" >-</option>
+                                    <option selected>Normal</option>
+                                    <option>Bug</option>
+                                    <option>Dark</option>
+                                    <option>Dragon</option>
+                                    <option>Electric</option>
+                                    <option>Fairy</option>
+                                    <option>Fighting</option>
+                                    <option>Fire</option>
+                                    <option>Flying</option>
+                                    <option>Ghost</option>
+                                    <option>Grass</option>
+                                    <option>Ground</option>
+                                    <option>Ice</option>
+                                    <option>Poison</option>
+                                    <option>Psychic</option>
+                                    <option>Rock</option>
+                                    <option>Steel</option>
+                                    <option>Water</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select name="attr_struggleContestType">
+                                    <option selected="selected">Cool</option>
+                                    <option >Tough</option>
+                                    <option >Beauty</option>
+                                    <option >Smart</option>
+                                    <option >Cute</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="text" name="attr_struggleContestEffect" placeholder="Contest Effect"/>
+                            </div>
+                            
+                            
+                        </div><div style="width:70%" class="sheet-move-body" >
+                            <div>
+                                <span>Range: <input type="text" name="attr_struggleRange"  style="width:350px" value='Melee-Ranged' /></span>
+                                
+                                <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
+                                
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + 0 + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                            </div>
+                            <div>
+                                <span>AC: <input type="number" name="attr_struggleAC" value='4' /></span>
+                                <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> </span>
+                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC}]] }} {{ar= [[1d20cs>@{struggleCrit} + (@{Acc} - @{struggleAC})]] }} {{critsOn= [[@{struggleCrit} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
+                            </div>
+                            <div>
+                                <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
+                                <span>DB: <input type="number" name="attr_struggle_db" value='4' /></span>
+                                <span class="sheet-db-breakdown"> 
+                                    <input type="text" name="attr_struggle_db_roll" style="width: 200px;text-align: center;" value="1d8 + 6" />
+                                </span>
+                                
+                                <span>
+                                    <label style='display:inline-block; width:auto'>STAB</label>
+                                    <input type='checkbox' name='attr_struggleStab' value='1'/>
+                                </span>
+                                
+                                <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
+                                
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sheet-row">
+                        <textarea name="attr_struggleEffects" style="display:inline-block;max-width:100%"></textarea>
+                    </div>
+                </div>
+            
+            <div class='sheet-a'>
+            
+            <fieldset class="repeating_moves">
+                <input type="hidden" name="attr_mlID" />
+                <div class="sheet-table sheet-move-item">
+                    <span class="sheet-movesKnown-Add">
+                        <input type="checkbox" name="attr_mlKnown" value="1" />
+                        <div></div>
+                    </span>
+                    <input type="hidden" name="attr_mlType" class="sheet-move-type" />
+                    <!-- Header -->
+                    
+                    <div class="sheet-row sheet-move-header" >
+                        <div style="width:40%">
+                            <input type="text" placeholder="Move Name" name="attr_mlName" style="width:100%" />
+                        </div><div style="width:25%">
+                            <select name="attr_mlFrequency" class="sheet-move-freq">
+                                <option selected="selected">At-Will</option>
+                                <option>EOT</option>
+                                <option>Scene</option>
+                                <option>Daily</option>
+                                <option>Static</option>
+                                <option>Other</option>
+                            </select>
+                        </div><div style="width:10%">
+                            <input type="hidden" name="attr_mlFrequency" value="At-Will" />
+                            <input type="text" placeholder="Uses" name="attr_mlUses_max" class="sheet-move-uses" />
+                        </div><div style="width:25%">
+                            <select name="attr_mlCat">
+                                <option selected="selected">Physical</option>
+                                <option >Special</option>
+                                <option >Status</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sheet-row">
+                        <div style="width:30%" class="sheet-move-side">
+                            <div>
+                                <select name="attr_mlType">
+                                    <option value="Untyped" >-</option>
+                                    <option selected>Normal</option>
+                                    <option>Bug</option>
+                                    <option>Dark</option>
+                                    <option>Dragon</option>
+                                    <option>Electric</option>
+                                    <option>Fairy</option>
+                                    <option>Fighting</option>
+                                    <option>Fire</option>
+                                    <option>Flying</option>
+                                    <option>Ghost</option>
+                                    <option>Grass</option>
+                                    <option>Ground</option>
+                                    <option>Ice</option>
+                                    <option>Poison</option>
+                                    <option>Psychic</option>
+                                    <option>Rock</option>
+                                    <option>Steel</option>
+                                    <option>Water</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select name="attr_mlContestType">
+                                    <option selected="selected">Cool</option>
+                                    <option >Tough</option>
+                                    <option >Beauty</option>
+                                    <option >Smart</option>
+                                    <option >Cute</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type='text' name="attr_mlContestEffect" placeholder="Contest Effect" style="text-align:center"/>
+                            </div>
+                            
+                            
+                        </div><div style="width:70%" class="sheet-move-body" >
+                            <div>
+                                <span>Range: <input type="text" name="attr_mlRange" placeholder="Distance, Targets" style="width:350px"/></span>
+                                
+                                <input type="hidden" name="attr_mlCat" class='sheet-move-cat' />
+                                
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                            </div>
+                            <div>
+                                <span>AC: <input type="number" name="attr_mlAC" value='2' /></span>
+                                <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> </span>
+                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC}]] }} {{ar= [[1d20cs>@{mlCrit} + (@{Acc} - @{mlAC}) ]] }} {{critsOn= [[@{mlCrit} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
+                            </div>
+                            <div>
+                                <input type="hidden" name="attr_mlDB_roll" value='0' />
+                                <span>DB: <input type="number" name="attr_mlDB" value="0" /></span>
+    
+                                <span class="sheet-db-breakdown"> 
+                                    <input type="text" name="attr_mlDB_roll" style="width: 200px;text-align: center;" value="1d8+6" />
+                                </span>
+                                
+                                <span>
+                                    <label style='display:inline-block; width:auto'>STAB</label>
+                                    <input type='checkbox' name='attr_mlStab' value='1'/>
+                                </span>
+                                
+                                <input type="hidden" name="attr_mlCat" class='sheet-move-cat' />
+                                
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sheet-row">
+                        <textarea name="attr_mlEffects" style="display:inline-block;max-width:100%"></textarea>
+                    </div>
+                </div>
+                
+            </fieldset>
+        </div>
+    </div>
    
     <br/>
     
+    
+    
+    
+    
+    <!-- Edges, Features, Abilities -->
+    <div class='sheet-ability-features-edges'>
+        <div class='sheet-edges'>
+            <h3 class='sheet-header'>Edges</h3>
+            
+            <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
+            <input type="hidden" name="attr_TutorPoints_max" value="0" />
+            
+            <table class='sheet-table sheet-pokemon'>
+                <tr>
+                    <td class='sheet-table-header'>Remaining Tutor Points</td>
+                    <td><input type='number' name='attr_TutorPoints'/></td>
+                </tr>
+                <tr>
+                    <td class='sheet-table-header'>Bonus Tutor Points</td>
+                    <td><input type='number' name='attr_TutorPoints_bonus' value='0'></td>
+                </tr>
+                <tr>
+                    <td class='sheet-table-header'>Max Tutor Points</td>
+                    <td><span class="sheet-field" name="attr_TutorPoints_max" style="width: 40px;min-width: 40px;">0</span></td>
+                </tr>
+            </table>
+            
+            <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
+           
+           <div class='sheet-pokemon'>
+                <fieldset class='repeating_edges'>
+                    
+                    <div class='sheet-minihead sheet-ability'>
+                        <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                        
+                        <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
+                        
+                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
+                        
+                        <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
+                    </div>
+                    
+                    
+                    <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                    <div class="sheet-a">
+                        <div>
+                            <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
+                        </div>
+                        
+                        <div>
+                            <span class="sheet-label">Cost </span>
+                            <input type="number" name="attr_EdgeCost" value='0' />
+                        </div>
+                        <div>
+                            <textarea name='attr_EdgeInfo' ></textarea>
+                        </div>
+                    </div>
+                    
+                    
+                </fieldset>
+            </div>
+            
+            <div class='sheet-trainer'>
+                <fieldset class='repeating_edges'>
+                    
+                    <div class='sheet-minihead sheet-ability'>
+                        <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                        
+                        <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
+                        
+                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{message= @{EdgeInfo} }} " ></button>
+                        
+                        <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
+                    </div>
+                    
+                    
+                    <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                    <div class="sheet-a">
+                        <div>
+                            <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
+                        </div>
+                        
+                        <div>
+                            <textarea name='attr_EdgeInfo' ></textarea>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class='sheet-features'>
+            <h3 class='sheet-header'>Features</h3>
+            
+            <fieldset class='repeating_features'>
+                
+                <input type='hidden' class='sheet-hide-swap' name="attr_Feature_Hide" value='0' />
+                
+                <div class='sheet-minihead sheet-ability'>
+                    <input type='hidden' class='sheet-hide-swap' name="attr_Feature_Hide" value='0' />
+                    <input type="checkbox" class="sheet-arrow " name="attr_Feature_Hide"  value="1" /><span></span>
+                    <button type='roll' value="&{template:PTU} {{title= @{Feature_Name} }} {{prerequisite= @{Feature_Prereq} }} {{frequency= @{Feature_Freq} }} {{target= @{Feature_Target} }} {{trigger= @{Feature_Trigger} }} {{message= @{Feature_Info} }} "></button>
+                    <input type="text" class="sheet-ability-name" name="attr_Feature_Name" placeholder="Feature Name" style="width:100%" />
+                </div>
+                
+                
+                <div class="sheet-a">
+                    <div>
+                        <input type="text" name="attr_Feature_Prereq" placeholder="Prerequisite" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Feature_Freq" placeholder="Frequency" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Feature_Target" placeholder="Target" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Feature_Trigger" placeholder="Trigger" style="width:100%" />
+                    </div>
+                    <div>
+                        <textarea name='attr_Feature_Info' ></textarea>
+                    </div>
+                </div>
+                
+                <!--input type="checkbox" class="sheet-arrow" name="attr_Feature_Hide"/><span></span>
+                <h4 class='sheet-minihead'>Feature</h4>
+                <table class='sheet-table'>
+                    <tr>
+                        <td class='sheet-table-header'>Name:</td>
+                        <td><input class='sheet-shortfield' name='attr_Feature_Name' type='text'></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Frequency:</td>
+                        <td><input class='sheet-shortfield' name='attr_Feature_Freq' type='text'></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Target:</td>
+                        <td><input class='sheet-shortfield' name='attr_Feature_Target' type='text'></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Other Info:</td>
+                        <td><textarea class='sheet-textarea-b' name='attr_Feature_Info'></textarea></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Display:</td>
+                        <td><button type='roll' value='&{template:PTU} {{dis=Feature}} {{desc=@{Feature_Info}}} {{nick=@{character_name}}} {{name=@{Feature_Name}}} {{freq=@{Feature_Freq}}} {{tar=@{Feature_Target}}}' name='roll_FeatRoll' /> Show</td>
+                    </tr>
+                </table-->
+            </fieldset>
+        </div>
+        <div class='sheet-abilities'>
+            <h3 class="sheet-header">Abilities</h3>
+            
+            <fieldset class='repeating_abilities'>
+
+
+                <input type='hidden' class='sheet-hide-swap' name="attr_Ability_Hide" value='0' />
+                
+                <div class='sheet-minihead sheet-ability'>
+                    <input type='hidden' class='sheet-hide-swap' name="attr_Ability_Hide" value='0' />
+                    <input type="checkbox" class="sheet-arrow " name="attr_Ability_Hide"  value="1" /><span></span>
+                    <button type='roll' value="@{whisper} &{template:PTU} {{title= @{Ability_Name} }} {{frequency= @{Ability_Freq} }} {{target= @{Ability_Target} }} {{trigger= @{Ability_Trigger} }} {{message= @{Ability_Info} }} "></button>
+                    <input type="text" class="sheet-ability-name" name="attr_Ability_Name" placeholder="Ability Name" style="width:100%" />
+                </div>
+                
+                
+                <div class="sheet-a">
+                    <div>
+                        <input type="text" name="attr_Ability_Freq" placeholder="Frequency" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Ability_Target" placeholder="Target" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Ability_Trigger" placeholder="Trigger" style="width:100%" />
+                    </div>
+                    <div>
+                        <textarea name='attr_Ability_Info' ></textarea>
+                    </div>
+                </div>
+                
+                <!--input type="checkbox" class="sheet-arrow" name="attr_Ability_Hide"/><span></span>
+                <h4 class='sheet-minihead'>Ability</h4>
+                <table class='sheet-table'>
+                    <tr>
+                        <td class='sheet-table-header'>Name:</td>
+                        <td><input class='sheet-shortfield' name='attr_Ability_Name' type='text'></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Frequency:</td>
+                        <td><input class='sheet-shortfield' name='attr_Ability_Freq' type='text'></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Target:</td>
+                        <td><input class='sheet-shortfield' name='attr_Ability_
+                        ' type='text'></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Other Info:</td>
+                        <td><textarea class='sheet-textarea-b' name='attr_Ability_Info'></textarea></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Display:</td>
+                        <td><button type='roll' value='&{template:PTU} {{dis=Ability}} {{desc=@{Ability_Info}}} {{nick=@{character_name}}} {{name=@{Ability_Name}}} {{freq=@{Ability_Freq}}} {{tar=@{Ability_Target}}}' name='roll_AbilRoll' /> Show</td>
+                    </tr>
+                </table-->
+            </fieldset>
+        </div>
+    </div>
+    
+    <br/>
+    
+    <!-- Contests -->
     <h3 class='sheet-header'>Contests</h3>
     <table class='sheet-table' style="margin-top: 10px;margin-bottom: 10px;width:90%" align="center">
         <tr>
@@ -2476,308 +3448,8 @@
     </table>
     
     <br/>
-    <div class='sheet-row'>
-        <h3 class="sheet-header">Skills</h3>
-        <br />
-        <table class='sheet-left-half-table' STYLE="margin-bottom: 20px;">
-            <tr align = "center">
-                <th class='sheet-minihead'>Skill Name</th>
-                <th class='sheet-minihead'>Rank</th>
-                <th class='sheet-minihead'>Other Modifiers</th>
-                <th class='sheet-minihead'>Roll</th>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Acrobatics</td>
-                <td><input type='number' name='attr_Acrobatics' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Acrobatics_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Acrobatics}} {{SL=[[@{Acrobatics}d6+@{Acrobatics_bonus}]]}}' name='roll_AcrobaticsCheck' /></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Athletics</td>
-                <td><input type='number' name='attr_Athletics' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Athletics_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Athletics}} {{SL=[[@{Athletics}d6+@{Athletics_bonus}]]}}' name='roll_AthleticsCheck'/></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Combat</td>
-                <td><input type='number' name='attr_Combat' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Combat_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Combat}} {{SL=[[@{Combat}d6+@{Combat_bonus}]]}}' name='roll_CombatCheck'/></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Intimidate</td>
-                <td><input type='number' name='attr_Intimidate' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Intimidate_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Intimidate}} {{SL=[[@{Intimidate}d6+@{Intimidate_bonus}]]}}' name='roll_IntimidateCheck'/></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Stealth</td>
-                <td><input type='number' name='attr_Stealth' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Stealth_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Stealth}} {{SL=[[@{Stealth}d6+@{Stealth_bonus}]]}}' name='roll_StealthCheck'/></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Survival</td>
-                <td><input type='number' name='attr_Survival' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Survival_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Survival}} {{SL=[[@{Survival}d6+@{Survival_bonus}]]}}' name='roll_SurvivalCheck'/></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>General Education</td>
-                <td><input type='number' name='attr_GeneralEducation' value='2'/> d6+</td>
-                <td><input type='number' name='attr_GeneralEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=GeneralEducation}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Medicine Education</td>
-                <td><input type='number' name='attr_MedicineEducation' value='2'/> d6+</td>
-                <td><input type='number' name='attr_MedicineEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=MedicineEducation}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' /></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Occult Education</td>
-                <td><input type='number' name='attr_OccultEducation' value='2'/> d6+</td>
-                <td><input type='number' name='attr_OccultEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=OccultEducation}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' /></td>
-            </tr>
-        </table>
-        <table class='sheet-right-half-table'>
-            <tr align = "center">
-                <th class='sheet-minihead'>Skill Name</th>
-                <th class='sheet-minihead'>Rank</th>
-                <th class='sheet-minihead'>Other Modifiers</th>
-                <th class='sheet-minihead'>Roll</th>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Pokemon Education</td>
-                <td><input type='number' name='attr_PokemonEducation' value='2'/> d6+</td>
-                <td><input type='number' name='attr_PokemonEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=PokemonEducation}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' /></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Technology Education</td>
-                <td><input type='number' name='attr_TechnologyEducation' value='2'/> d6+</td>
-                <td><input type='number' name='attr_TechnologyEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=TechnologyEducation}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' /></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Guile</td>
-                <td><input type='number' name='attr_Guile' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Guile_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Guile}} {{SL=[[@{Guile}d6+@{Guile_bonus}]]}}' name='roll_GuileCheck' /></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Perception</td>
-                <td><input type='number' name='attr_Perception' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Perception_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Perception}} {{SL=[[@{Perception}d6+@{Perception_bonus}]]}}' name='roll_PerceptionCheck' /></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Charm</td>
-                <td><input type='number' name='attr_Charm' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Charm_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Charm}} {{SL=[[@{Charm}d6+@{Charm_bonus}]]}}' name='roll_CharmCheck' /></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Command</td>
-                <td><input type='number' name='attr_Command' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Command_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Command}} {{SL=[[@{Command}d6+@{Command_bonus}]]}}' name='roll_CommandCheck' /></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Focus</td>
-                <td><input type='number' name='attr_Focus' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Focus_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Focus}} {{SL=[[@{Focus}d6+@{Focus_bonus}]]}}' name='roll_FocusCheck' /></td>
-            </tr>
-            <tr align = "center">
-                <td class='sheet-table-header'>Intuition</td>
-                <td><input type='number' name='attr_Intuition' value='2'/> d6+</td>
-                <td><input type='number' name='attr_Intuition_bonus' value='0'/></td>
-                <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Intuition}} {{SL=[[@{Intuition}d6+@{Intuition_bonus}]]}}' name='roll_IntuitionCheck' /></td>
-            </tr>
-        </table> <!--
-        </tr>
-        </table> -->
     
-    </div>
-    <br/>
-    
-    
-    <div class='sheet-ability-features-edges'>
-        <div class='sheet-edges'>
-            <h3 class='sheet-header'>Edges</h3>
-            <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
-            <table class='sheet-table sheet-pokemon'>
-                <tr>
-                    <td class='sheet-table-header'>Remaining Tutor Points</td>
-                    <td><input type='number' name='attr_TutorPoints'/></td>
-                </tr>
-                <tr>
-                    <td class='sheet-table-header'>Max Tutor Points</td>
-                    <td><input type='number' name='attr_TutorPoints_max' value='((1-@{CharType}))*(floor(@{Level} / 5)+1)' disabled/></td>
-                </tr>
-            </table>
-            <fieldset class='repeating_edges'>
-                
-                <input type="checkbox" class="sheet-arrow " name="attr_EdgeHide"  value="1" /><span></span>
-                
-                <div class='sheet-minihead'>
-                    <input type="text" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
-                </div>
-                
-                <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
-                
-                <div class="sheet-a">
-                    <div>
-                        <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
-                    </div>
-                    <div>
-                        <span class="sheet-label">Cost </span><input type="number" name="attr_EdgeCost" value='0' />
-                    </div>
-                    <div>
-                        <textarea name='attr_EdgeInfo' ></textarea>
-                    </div>
-                </div>
-                
-                <!--table class='sheet-table'>
-                    <tr>
-                        <td class='sheet-table-header'>Name:</td>
-                        <td><input class='sheet-shortfield' name='attr_EdgeName' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Prerequisites:</td>
-                        <td><input class='sheet-shortfield' name='attr_EdgePrereq' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>TP Cost:</td>
-                        <td><input class='sheet-shortfield' name='attr_EdgeCost' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Other Info:</td>
-                        <td><textarea class='sheet-textarea-b' name='attr_EdgeInfo'></textarea></td>
-                    </tr>
-                      <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Display:</td>
-                        <td><button type='roll' value='&{template:PTU} {{dis=Edge}} {{desc=@{EdgeInfo}}} {{nick=@{nickname}}} {{name=@{EdgeName}}} {{prereq=@{FeatureTarget}}} {{cost=@{FeatureTarget}}}' name='roll_EdgeRoll' /> Show</td>
-                      </tr>
-                </table-->
-            </fieldset>
-        </div>
-        <div class='sheet-features'>
-            <h3 class='sheet-header'>Features</h3>
-            
-            <fieldset class='repeating_features'>
-                
-                <input type="checkbox" class="sheet-arrow " name="attr_Feature_Hide"  value="1" /><span></span>
-                <input type='hidden' class='sheet-hide-swap' name="attr_Feature_Hide" value='0' />
-                
-                <div class='sheet-minihead'>
-                    <input type="text" name="attr_Feature_Name" placeholder="Feature Name" style="width:100%" />
-                </div>
-                
-                
-                <div class="sheet-a">
-                    <div>
-                        <input type="text" name="attr_Feature_Prereq" placeholder="Prerequisite" style="width:100%" />
-                    </div>
-                    <div>
-                        <input type="text" name="attr_Feature_Freq" placeholder="Frequency" style="width:100%" />
-                    </div>
-                    <div>
-                        <input type="text" name="attr_Feature_Target" placeholder="Target" style="width:100%" />
-                    </div>
-                    <div>
-                        <input type="text" name="attr_Feature_Triger" placeholder="Trigger" style="width:100%" />
-                    </div>
-                    <div>
-                        <textarea name='attr_Feature_Info' ></textarea>
-                    </div>
-                </div>
-                
-                <!--input type="checkbox" class="sheet-arrow" name="attr_Feature_Hide"/><span></span>
-                <h4 class='sheet-minihead'>Feature</h4>
-                <table class='sheet-table'>
-                    <tr>
-                        <td class='sheet-table-header'>Name:</td>
-                        <td><input class='sheet-shortfield' name='attr_Feature_Name' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Frequency:</td>
-                        <td><input class='sheet-shortfield' name='attr_Feature_Freq' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Target:</td>
-                        <td><input class='sheet-shortfield' name='attr_Feature_Target' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Other Info:</td>
-                        <td><textarea class='sheet-textarea-b' name='attr_Feature_Info'></textarea></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Display:</td>
-                        <td><button type='roll' value='&{template:PTU} {{dis=Feature}} {{desc=@{Feature_Info}}} {{nick=@{nickname}}} {{name=@{Feature_Name}}} {{freq=@{Feature_Freq}}} {{tar=@{Feature_Target}}}' name='roll_FeatRoll' /> Show</td>
-                    </tr>
-                </table-->
-            </fieldset>
-        </div>
-        <div class='sheet-abilities'>
-            <h3 class="sheet-header">Abilities</h3>
-            
-            <fieldset class='repeating_abilities'>
-
-
-                <input type="checkbox" class="sheet-arrow " name="attr_Ability_Hide"  value="1" /><span></span>
-                <input type='hidden' class='sheet-hide-swap' name="attr_Ability_Hide" value='0' />
-                
-                <div class='sheet-minihead'>
-                    <input type="text" name="attr_Ability_Name" placeholder="Ability Name" style="width:100%" />
-                </div>
-                
-                
-                <div class="sheet-a">
-                    <div>
-                        <input type="text" name="attr_Ability_Freq" placeholder="Frequency" style="width:100%" />
-                    </div>
-                    <div>
-                        <input type="text" name="attr_Ability_Target" placeholder="Target" style="width:100%" />
-                    </div>
-                    <div>
-                        <textarea name='attr_Ability_Info' ></textarea>
-                    </div>
-                </div>
-                
-                <!--input type="checkbox" class="sheet-arrow" name="attr_Ability_Hide"/><span></span>
-                <h4 class='sheet-minihead'>Ability</h4>
-                <table class='sheet-table'>
-                    <tr>
-                        <td class='sheet-table-header'>Name:</td>
-                        <td><input class='sheet-shortfield' name='attr_Ability_Name' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Frequency:</td>
-                        <td><input class='sheet-shortfield' name='attr_Ability_Freq' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Target:</td>
-                        <td><input class='sheet-shortfield' name='attr_Ability_
-                        ' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Other Info:</td>
-                        <td><textarea class='sheet-textarea-b' name='attr_Ability_Info'></textarea></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Display:</td>
-                        <td><button type='roll' value='&{template:PTU} {{dis=Ability}} {{desc=@{Ability_Info}}} {{nick=@{nickname}}} {{name=@{Ability_Name}}} {{freq=@{Ability_Freq}}} {{tar=@{Ability_Target}}}' name='roll_AbilRoll' /> Show</td>
-                    </tr>
-                </table-->
-            </fieldset>
-        </div>
-    </div>
-    
-    <br/>
-    
+    <!-- Inventory -->
     <div class='sheet-row sheet-inventory'>
         <h3 class="sheet-header">Inventory</h3>
         
@@ -2804,140 +3476,30 @@
             
         </fieldset>
     </div>
-    <div class='sheet-row'>
-        <input type="checkbox" class="sheet-arrow" /><span></span>
-        <h3 class="sheet-header">Ability/Feature/Edge/Various Support</h3>
-        <table>
-        <tr>
-        <td>
-        <div class="sheet-checklist">Sniper–Original:
-        <select name="attr_sniper" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Sniper–Playtest:
-        <select name="attr_snipern" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value="3d10">On</option>
-        </select>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Type Aura–Playtest (True when affected by one):
-        <select name="attr_typeatrue" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        Enter the types below, separated by spaces.<input class='sheet-shortfield' name="attr_typeatype" type='text'/>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Incandescence–Original (True only on a Pokémon Incandescence has been used on):
-        <select name="attr_incando" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Flash Fire–Original (True only after hit by a fire move):
-        <select name="attr_flashfire" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        </tr>
-        <tr>
-        <td>
-        <div class="sheet-checklist">Weird Power:
-        <select name="attr_weird" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Twisted Power:
-        <select name="attr_twist" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Last Chance:
-        <select name="attr_lastctrue" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        Enter the types below, separated by spaces.<input class='sheet-shortfield' name="attr_lastctype" type='text'/>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Incandescence–Playtest (True only on a Pokémon Incandescence has been used on):
-        <select name="attr_incandn" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Damp–Playtest Bonus Damage:
-        <select name="attr_damp" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        </tr>
-        <tr>
-        <td>
-        <div class="sheet-checklist">Aura Storm–Playtest:
-        <select name="attr_aurastn" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Defeatist–Playtest:
-        <select name="attr_defeat" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Adaptability–Playtest:
-        <select name="attr_adaptn" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        Enter STAB types below, separated by spaces.<input class='sheet-shortfield' name="attr_STAB" type='text'/>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Hustle–Playtest Damage Bonus:
-        <select name="attr_hustle" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        <td>
-        <div class="sheet-checklist">Courage:
-        <select name="attr_courage" class="sheet-shortfield2">
-            <option value=0>Off</option>
-            <option value=1>On</option>
-        </select>
-        </div>
-        </td>
-        </tr>
-        </table>
+    
+</div>
+
+<!-- Notes -->
+<div class='sheet-oldtab2'>
+    <h4 class='sheet-header'>
+        Appearance
+    </h4>
+    <div>
+        <textarea name='attr_notesAppearance'></textarea>
+    </div>
+    
+    <h4 class='sheet-header'>
+        Background
+    </h4>
+    <div>
+        <textarea name='attr_notesBackground'></textarea>
+    </div>
+    
+    <h4 class='sheet-header'>
+        Notes
+    </h4>
+    <div>
+        <textarea name='attr_notesGeneral'></textarea>
     </div>
 </div>
 
@@ -2951,84 +3513,124 @@
             <h3 class="sheet-header">Skill Rolls</h3>
             </tr>
             <tr>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Acrobatics}} {{SL=[[@{Acrobatics}d6+@{Acrobatics_bonus}]]}}' name='roll_AcrobaticsCheck' />Acrobatics</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Athletics}} {{SL=[[@{Athletics}d6+@{Athletics_bonus}]]}}' name='roll_AthleticsCheck'/>Athletics</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Combat}} {{SL=[[@{Combat}d6+@{Combat_bonus}]]}}' name='roll_CombatCheck'/>Combat</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Acrobatics}} {{SL=[[@{Acrobatics}d6+@{Acrobatics_bonus}]]}}' name='roll_AcrobaticsCheck' />Acrobatics</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Athletics}} {{SL=[[@{Athletics}d6+@{Athletics_bonus}]]}}' name='roll_AthleticsCheck'/>Athletics</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Combat}} {{SL=[[@{Combat}d6+@{Combat_bonus}]]}}' name='roll_CombatCheck'/>Combat</td>
             </tr>
             <tr>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Intimidate}} {{SL=[[@{Intimidate}d6+@{Intimidate_bonus}]]}}' name='roll_IntimidateCheck'/>Intimidate</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Stealth}} {{SL=[[@{Stealth}d6+@{Stealth_bonus}]]}}' name='roll_StealthCheck'/>Stealth</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Survival}} {{SL=[[@{Survival}d6+@{Survival_bonus}]]}}' name='roll_SurvivalCheck'/>Survival</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intimidate}} {{SL=[[@{Intimidate}d6+@{Intimidate_bonus}]]}}' name='roll_IntimidateCheck'/>Intimidate</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Stealth}} {{SL=[[@{Stealth}d6+@{Stealth_bonus}]]}}' name='roll_StealthCheck'/>Stealth</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Survival}} {{SL=[[@{Survival}d6+@{Survival_bonus}]]}}' name='roll_SurvivalCheck'/>Survival</td>
             </tr>
             <tr>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=GeneralEducation}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/>General Education</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=MedicineEducation}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' />Medicine Education</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=OccultEducation}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' />Occult Education</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=GeneralEducation}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/>General Education</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=MedicineEducation}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' />Medicine Education</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=OccultEducation}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' />Occult Education</td>
             </tr>
             <tr>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=PokemonEducation}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' />Pokemon Education</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=TechnologyEducation}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' />Technology Education</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Guile}} {{SL=[[@{Guile}d6+@{Guile_bonus}]]}}' name='roll_GuileCheck' />Guile</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=PokemonEducation}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' />Pokemon Education</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=TechnologyEducation}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' />Technology Education</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Guile}} {{SL=[[@{Guile}d6+@{Guile_bonus}]]}}' name='roll_GuileCheck' />Guile</td>
             </tr>
             <tr>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Perception}} {{SL=[[@{Perception}d6+@{Perception_bonus}]]}}' name='roll_PerceptionCheck' />Perception</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Charm}} {{SL=[[@{Charm}d6+@{Charm_bonus}]]}}' name='roll_CharmCheck' />Charm</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Command}} {{SL=[[@{Command}d6+@{Command_bonus}]]}}' name='roll_CommandCheck' />Command</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Perception}} {{SL=[[@{Perception}d6+@{Perception_bonus}]]}}' name='roll_PerceptionCheck' />Perception</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Charm}} {{SL=[[@{Charm}d6+@{Charm_bonus}]]}}' name='roll_CharmCheck' />Charm</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Command}} {{SL=[[@{Command}d6+@{Command_bonus}]]}}' name='roll_CommandCheck' />Command</td>
             </tr>
             <tr>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Focus}} {{SL=[[@{Focus}d6+@{Focus_bonus}]]}}' name='roll_FocusCheck' />Focus</td>
-            <td><button type='roll' value='&{template:PTU} {{nick=@{nickname}}} {{skill=Intuition}} {{SL=[[@{Intuition}d6+@{Intuition_bonus}]]}}' name='roll_IntuitionCheck' />Intuition</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Focus}} {{SL=[[@{Focus}d6+@{Focus_bonus}]]}}' name='roll_FocusCheck' />Focus</td>
+            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intuition}} {{SL=[[@{Intuition}d6+@{Intuition_bonus}]]}}' name='roll_IntuitionCheck' />Intuition</td>
             <td>&nbsp;</td>    
             </tr>
         </table>
         <br>
-        <div class="sheet-movesKnown">
         
+        
+        <h3 class="sheet-header">Known Moves</h3>
+        <div class="sheet-movesKnown">
+            <input type='hidden' name="attr_lockMovesKnown" value="1" />
+            
             <fieldset class="repeating_movesKnown">
-                <input type="hidden" name="attr_mkID" />
+                <input type="hidden" name="attr_mkID" value='0' />
+                <input type="hidden" name="attr_mkName" value='' />
+                <input type="hidden" name="attr_mkRange" value='' />
+                <input type="hidden" name="attr_mkCat" value='Physical' />
+                <input type="hidden" name="attr_mkCrit" value='0' />
+                <input type="hidden" name="attr_mkDB" value='0' />
+                <input type="hidden" name="attr_mkDB_roll" value='0' />
+                <input type="hidden" name="attr_mkContestType" value='' />
+                <input type="hidden" name="attr_mkContestEffect" value='' />
+                <input type="hidden" name="attr_mkEffects" value='' />
+                <input type="hidden" name="attr_mkDamage_diceCount" value='0' />
+                <input type="hidden" name="attr_mkDamage_diceType"  value='0' />
+                <input type="hidden" name="attr_mkDamage_diceBonus" value='0' />
                 
                 <div class="sheet-table sheet-moveKnown-item">
+                    
                     <input type="hidden" name="attr_mkType" class="sheet-move-type" />
                     <div class=" sheet-move-header">
-                        <span name="attr_mkName" class="sheet-name">Name</span>
+                        <div class="sheet-name">
+                            <span name="attr_mkName" >Name </span>
+                            
+                            <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
+                            
+                            <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{ATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                            <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{SPATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                            <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + 0 ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                            
+                        </div>
                         <span name="attr_mkFrequency" class="sheet-freq">Frequency</span>
                         
                         <input type="hidden" name="attr_mkFrequency" class="sheet-freq" value="Physical" />
-                        <span class="sheet-uses">
-                            <input type="number" name="attr_mkUses" />
+                        <span class="sheet-uses sheet-move-uses">
+                            <input type="number" name="attr_mkUses" value='0' />
                             <span>/</span>
                             <span name="attr_mkUses_max">0</span>
                         </span>
                     </div>
+                    
                     <div class="sheet-move-body">
-                        <button type="roll" class="sheet-btn-accuracy"></button>
-                        <button type="roll" class="sheet-btn-damage"></button>
-                        <button type="roll" class="sheet-btn-show"></button>
+                        
                         <div class="">
-                            <span>Range:</span><span name="attr_mkRange"></span>
+                            <span class="sheet-label">Range:</span><span name="attr_mkRange">---</span>
                         </div>
-                        <div class="">
-                            <span name="attr_mkAC">AC</span> <span name="attr_mkCrit">Crit</span>
+                        
+                        <input type='hidden' name="attr_mkAC" value='' />
+                        <div class="sheet-move-AC">
+                            <span class="sheet-label"> AC: </span> <span name="attr_mkAC"></span> 
+                            <span class="sheet-label"> Crit On: </span> <span name="attr_mkCrit"></span>
+                            
+                            
+                            <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} - @{Acc} ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
+                            
                         </div>
-                        <div class="">
-                            <span name="attr_mkDB">DB</span> <span name="attr_mkDB_roll">Roll</span>
+                        
+                        <input type='hidden' name="attr_mkDB" value='' />
+                        <div class="sheet-move-DB">
+                            <span class="sheet-label"> DB: </span> <span name="attr_mkDB">4</span> 
+                            <span class="sheet-field" name="attr_mkDB_roll">1d8 + 6</span>
+                            
+                            <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
+                            
+                            <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} ]] }}"></button>
+                            <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} ]] }}"></button>
+                            <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 ]] }}"></button>
+                        
                         </div>
-                        <div class="">
-                            <div style="width:50%">
-                                
-                            </div><div style="width:50%">
-                                
-                            </div>
-                        </div>
+                        
                     </div>
+                    
                 </div>
             </fieldset>
             
         </div>
+        
+        
+        
     </div>    
 </div>
 
-<!-- Import -->
-<div class="sheet-oldtab4" style="background-color:#f2f2f2;"> 
-    <textarea class='sheet-textarea' name='attr_input'></textarea>
+
+<div class="sheet-oldtab4 sheet-page-import" style="background-color:#f2f2f2;"> 
+    <textarea class='sheet-import sheet-textarea' name='attr_input'></textarea>
 </div>
