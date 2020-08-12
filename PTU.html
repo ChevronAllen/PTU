@@ -323,7 +323,7 @@
     });
     */
     
-    on("change:input", function() {
+    on("clicked:import", function() {
         infoImport();
     });
     
@@ -1801,7 +1801,7 @@
     </div-->
     <div class="sheet-oldtab">
         <input type="radio" name="attr_tab" class="sheet-oldtab sheet-oldtab3" value="3" />
-        <span title="Roll Page" ></span>
+        <span title="Action Page" ></span>
     </div>
     <div class="sheet-oldtab">
         <input type="radio" name="attr_tab" class="sheet-oldtab sheet-oldtab4" value="4" />
@@ -2260,6 +2260,7 @@
                 </tr>
             </table>
             
+            <!-- Quick Notes -->
             <h3 class="sheet-header">Notes</h3>
             <div>
                 <textarea name='attr_notes' style="height: 350px;"></textarea>
@@ -3466,136 +3467,692 @@
     <div>
         <textarea name='attr_notesGeneral'></textarea>
     </div>
+
+    <!-- Inventory -->
+    <div class='sheet-row sheet-inventory'>
+        <h3 class="sheet-header">Inventory</h3>
+        
+        <div class="sheet-inventory-money">
+            <span>Money</span>
+            <input type="number" name='attr_money' value="0" min='0' />
+        </div>
+
+        <fieldset class='repeating_inventory'>
+            
+            <div class="sheet-inventory-item">
+                <span class="sheet-hide-container">
+                    <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
+                    <input type="checkbox" name="attr_InventoryHide" value="1" />
+                    
+                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Expand-Icon.png" class="sheet-a" />
+                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Collapse-Icon.png"   class="sheet-b" />
+                </span>
+                <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
+                <input type="number" name='attr_InventoryQuantity' value="1" />
+                <input type="text" name='attr_InventoryName' />
+                <textarea class="sheet-b" name="attr_InventoryDesc"></textarea>
+            </div>
+            
+        </fieldset>
+    </div>
 </div>
 
 <!-- Roll Page -->
 <div class="sheet-oldtab3">
-    <div class='sheet-row'>
-        <h3 class="sheet-header">Roll Page</h3>
-        <br>
-        <table class='sheet-table' align = "center">
-            <tr>
-            <h3 class="sheet-header">Skill Rolls</h3>
-            </tr>
-            <tr>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Acrobatics}} {{SL=[[@{Acrobatics}d6+@{Acrobatics_bonus}]]}}' name='roll_AcrobaticsCheck' />Acrobatics</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Athletics}} {{SL=[[@{Athletics}d6+@{Athletics_bonus}]]}}' name='roll_AthleticsCheck'/>Athletics</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Combat}} {{SL=[[@{Combat}d6+@{Combat_bonus}]]}}' name='roll_CombatCheck'/>Combat</td>
-            </tr>
-            <tr>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intimidate}} {{SL=[[@{Intimidate}d6+@{Intimidate_bonus}]]}}' name='roll_IntimidateCheck'/>Intimidate</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Stealth}} {{SL=[[@{Stealth}d6+@{Stealth_bonus}]]}}' name='roll_StealthCheck'/>Stealth</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Survival}} {{SL=[[@{Survival}d6+@{Survival_bonus}]]}}' name='roll_SurvivalCheck'/>Survival</td>
-            </tr>
-            <tr>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=GeneralEducation}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/>General Education</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=MedicineEducation}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' />Medicine Education</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=OccultEducation}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' />Occult Education</td>
-            </tr>
-            <tr>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=PokemonEducation}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' />Pokemon Education</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=TechnologyEducation}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' />Technology Education</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Guile}} {{SL=[[@{Guile}d6+@{Guile_bonus}]]}}' name='roll_GuileCheck' />Guile</td>
-            </tr>
-            <tr>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Perception}} {{SL=[[@{Perception}d6+@{Perception_bonus}]]}}' name='roll_PerceptionCheck' />Perception</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Charm}} {{SL=[[@{Charm}d6+@{Charm_bonus}]]}}' name='roll_CharmCheck' />Charm</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Command}} {{SL=[[@{Command}d6+@{Command_bonus}]]}}' name='roll_CommandCheck' />Command</td>
-            </tr>
-            <tr>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Focus}} {{SL=[[@{Focus}d6+@{Focus_bonus}]]}}' name='roll_FocusCheck' />Focus</td>
-            <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intuition}} {{SL=[[@{Intuition}d6+@{Intuition_bonus}]]}}' name='roll_IntuitionCheck' />Intuition</td>
-            <td>&nbsp;</td>    
-            </tr>
-        </table>
-        <br>
-        
-        
-        <h3 class="sheet-header">Known Moves</h3>
-        <div class="sheet-movesKnown">
-            <input type='hidden' name="attr_lockMovesKnown" value="1" />
+    <!-- Edges, Features, Abilities -->
+    <div class='sheet-ability-features-edges'>
+        <div class='sheet-edges'>
+            <h3 class='sheet-header'>Edges</h3>
             
-            <fieldset class="repeating_movesKnown">
-                <input type="hidden" name="attr_mkID" value='0' />
-                <input type="hidden" name="attr_mkName" value='' />
-                <input type="hidden" name="attr_mkRange" value='' />
-                <input type="hidden" name="attr_mkCat" value='Physical' />
-                <input type="hidden" name="attr_mkCrit" value='0' />
-                <input type="hidden" name="attr_mkDB" value='0' />
-                <input type="hidden" name="attr_mkDB_roll" value='0' />
-                <input type="hidden" name="attr_mkContestType" value='' />
-                <input type="hidden" name="attr_mkContestEffect" value='' />
-                <input type="hidden" name="attr_mkEffects" value='' />
-                <input type="hidden" name="attr_mkDamage_diceCount" value='0' />
-                <input type="hidden" name="attr_mkDamage_diceType"  value='0' />
-                <input type="hidden" name="attr_mkDamage_diceBonus" value='0' />
-                
-                <div class="sheet-table sheet-moveKnown-item">
+            <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
+            <input type="hidden" name="attr_TutorPoints_max" value="0" />
+            
+            <table class='sheet-table sheet-pokemon'>
+                <tr>
+                    <td class='sheet-table-header'>Remaining Tutor Points</td>
+                    <td><input type='number' name='attr_TutorPoints'/></td>
+                </tr>
+                <tr>
+                    <td class='sheet-table-header'>Bonus Tutor Points</td>
+                    <td><input type='number' name='attr_TutorPoints_bonus' value='0'></td>
+                </tr>
+                <tr>
+                    <td class='sheet-table-header'>Max Tutor Points</td>
+                    <td><span class="sheet-field" name="attr_TutorPoints_max" style="width: 40px;min-width: 40px;">0</span></td>
+                </tr>
+            </table>
+            
+            <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
+           
+           <div class='sheet-pokemon'>
+                <fieldset class='repeating_edges'>
                     
-                    <input type="hidden" name="attr_mkType" class="sheet-move-type" />
-                    <div class=" sheet-move-header">
-                        <div class="sheet-name">
-                            <span name="attr_mkName" >Name </span>
-                            
-                            <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
-                            
-                            <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{ATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
-                            <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{SPATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
-                            <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + 0 ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
-                            
-                        </div>
-                        <span name="attr_mkFrequency" class="sheet-freq">Frequency</span>
+                    <div class='sheet-minihead sheet-ability'>
+                        <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
                         
-                        <input type="hidden" name="attr_mkFrequency" class="sheet-freq" value="Physical" />
-                        <span class="sheet-uses sheet-move-uses">
-                            <input type="number" name="attr_mkUses" value='0' />
-                            <span>/</span>
-                            <span name="attr_mkUses_max">0</span>
-                        </span>
+                        <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
+                        
+                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
+                        
+                        <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
                     </div>
                     
-                    <div class="sheet-move-body">
-                        
-                        <div class="">
-                            <span class="sheet-label">Range:</span><span name="attr_mkRange">---</span>
+                    
+                    <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                    <div class="sheet-a">
+                        <div>
+                            <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
                         </div>
                         
-                        <input type='hidden' name="attr_mkAC" value='' />
-                        <div class="sheet-move-AC">
-                            <span class="sheet-label"> AC: </span> <span name="attr_mkAC"></span> 
-                            <span class="sheet-label"> Crit On: </span> <span name="attr_mkCrit"></span>
-                            
-                            
-                            <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} - @{Acc} ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
-                            
+                        <div>
+                            <span class="sheet-label">Cost </span>
+                            <input type="number" name="attr_EdgeCost" value='0' />
+                        </div>
+                        <div>
+                            <textarea name='attr_EdgeInfo' ></textarea>
+                        </div>
+                    </div>
+                    
+                    
+                </fieldset>
+            </div>
+            
+            <div class='sheet-trainer'>
+                <fieldset class='repeating_edges'>
+                    
+                    <div class='sheet-minihead sheet-ability'>
+                        <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                        
+                        <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
+                        
+                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{message= @{EdgeInfo} }} " ></button>
+                        
+                        <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
+                    </div>
+                    
+                    
+                    <input type='hidden' class='sheet-hide-swap' name="attr_EdgeHide" value='0' />
+                    <div class="sheet-a">
+                        <div>
+                            <input type="text" name="attr_EdgePrereq" placeholder="Prerequisite" style="width:100%" />
                         </div>
                         
-                        <input type='hidden' name="attr_mkDB" value='' />
-                        <div class="sheet-move-DB">
-                            <span class="sheet-label"> DB: </span> <span name="attr_mkDB">4</span> 
-                            <span class="sheet-field" name="attr_mkDB_roll">1d8 + 6</span>
-                            
-                            <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
-                            
-                            <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} ]] }}"></button>
-                            <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} ]] }}"></button>
-                            <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 ]] }}"></button>
-                        
+                        <div>
+                            <textarea name='attr_EdgeInfo' ></textarea>
                         </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class='sheet-features'>
+            <h3 class='sheet-header'>Features</h3>
+            
+            <fieldset class='repeating_features'>
+                
+                <input type='hidden' class='sheet-hide-swap' name="attr_Feature_Hide" value='0' />
+                
+                <div class='sheet-minihead sheet-ability'>
+                    <input type='hidden' class='sheet-hide-swap' name="attr_Feature_Hide" value='0' />
+                    <input type="checkbox" class="sheet-arrow " name="attr_Feature_Hide"  value="1" /><span></span>
+                    <button type='roll' value="&{template:PTU} {{title= @{Feature_Name} }} {{prerequisite= @{Feature_Prereq} }} {{frequency= @{Feature_Freq} }} {{target= @{Feature_Target} }} {{trigger= @{Feature_Trigger} }} {{message= @{Feature_Info} }} "></button>
+                    <input type="text" class="sheet-ability-name" name="attr_Feature_Name" placeholder="Feature Name" style="width:100%" />
+                </div>
+                
+                
+                <div class="sheet-a">
+                    <div>
+                        <input type="text" name="attr_Feature_Prereq" placeholder="Prerequisite" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Feature_Freq" placeholder="Frequency" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Feature_Target" placeholder="Target" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Feature_Trigger" placeholder="Trigger" style="width:100%" />
+                    </div>
+                    <div>
+                        <textarea name='attr_Feature_Info' ></textarea>
+                    </div>
+                </div>
+                
+                <!--input type="checkbox" class="sheet-arrow" name="attr_Feature_Hide"/><span></span>
+                <h4 class='sheet-minihead'>Feature</h4>
+                <table class='sheet-table'>
+                    <tr>
+                        <td class='sheet-table-header'>Name:</td>
+                        <td><input class='sheet-shortfield' name='attr_Feature_Name' type='text'></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Frequency:</td>
+                        <td><input class='sheet-shortfield' name='attr_Feature_Freq' type='text'></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Target:</td>
+                        <td><input class='sheet-shortfield' name='attr_Feature_Target' type='text'></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Other Info:</td>
+                        <td><textarea class='sheet-textarea-b' name='attr_Feature_Info'></textarea></td>
+                    </tr>
+                    <tr class="sheet-featlist">
+                        <td class='sheet-table-header'>Display:</td>
+                        <td><button type='roll' value='&{template:PTU} {{dis=Feature}} {{desc=@{Feature_Info}}} {{nick=@{character_name}}} {{name=@{Feature_Name}}} {{freq=@{Feature_Freq}}} {{tar=@{Feature_Target}}}' name='roll_FeatRoll' /> Show</td>
+                    </tr>
+                </table-->
+            </fieldset>
+        </div>
+        <div class='sheet-abilities'>
+            <h3 class="sheet-header">Abilities</h3>
+            
+            <fieldset class='repeating_abilities'>
+
+
+                <input type='hidden' class='sheet-hide-swap' name="attr_Ability_Hide" value='0' />
+                
+                <div class='sheet-minihead sheet-ability'>
+                    <input type='hidden' class='sheet-hide-swap' name="attr_Ability_Hide" value='0' />
+                    <input type="checkbox" class="sheet-arrow " name="attr_Ability_Hide"  value="1" /><span></span>
+                    <button type='roll' value="@{whisper} &{template:PTU} {{title= @{Ability_Name} }} {{frequency= @{Ability_Freq} }} {{target= @{Ability_Target} }} {{trigger= @{Ability_Trigger} }} {{message= @{Ability_Info} }} "></button>
+                    <input type="text" class="sheet-ability-name" name="attr_Ability_Name" placeholder="Ability Name" style="width:100%" />
+                </div>
+                
+                
+                <div class="sheet-a">
+                    <div>
+                        <input type="text" name="attr_Ability_Freq" placeholder="Frequency" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Ability_Target" placeholder="Target" style="width:100%" />
+                    </div>
+                    <div>
+                        <input type="text" name="attr_Ability_Trigger" placeholder="Trigger" style="width:100%" />
+                    </div>
+                    <div>
+                        <textarea name='attr_Ability_Info' ></textarea>
+                    </div>
+                </div>
+        
+            </fieldset>
+        </div>
+    </div>
+    <!-- Skills -->
+    <div class='sheet-row'>
+        <h3 class="sheet-header">Skills</h3>
+        <br />
+        <table class='sheet-left-half-table' STYLE="margin-bottom: 20px;">
+            <tr align = "center">
+                <th class='sheet-minihead'>Skill Name</th>
+                <th class='sheet-minihead'>Rank</th>
+                <th class='sheet-minihead'>Other Modifiers</th>
+                <th class='sheet-minihead'>Roll</th>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Acrobatics</td>
+                <td><input type='number' name='attr_Acrobatics' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Acrobatics_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Acrobatics}} {{SL=[[@{Acrobatics}d6+@{Acrobatics_bonus}]]}}' name='roll_AcrobaticsCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Athletics</td>
+                <td><input type='number' name='attr_Athletics' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Athletics_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Athletics}} {{SL=[[@{Athletics}d6+@{Athletics_bonus}]]}}' name='roll_AthleticsCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Combat</td>
+                <td><input type='number' name='attr_Combat' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Combat_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Combat}} {{SL=[[@{Combat}d6+@{Combat_bonus}]]}}' name='roll_CombatCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Intimidate</td>
+                <td><input type='number' name='attr_Intimidate' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Intimidate_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intimidate}} {{SL=[[@{Intimidate}d6+@{Intimidate_bonus}]]}}' name='roll_IntimidateCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Stealth</td>
+                <td><input type='number' name='attr_Stealth' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Stealth_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Stealth}} {{SL=[[@{Stealth}d6+@{Stealth_bonus}]]}}' name='roll_StealthCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Survival</td>
+                <td><input type='number' name='attr_Survival' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Survival_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Survival}} {{SL=[[@{Survival}d6+@{Survival_bonus}]]}}' name='roll_SurvivalCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>General Education</td>
+                <td><input type='number' name='attr_GeneralEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_GeneralEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=GeneralEducation}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Medicine Education</td>
+                <td><input type='number' name='attr_MedicineEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_MedicineEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=MedicineEducation}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Occult Education</td>
+                <td><input type='number' name='attr_OccultEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_OccultEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=OccultEducation}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' /></td>
+            </tr>
+        </table>
+        <table class='sheet-right-half-table'>
+            <tr align = "center">
+                <th class='sheet-minihead'>Skill Name</th>
+                <th class='sheet-minihead'>Rank</th>
+                <th class='sheet-minihead'>Other Modifiers</th>
+                <th class='sheet-minihead'>Roll</th>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Pokemon Education</td>
+                <td><input type='number' name='attr_PokemonEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_PokemonEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=PokemonEducation}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Technology Education</td>
+                <td><input type='number' name='attr_TechnologyEducation' value='2'/> d6+</td>
+                <td><input type='number' name='attr_TechnologyEducation_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=TechnologyEducation}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Guile</td>
+                <td><input type='number' name='attr_Guile' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Guile_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Guile}} {{SL=[[@{Guile}d6+@{Guile_bonus}]]}}' name='roll_GuileCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Perception</td>
+                <td><input type='number' name='attr_Perception' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Perception_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Perception}} {{SL=[[@{Perception}d6+@{Perception_bonus}]]}}' name='roll_PerceptionCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Charm</td>
+                <td><input type='number' name='attr_Charm' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Charm_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Charm}} {{SL=[[@{Charm}d6+@{Charm_bonus}]]}}' name='roll_CharmCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Command</td>
+                <td><input type='number' name='attr_Command' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Command_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Command}} {{SL=[[@{Command}d6+@{Command_bonus}]]}}' name='roll_CommandCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Focus</td>
+                <td><input type='number' name='attr_Focus' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Focus_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Focus}} {{SL=[[@{Focus}d6+@{Focus_bonus}]]}}' name='roll_FocusCheck' /></td>
+            </tr>
+            <tr align = "center">
+                <td class='sheet-table-header'>Intuition</td>
+                <td><input type='number' name='attr_Intuition' value='2'/> d6+</td>
+                <td><input type='number' name='attr_Intuition_bonus' value='0'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intuition}} {{SL=[[@{Intuition}d6+@{Intuition_bonus}]]}}' name='roll_IntuitionCheck' /></td>
+            </tr>
+        </table> <!--
+        </tr>
+        </table> -->
+    
+    </div>
+    <br/>
+    
+    <!-- Moves -->
+    <div class="sheet-generic-rolls">
+        
+        <!-- Generic Damage -->
+        <div class="sheet-table">
+            <div class="sheet-row">
+                <div style="width:10px;"></div>
+                <div style="width:30px;">
+                    <span>DB</span>
+                </div>
+                <div style="width:40px;">
+                    <input type="number" name="attr_generic_db" value="4" min="0" style="width:100%"/>
+                </div>
+                <div style="width:70px;">
+                    <input type="hidden" name="attr_generic_db_roll" value="1d8+6" />
+                    <span class="sheet-field" name="attr_generic_db_roll">1d8+6</span>
+                </div>
+                <div style="width:100px;">
+                    <button type="roll" name="roll_generic_db" value="@{whisper} &{template:PTU}{{title=@{character_name}'s Damage}}{{damage= [[@{generic_db_roll} + ?{Class|None, 0|Physical, @{ATK_total}|Special, @{SPATK_total}} + @{dmg_bonus} ]]  }}">Damage</button>
+                </div>
+                <div style="width:10px;"></div>
+                <div style="width:100px;">
+                    <button type="roll" name="roll_generic_accuracy" value="@{whisper} &{template:PTU}{{title=@{character_name}'s Accuracy}}{{AC= [[1d20 + @{Acc}]] }}">Accuracy</button>
+                </div>
+                <div style="width:10px;"></div>
+            </div>
+        </div>
+        
+    </div>
+    
+    
+    <!-- Known Moves Summary -->
+    <h3 class="sheet-header">
+        Known Moves
+        <button type="action" name="act_lockMoves" style="font-family: 'Pictos';color:black">(</button>
+    </h3>
+    <div class="sheet-movesKnown">
+        <input type='hidden' name="attr_lockMovesKnown" value="1" />
+        
+        <fieldset class="repeating_movesKnown">
+            <input type="hidden" name="attr_mkID" value='0' />
+            <input type="hidden" name="attr_mkName" value='' />
+            <input type="hidden" name="attr_mkRange" value='' />
+            <input type="hidden" name="attr_mkCat" value='Physical' />
+            <input type="hidden" name="attr_mkCrit" value='0' />
+            <input type="hidden" name="attr_mkDB" value='0' />
+            <input type="hidden" name="attr_mkDB_roll" value='0' />
+            <input type="hidden" name="attr_mkContestType" value='' />
+            <input type="hidden" name="attr_mkContestEffect" value='' />
+            <input type="hidden" name="attr_mkEffects" value='' />
+            <input type="hidden" name="attr_mkDamage_diceCount" value='0' />
+            <input type="hidden" name="attr_mkDamage_diceType"  value='0' />
+            <input type="hidden" name="attr_mkDamage_diceBonus" value='0' />
+            
+            <div class="sheet-table sheet-moveKnown-item">
+                
+                <input type="hidden" name="attr_mkType" class="sheet-move-type" />
+                <div class=" sheet-move-header">
+                    <div class="sheet-name">
+                        <span name="attr_mkName" >Name </span>
                         
+                        <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
+                        
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{ATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{SPATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + 0 ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        
+                    </div>
+                    <span name="attr_mkFrequency" class="sheet-freq">Frequency</span>
+                    
+                    <input type="hidden" name="attr_mkFrequency" class="sheet-freq" value="Physical" />
+                    <span class="sheet-uses sheet-move-uses">
+                        <input type="number" name="attr_mkUses" value='0' />
+                        <span>/</span>
+                        <span name="attr_mkUses_max">0</span>
+                    </span>
+                </div>
+                
+                <div class="sheet-move-body">
+                    
+                    <div class="">
+                        <span class="sheet-label">Range:</span><span name="attr_mkRange">---</span>
+                    </div>
+                    
+                    <input type='hidden' name="attr_mkAC" value='' />
+                    <div class="sheet-move-AC">
+                        <span class="sheet-label"> AC: </span> <span name="attr_mkAC"></span> 
+                        <span class="sheet-label"> Crit On: </span> <span name="attr_mkCrit"></span>
+                        
+                        
+                        <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} + (@{Acc} - (@{mkAC}) ) ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
+                        
+                    </div>
+                    
+                    <input type='hidden' name="attr_mkDB" value='' />
+                    <div class="sheet-move-DB">
+                        <span class="sheet-label"> DB: </span> <span name="attr_mkDB">4</span> 
+                        <span class="sheet-field" name="attr_mkDB_roll">1d8 + 6</span>
+                        
+                        
+                        
+                        <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
+                        
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                    
                     </div>
                     
                 </div>
-            </fieldset>
+                
+            </div>
+        </fieldset>
+        
+    </div>
+    
+    <!-- Moves Learnset  -->
+    <h3 class="sheet-header">Move List
+        
+        <input type='hidden' class='sheet-hide-swap' name='attr_hideMoveList' value='0'/>
+        
+        <span class='sheet-a' >-</span>
+        <span class='sheet-b' >+</span>
+        <input type='checkbox' name='attr_hideMoveList' value='1' />
+    </h3>
+    <div class="sheet-movesList">
+        <input type='hidden' class='sheet-hide-swap' name='attr_hideMoveList' value='0' />
+        
+            <!-- Struggle -->
+            <div class="sheet-table sheet-move-item">
+                    <input type="hidden" name="attr_struggleFreq" value='At-Will' />
+                    <input type="hidden" name="attr_struggleType" class="sheet-move-type" value ='Normal' />
+                    <!-- Header -->
+                    <div class="sheet-row sheet-move-header" >
+                        <div style="width:40%">
+                            <span>Struggle</span>
+                        </div><div style="width:25%">
+                            <span class="sheet-move-freq">At-Will</span>
+                        </div><div style="width:10%">
+                        </div><div style="width:25%">
+                            <select name="attr_struggleCat">
+                                <option selected="selected">Physical</option>
+                                <option >Special</option>
+                                <option >Status</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sheet-row">
+                        <div style="width:30%" class="sheet-move-side">
+                            <div>
+                                <select name="attr_struggleType">
+                                    <option value="Untyped" >-</option>
+                                    <option selected>Normal</option>
+                                    <option>Bug</option>
+                                    <option>Dark</option>
+                                    <option>Dragon</option>
+                                    <option>Electric</option>
+                                    <option>Fairy</option>
+                                    <option>Fighting</option>
+                                    <option>Fire</option>
+                                    <option>Flying</option>
+                                    <option>Ghost</option>
+                                    <option>Grass</option>
+                                    <option>Ground</option>
+                                    <option>Ice</option>
+                                    <option>Poison</option>
+                                    <option>Psychic</option>
+                                    <option>Rock</option>
+                                    <option>Steel</option>
+                                    <option>Water</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select name="attr_struggleContestType">
+                                    <option selected="selected">Cool</option>
+                                    <option >Tough</option>
+                                    <option >Beauty</option>
+                                    <option >Smart</option>
+                                    <option >Cute</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="text" name="attr_struggleContestEffect" placeholder="Contest Effect"/>
+                            </div>
+                            
+                            
+                        </div><div style="width:70%" class="sheet-move-body" >
+                            <div>
+                                <span>Range: <input type="text" name="attr_struggleRange"  style="width:350px" value='Melee-Ranged' /></span>
+                                
+                                <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
+                                
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + 0 + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                            </div>
+                            <div>
+                                <span>AC: <input type="number" name="attr_struggleAC" value='4' /></span>
+                                <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> </span>
+                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC}]] }} {{ar= [[1d20cs>@{struggleCrit} + (@{Acc} - @{struggleAC})]] }} {{critsOn= [[@{struggleCrit} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
+                            </div>
+                            <div>
+                                <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
+                                <span>DB: <input type="number" name="attr_struggle_db" value='4' /></span>
+                                <span class="sheet-db-breakdown"> 
+                                    <input type="text" name="attr_struggle_db_roll" style="width: 200px;text-align: center;" value="1d8 + 6" />
+                                </span>
+                                
+                                <span>
+                                    <label style='display:inline-block; width:auto'>STAB</label>
+                                    <input type='checkbox' name='attr_struggleStab' value='1'/>
+                                </span>
+                                
+                                <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
+                                
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sheet-row">
+                        <textarea name="attr_struggleEffects" style="display:inline-block;max-width:100%"></textarea>
+                    </div>
+                </div>
             
+            <div class='sheet-a'>
+            
+            <fieldset class="repeating_moves">
+                <input type="hidden" name="attr_mlID" />
+                <div class="sheet-table sheet-move-item">
+                    <span class="sheet-movesKnown-Add">
+                        <input type="checkbox" name="attr_mlKnown" value="1" />
+                        <div></div>
+                    </span>
+                    <input type="hidden" name="attr_mlType" class="sheet-move-type" />
+                    <!-- Header -->
+                    
+                    <div class="sheet-row sheet-move-header" >
+                        <div style="width:40%">
+                            <input type="text" placeholder="Move Name" name="attr_mlName" style="width:100%" />
+                        </div><div style="width:25%">
+                            <select name="attr_mlFrequency" class="sheet-move-freq">
+                                <option selected="selected">At-Will</option>
+                                <option>EOT</option>
+                                <option>Scene</option>
+                                <option>Daily</option>
+                                <option>Static</option>
+                                <option>Other</option>
+                            </select>
+                        </div><div style="width:10%">
+                            <input type="hidden" name="attr_mlFrequency" value="At-Will" />
+                            <input type="text" placeholder="Uses" name="attr_mlUses_max" class="sheet-move-uses" />
+                        </div><div style="width:25%">
+                            <select name="attr_mlCat" value="Physical">
+                                <option selected="selected">Physical</option>
+                                <option >Special</option>
+                                <option >Status</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="sheet-row">
+                        <div style="width:30%" class="sheet-move-side">
+                            <div>
+                                <select name="attr_mlType">
+                                    <option value="Untyped" >-</option>
+                                    <option selected>Normal</option>
+                                    <option>Bug</option>
+                                    <option>Dark</option>
+                                    <option>Dragon</option>
+                                    <option>Electric</option>
+                                    <option>Fairy</option>
+                                    <option>Fighting</option>
+                                    <option>Fire</option>
+                                    <option>Flying</option>
+                                    <option>Ghost</option>
+                                    <option>Grass</option>
+                                    <option>Ground</option>
+                                    <option>Ice</option>
+                                    <option>Poison</option>
+                                    <option>Psychic</option>
+                                    <option>Rock</option>
+                                    <option>Steel</option>
+                                    <option>Water</option>
+                                </select>
+                            </div>
+                            <div>
+                                <select name="attr_mlContestType">
+                                    <option selected="selected">Cool</option>
+                                    <option >Tough</option>
+                                    <option >Beauty</option>
+                                    <option >Smart</option>
+                                    <option >Cute</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type='text' name="attr_mlContestEffect" placeholder="Contest Effect" style="text-align:center"/>
+                            </div>
+                            
+                            
+                        </div><div style="width:70%" class="sheet-move-body" >
+                            <div>
+                                <span>Range: <input type="text" name="attr_mlRange" placeholder="Distance, Targets" style="width:350px"/></span>
+                                
+                                <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
+                                
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                            </div>
+                            <div>
+                                <span>AC: <input type="number" name="attr_mlAC" value='2' /></span>
+                                <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> </span>
+                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC}]] }} {{ar= [[1d20cs>@{mlCrit} + (@{Acc} - @{mlAC}) ]] }} {{critsOn= [[@{mlCrit} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
+                            </div>
+                            <div>
+                                <input type="hidden" name="attr_mlDB_roll" value='0' />
+                                <span>DB: <input type="number" name="attr_mlDB" value="0" /></span>
+    
+                                <span class="sheet-db-breakdown"> 
+                                    <input type="text" name="attr_mlDB_roll" style="width: 200px;text-align: center;" value="0" />
+                                </span>
+                                
+                                <span>
+                                    <label style='display:inline-block; width:auto'>STAB</label>
+                                    <input type='checkbox' name='attr_mlStab' value='1'/>
+                                </span>
+                                
+                                <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
+                                
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sheet-row">
+                        <textarea name="attr_mlEffects" style="display:inline-block;max-width:100%"></textarea>
+                    </div>
+                </div>
+                
+            </fieldset>
         </div>
-        
-        
-        
     </div>    
 </div>
 
 
 <div class="sheet-oldtab4 sheet-page-import" style="background-color:#f2f2f2;"> 
+    <button type="action" style="width: 100%;" name="act_import">Import</button>
     <textarea class='sheet-import sheet-textarea' name='attr_input'></textarea>
 </div>
