@@ -6,6 +6,12 @@
     --field-color:lightgrey;
 }
 
+.sheet-main-block{
+    display:grid;
+    grid-template-columns: 59% 39%;
+    gap:2%;
+}
+
 .sheet-move-button{
     float:right;
 }
@@ -57,6 +63,7 @@ input:not(.sheet-buttons)::-webkit-outer-spin-button {
 span.sheet-field{
     display:inline-block;
     min-height:25px;
+    min-width:50px;
     width:auto;
     padding:2px 5px;
     text-align-last:center;
@@ -64,7 +71,6 @@ span.sheet-field{
     border:1px solid black;
     background-color:var(--field-color);
     font-weight:bold;
-    min-width:75px;
 }
 
 textarea{
@@ -802,6 +808,9 @@ div.sheet-table.sheet-basic-info  .sheet-row:nth-child(odd),
 table.sheet-table.sheet-basic-info  tr:nth-child(odd){
     background-color: white;
 }
+.sheet-basic-info th{
+    text-align: center;
+}
 /*
 .sheet-table tr:nth-child(even),
 .sheet-table .sheet-row:nth-child(even){
@@ -915,6 +924,7 @@ textarea.sheet-import{
 
 .sheet-table-header{
  font-weight: bold;
+ text-align: right;
 }
 
 .sheet-table-header-1{
