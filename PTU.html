@@ -1779,7 +1779,9 @@
     </table>
 </rolltemplate>
 
-<input class='sheet-shortfield' name='attr_character_sheet' value='PTUv2' type='hidden'/>
+<!--input class='sheet-shortfield' name='attr_character_sheet' value='PTUv2' type='hidden'/-->
+<input type="hidden" name="attr_sheet-version" value="v2.0.0" />
+<input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
 
 <div class="sheet-center-img">
     <img src="http://i.imgur.com/Dm0WdCu.png" alt="PTU v1.05" />
@@ -1847,19 +1849,10 @@
 </div>
 <br />
 
-
-
 <input type="hidden" name="attr_tab" class="sheet-oldtab" value="1" />
-<input type="hidden" name="attr_target" class="sheet-targeted" />
 
-
-<!--
-<input type="radio" name="attr_target" value="0" checked /> Non-Targeted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="radio" class="sheet-targeted" name="attr_target" value="1"/> Targeted
--->
 
 <!-- Traditional -->
-<input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
 <div class="sheet-oldtab1">
     <div class="sheet-main-header">
         
@@ -4151,7 +4144,7 @@
     </div>    
 </div>
 
-
+<!-- Import Page -->
 <div class="sheet-oldtab4 sheet-page-import" style="background-color:#f2f2f2;"> 
     <button type="action" style="width: 100%;" name="act_import">Import</button>
     <textarea class='sheet-import sheet-textarea' name='attr_input'></textarea>
