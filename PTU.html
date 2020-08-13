@@ -1797,10 +1797,6 @@
         <input type="radio" name="attr_tab" class="sheet-oldtab sheet-oldtab1" value="2" />
         <span title="Notes Page"></span>
     </div>
-    <!--div class="sheet-oldtab">
-        <input type="radio" name="attr_tab" class="sheet-oldtab sheet-oldtab2" value="2"  />
-        <span title="Tabbed Page"></span>
-    </div-->
     <div class="sheet-oldtab">
         <input type="radio" name="attr_tab" class="sheet-oldtab sheet-oldtab3" value="3" />
         <span title="Action Page" ></span>
@@ -1809,7 +1805,9 @@
         <input type="radio" name="attr_tab" class="sheet-oldtab sheet-oldtab4" value="4" />
         <span title="Import Page" ></span>
     </div>
+
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
     <span>
         <div class="sheet-oldtab">
             <input type="radio" name="attr_whisper" class="sheet-oldtab" value="/w gm " checked="checked"/>
@@ -1820,32 +1818,20 @@
             <span title="Public" ></span>
         </div>
     </span>
-    &nbsp;&nbsp;&nbsp;&nbsp;
-    <!--span>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;   
+
+    <span>        
         <div class="sheet-oldtab">
-            <input type="radio" name="attr_target" class="sheet-oldtab" value="0" checked="checked"/>
-            <span title="Non-Targeted" ></span>
+            <input type="radio" name="attr_CharType" class="sheet-oldtab" value="0" checked/>
+            <span title="Pokemon" ></span>
         </div>
         <div class="sheet-oldtab">
-            <input type="radio" name="attr_target" class="sheet-oldtab" value="1" />
-            <span title="Targeted" ></span>
-        </div>
-    </span-->
-    
-    <span>
-        
-            <div class="sheet-oldtab">
-                <input type="radio" name="attr_CharType" class="sheet-oldtab" value="0" checked/>
-                <span title="Pokemon" ></span>
-            </div>
-            <div class="sheet-oldtab">
-                <input type="radio" name="attr_CharType" class="sheet-oldtab" value="1" />
-                <span title="Trainer" ></span>
-            </div>
-     
+            <input type="radio" name="attr_CharType" class="sheet-oldtab" value="1" />
+            <span title="Trainer" ></span>
+        </div>     
     </span>
-    
-    
+        
 </div>
 <br />
 
@@ -2269,6 +2255,9 @@
                 <input type="hidden" name="attr_Injuries" value="0" />
                 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                 <div class="sheet-row">
+                    <button type='roll' name='act_calcDamage' style="width:100%" value="@{whisper} &{template:default} {{name= @{character_name} Damage Calculation}} {{Damage Taken= [[?{damage|0}]] }} {{After Defenses= [[(?{damage} - @{dam_R}) - ?{category|Physical, @{DEF_total}|Special,@{SPDEF_total}|Other, 0}  )]] }} {{After Type = [[floor( [[( (?{damage} - @{dam_R}) - ?{category|Physical, @{DEF_total}|Special,@{SPDEF_total}|Other, 0}) * ?{Effectiveness|Immune, 0|Triple Resisted, 0.125|Double Resisted, 0.25|Resisted, 0.5|Normal, 1|Effective, 1.5| Double Effective, 2| Triple Effective,3} ]] )]]  }}">Calculate Damage</button>
+                </div>
+                <div class="sheet-row">
                     <div style="width:50%">
                         <span class='sheet-label' >Temporary Hit Points</span>
                     </div><div style="width:30%">
@@ -2278,7 +2267,6 @@
                 <div class="sheet-row">
                     <div style="width:50%">
                         <span class='sheet-label' >Current Hit Point</span>
-                        <button type='roll' name='act_calcDamage'></button>
                     </div><div style="width:30%">
                         <span><input type="number" name="attr_HitPoints" style="width:100%" value='0' \></span>
                     </div>
