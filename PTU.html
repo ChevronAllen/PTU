@@ -440,7 +440,7 @@
                 const alloc = parseInt(values[`${stat}`], 10)||0;
                 const stage = parseFloat(values[`${stat}_Stage`], 10)||1;
                 const bonus = parseInt(values[`${stat}_bonus`], 10)||0;
-                const calc = Math.floor( ((base+alloc)*stage) + bonus );
+                const calc = Math.floor( (base + alloc + bonus) * stage  );
                 
                 setAttrs({
                     [stat + '_total']:  calc
@@ -2040,22 +2040,23 @@
                     <th>Stat</th>
                     <th>Base</th>
                     <th>Allocated</th>
-                    <th>Stage</th>
                     <th>Bonus</th>
+                    <th>Stage</th>
                     <th>Current</th>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>HP</td>
                     <td align="center"><input type='number' name='attr_base_HP' value ='10' ></td>
                     <td align='center'><input type='number' name='attr_HP' value = 0 ></td>
+                    <td align='center'><input type='number' name='attr_HP_bonus' value = 0 ></td>
                     <td>&nbsp;</td>
-                    <td><input type='number' name='attr_HP_bonus' value = 0 ></td>
                     <td align='center'><span class="sheet-field" name="attr_HP_total" style="width:100%" >0</span></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>Attack</td>
                     <td align="center"><input type='number' name='attr_base_ATK' value='5' ></td>
                     <td align='center'><input type='number' name='attr_ATK' value = 0 ></td>
+                    <td align='center'><input type='number' name='attr_ATK_bonus' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_ATK_Stage'>
                         <option value='0.4'>-6</option>
                         <option value='0.5'>-5</option>
@@ -2070,14 +2071,14 @@
                         <option value='1.8'>4</option>
                         <option value='2'>5</option>
                         <option value='2.2'>6</option>
-                    </select></td>
-                    <td><input type='number' name='attr_ATK_bonus' value = 0 ></td>
+                    </select></td>                    
                     <td align='center'><span class="sheet-field" style="width:100%" name="attr_ATK_total"  >0</span></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>Defense</td>
                     <td align="center"><input type='number' name='attr_base_DEF' value='5' ></td>
                     <td align='center'><input type='number' name='attr_DEF' value = 0 ></td>
+                    <td align='center'><input type='number' name='attr_DEF_bonus' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_DEF_Stage'>
                         <option value='0.4'>-6</option>
                         <option value='0.5'>-5</option>
@@ -2093,13 +2094,13 @@
                         <option value='2'>5</option>
                         <option value='2.2'>6</option>
                     </select></td>
-                    <td><input type='number' name='attr_DEF_bonus' value = 0 ></td>
                     <td align='center'><span class="sheet-field" style="width:100%" name="attr_DEF_total">0</span></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>Special Attack</td>
                     <td align="center"><input type='number' name='attr_base_SPATK' value='5' ></td>
                     <td align='center'><input type='number' name='attr_SPATK' value = 0 ></td>
+                    <td align='center'><input type='number' name='attr_SPATK_bonus' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_SPATK_Stage'>
                         <option value='0.4'>-6</option>
                         <option value='0.5'>-5</option>
@@ -2114,14 +2115,14 @@
                         <option value='1.8'>4</option>
                         <option value='2'>5</option>
                         <option value='2.2'>6</option>
-                    </select></td>
-                    <td><input type='number' name='attr_SPATK_bonus' value = 0 ></td>
+                    </select></td>                    
                     <td align='center'><span class="sheet-field" style="width:100%" name="attr_SPATK_total">0</span></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>Special Defense</td>
                     <td align="center"><input type='number' name='attr_base_SPDEF' value='5' ></td>
                     <td align='center'><input type='number' name='attr_SPDEF' value = 0 ></td>
+                    <td align='center'><input type='number' name='attr_SPDEF_bonus' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_SPDEF_Stage'>
                         <option value='0.4'>-6</option>
                         <option value='0.5'>-5</option>
@@ -2136,14 +2137,14 @@
                         <option value='1.8'>4</option>
                         <option value='2'>5</option>
                         <option value='2.2'>6</option>
-                    </select></td>
-                    <td><input type='number' name='attr_SPDEF_bonus' value = 0 ></td>
+                    </select></td>                    
                     <td align='center'><span class="sheet-field" style="width:100%" name="attr_SPDEF_total">0</span></td>
                 </tr>
                 <tr style="border-bottom: 2px gray dotted;">
                     <td class='sheet-table-header'>Speed</td>
                     <td align="center"><input type='number' name='attr_base_SPEED' value='5' ></td>
                     <td align='center'><input type='number' name='attr_SPEED' value = 0 ></td>
+                    <td align='center'><input type='number' name='attr_SPEED_bonus' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_SPEED_Stage'>
                         <option value='0.4'>-6</option>
                         <option value='0.5'>-5</option>
@@ -2159,13 +2160,13 @@
                         <option value='2'>5</option>
                         <option value='2.2'>6</option>
                     </select></td>
-                    <td><input type='number' name='attr_SPEED_bonus' value = 0 ></td>
                     <td align='center'><span class="sheet-field" style="width:100%" name="attr_SPEED_total">0</span></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>Accuracy Bonus</td>
                     <td align="center">&nbsp;</td>
                     <td align='center'>&nbsp;</td>
+                    <td align='center'><input type='number' name='attr_Acc_bonus' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_Acc'>
                         <option value='-6'>-6</option>
                         <option value='-5'>-5</option>
@@ -2180,14 +2181,14 @@
                         <option value='4'>4</option>
                         <option value='5'>5</option>
                         <option value='6'>6</option>
-                    </select></td>
-                    <td>&nbsp;</td>
+                    </select></td>                    
                     <td align='center'><span class="sheet-field" style="width:100%" name="attr_Acc">0</span></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>Evasion Bonus</td>
                     <td align="center">&nbsp;</td>
                     <td align='center'>&nbsp;</td>
+                    <td align='center'><input type='number' name='attr_Eva_bonus' value = 0 ></td>
                     <td align='center'><select class='sheet-shortfield2' name='attr_Eva'>
                         <option value='-6'>-6</option>
                         <option value='-5'>-5</option>
@@ -2203,7 +2204,6 @@
                         <option value='5'>5</option>
                         <option value='6'>6</option>
                     </select></td>
-                    <td>&nbsp;</td>
                     <td align='center'><span class="sheet-field" style="width:100%" name="attr_Eva">0</span></td>
                 </tr>
                 <tr>
