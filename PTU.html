@@ -108,19 +108,15 @@
         
         getAttrs([ "Overland", "Overland_bonus", "Swim", "Swim_bonus", "Throw", "Throw_bonus", "Power", "Power_bonus", "HJ", "HJ_bonus" ,"LJ", "LJ_bonus","speed_movement_bonus"],function(v){
             
-            //var char = parseInt(v["CharType"])||0;
-            
-            //Overland = 3 + [(Athl + Acro)/2]
-            
             var overland = parseInt(v["Overland"])||0;
             var swim     = parseInt(v["Swim"])||0;
             var hj       = parseInt(v["HJ"])||0;
             var lj       = parseInt(v["LJ"])||0;
             var power    = parseInt(v["Power"])||0;
             var thrown   = parseInt(v["Throw"])||0;
-
+            
             var movement_mod = parseInt(v["speed_movement_bonus"])||0;
-
+            
             var bonus_o = parseInt(v["Overland_bonus"])||0;
             var bonus_s = parseInt(v["Swim_bonus"])||0;
             var bonus_t = parseInt(v["Throw_bonus"])||0;
@@ -128,8 +124,7 @@
             var bonus_h = parseInt(v["HJ_bonus"]) || 0;
             var bonus_l = parseInt(v["LJ_bonus"]) || 0;
             
-            
-            
+
             if(movement_mod < 0)
             {
                 
@@ -148,6 +143,7 @@
             update["Throw_calc"]     = (thrown + bonus_t);
             
             /* Legacy code kept for reference
+            var char = parseInt(v["CharType"])||0;
             var acro = parseInt(v["Acrobatics"])||0;
             var athl = parseInt(v["Athletics"])||0;
             if(char == 1){
@@ -195,6 +191,7 @@
                 update["Power_calc"]     = (power + bonus_p);
                 update["Throw_calc"]     = (thrown + bonus_t);
             */
+            
             setAttrs(update, {silent: true});
                 
         });
