@@ -103,10 +103,10 @@
     
     
     
-    on("sheet:opened change:CharType change:Overland change:Overland_bonus change:Swim change:Swim_bonus change:Throw change:Throw_bonus change:Power change:Power_bonus change:HJ change:HJ_bonus change:LJ change:LJ_bonus change:Athletics change:Acrobatics",function(){
+    on("sheet:opened change:Overland change:Overland_bonus change:Swim change:Swim_bonus change:Throw change:Throw_bonus change:Power change:Power_bonus change:HJ change:HJ_bonus change:LJ change:LJ_bonus change:speed_movement_bonus",function(){
         var update = {};
         
-        getAttrs(["CharType", "Overland", "Overland_bonus", "Swim", "Swim_bonus", "Throw", "Throw_bonus", "Power", "Power_bonus", "HJ", "HJ_bonus" ,"LJ", "LJ_bonus", "Athletics", "Acrobatics"],function(v){
+        getAttrs([ "Overland", "Overland_bonus", "Swim", "Swim_bonus", "Throw", "Throw_bonus", "Power", "Power_bonus", "HJ", "HJ_bonus" ,"LJ", "LJ_bonus","speed_movement_bonus"],function(v){
             
             //var char = parseInt(v["CharType"])||0;
             
@@ -119,6 +119,8 @@
             var power    = parseInt(v["Power"])||0;
             var thrown   = parseInt(v["Throw"])||0;
 
+            var movement_mod = parseInt(v["speed_movement_bonus"])||0;
+
             var bonus_o = parseInt(v["Overland_bonus"])||0;
             var bonus_s = parseInt(v["Swim_bonus"])||0;
             var bonus_t = parseInt(v["Throw_bonus"])||0;
@@ -127,17 +129,27 @@
             var bonus_l = parseInt(v["LJ_bonus"]) || 0;
             
             
-            //var acro = parseInt(v["Acrobatics"])||0;
-            //var athl = parseInt(v["Athletics"])||0;
-
-            update["Overland_calc"]  = (overland + bonus_o);
-            update["Swim_calc"]      = (swim + bonus_s);
+            
+            if(movement_mod < 0)
+            {
+                
+                update["Overland_calc"]  = Math.min(Math.max( (overland + bonus_o) + movement_mod, 2), (overland + bonus_o));
+                update["Swim_calc"]      = Math.min(Math.max( (swim + bonus_s) + movement_mod, 2), (swim + bonus_s));
+            }else
+            {
+                update["Overland_calc"]  = (overland + bonus_o) + movement_mod;
+                update["Swim_calc"]      = (swim + bonus_s) + movement_mod;
+                
+            }
+            
             update["HJ_calc"]        = (hj + bonus_h);
             update["LJ_calc"]        = (lj + bonus_l);
             update["Power_calc"]     = (power + bonus_p);
             update["Throw_calc"]     = (thrown + bonus_t);
-
-            /*
+            
+            /* Legacy code kept for reference
+            var acro = parseInt(v["Acrobatics"])||0;
+            var athl = parseInt(v["Athletics"])||0;
             if(char == 1){
                 
                 var hj = 0;
@@ -182,7 +194,6 @@
                 update["LJ_calc"]        = (lj + bonus_l);
                 update["Power_calc"]     = (power + bonus_p);
                 update["Throw_calc"]     = (thrown + bonus_t);
-            }
             */
             setAttrs(update, {silent: true});
                 
@@ -453,6 +464,7 @@
     });
     */
     
+    /* Update Combat Stats */
     const stats = ['HP','ATK','DEF','SPATK','SPDEF','SPEED'];
     stats.forEach(function (stat) {
         on(`change:base_${stat} change:${stat} change:${stat}_Stage change:${stat}_bonus sheet:opened`, function () {
@@ -469,6 +481,27 @@
                 });
             });
             
+        });
+    });
+
+    on("change:SPEED_Stage",function(){
+        update={};
+        getAttrs(["SPEED_Stage"], function(values){
+            var stage_mul = parseFloat( values["SPEED_Stage"], 10)||1;
+            var stage = 0;
+
+            if(stage_mul != 1){
+                stage_mul *= 10;
+                
+                stage =  (stage_mul < 10) ? 0-(10 - stage_mul) : Math.trunc((stage_mul - 10)/2);
+
+                console.log(`multiplier: ${stage_mul} , stage: ${Math.trunc(stage)}`);
+            }
+
+            update["speed_movement_bonus"] = Math.floor(stage/2);
+
+            setAttrs(update);
+
         });
     });
     
@@ -496,7 +529,6 @@
         update={};
         
         getAttrs(["repeating_moves_mlDB"], function(values) {
-            //console.log("Works");
             
             var db = parseInt(values["repeating_moves_mlDB"]) || 0;
             var x = dbCalc(db);
@@ -533,8 +565,6 @@
     /*
     on("change:repeating_moves:mlDB_roll", function() {
         update={};
-        
-        //console.log("Works");
         
         update["repeating_moves_mlDB"] = "";
         setAttrs(update, {silent:true});
@@ -2293,19 +2323,6 @@
                         <span><input type="number" name="attr_Injuries" style="width:100%" value='0' \></span>
                     </div>
                 </div>
-                <!--div class="sheet-row">
-                    <fieldset class="repeating_injuries">
-                        <div class="sheet-injury-item" >
-                            <div style="display:inline-block;width:15%;" >
-                                <input type="number" name="attr_injury_damage" style="width:100%" value='0' />
-                            </div><div style="display:inline-block;width:10%;" >
-                                
-                            </div><div style="display:inline-block;width:70%" >
-                                <input type="text" name="attr_injury_descr" style="width:100%" placeholder='description'/>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div-->
             </div>
             
             
