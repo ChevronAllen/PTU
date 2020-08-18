@@ -1,5 +1,5 @@
 .charsheet{
-    min-width:840px;
+    min-width:875px;
     max-width:900px;
     margin: 0 auto;
     background: #d6d5c9;
@@ -153,10 +153,10 @@ div.sheet-oldtab-group{
     margin-bottom:-2px;
 }
 div.sheet-oldtab{
-    display:inline-block;
-
-    
+    display:inline-block;    
     position:relative;
+    margin-top:3px;
+    margin-bottom: 3px;
 }
 div.sheet-oldtab > input.sheet-oldtab {
     display:block;
@@ -377,7 +377,9 @@ span.sheet-freq{
 .sheet-move-item .sheet-movesKnown-Add > input:checked + div{
     background:red;
 }
-
+.sheet-move-uses{
+    text-align: center;
+}
 input[value="At-Will"] + .sheet-move-uses,
 input[value="EOT"] + .sheet-move-uses,
 input[value="Static"] + .sheet-move-uses{

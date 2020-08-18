@@ -573,15 +573,18 @@
         
     });
     
-    on("change:struggle_db", function(){
+    on("change:struggle_db change:struggleStab", function(){
         update = {};
         
-        getAttrs(["struggle_db"],function(values){
+        getAttrs(["struggle_db","struggleStab"],function(values){
            
             var db = parseInt(values["struggle_db"]) || 0;
-            var x = dbCalc(db);
+            var stab = parseInt(values["struggleStab"]) || 0;
+            var x = dbCalc(db + (stab * 2));
             var roll = "";
             
+            update[""struggle_db_calc""] = db + (stab * 2);
+
             if(db > 0){
                 roll = "" + x.amount + "" + x.dice + " + " + x.bonus ;
                 update["struggle_db_roll"] = roll;
@@ -1226,6 +1229,10 @@
             sdef  = Math.min(Math.floor( sdef/5),6);
             speed = Math.min(Math.floor(speed/5),6);
 
+            update["PhysEvade"] = def;
+            update["SpecEvade"] = sdef;
+            update["SpeedEvade"] = speed;
+
             update["PhysEvade_calc"]  = Math.min( eva + peb  + def,  9);
             update["SpecEvade_calc"]  = Math.min( eva + sceb + sdef, 9);
             update["SpeedEvade_calc"] = Math.min( eva + speb + speed,9);
@@ -1837,6 +1844,13 @@
             <span title="Trainer" ></span>
         </div>     
     </span>
+
+    <span>
+        <div class="sheet-oldtab">
+            <input type="radio" name="attr_tab" class="sheet-oldtab" value="5" checked/>
+            <span title="Settings" ></span>
+        </div>
+    </span>
         
 </div>
 <br />
@@ -1940,16 +1954,13 @@
                 <div class="sheet-row">
                     <div style="width:20%">
                         <span class='sheet-label' >Level</span>
-                    </div>
-                    <div style="width:30%">
+                    </div><div style="width:30%">
                         <span><input type="number" name="attr_level" value="1" min='1' \></span>
-                    </div>
-                    <div style="width:20%">
+                    </div><div style="width:20%">
                         <span class='sheet-label' >EXP</span>     
-                    </div>
-                    <div style="width:25%">
+                    </div><div style="width:30%">
                         <span>
-                            <input type="number" name="attr_exp" value="0" min='0'\> / <input type="number" name="attr_exp_max"  value="10" min='0'> 
+                            <input type="number" name="attr_exp" value="0" min='0' style="width:45%"/> / <input type="number" name="attr_exp_max"  value="10" min='0' style="width:45%"/> 
                         </span>
                     </div>
                 </div>
@@ -1959,7 +1970,7 @@
                     <div style="width:20%">
                         <span class='sheet-label' >Nature</span>
                     </div><div style="width:30%">
-                        <span><input type="text" name="attr_nature" style="width:100%;text-align:center;"\></span> 
+                        <span><input type="text" name="attr_nature" style="width:100%;text-align:center;"/></span> 
                     </div><div style="width:25%">
                         <span class='sheet-label'>High </span>
                         <select name="attr_nature_high" style="width:auto" >
@@ -2202,7 +2213,9 @@
                         <option value='5'>5</option>
                         <option value='6'>6</option>
                     </select></td>                    
-                    <td align='center'><span class="sheet-field" style="width:100%" name="attr_Acc_total">0</span></td>
+                    <td align='center'>
+                        <input type="hidden" name="attr_Acc_total" value="0"/>
+                        <span class="sheet-field" style="width:100%" name="attr_Acc_total">0</span></td>
                 </tr>
                 <tr>
                     <td class='sheet-table-header'>Evasion Bonus</td>
@@ -2363,47 +2376,53 @@
             <h3 class="sheet-header">Evasions</h3>
             <div class="sheet-table sheet-basic-info">
                 <div class="sheet-row">
-                    <div style="width:30%">
+                    <div style="width:20%">
                         <span class='sheet-label' >Physical</span>
                     </div><div style="width:20%">
-                        <span style="display:block;text-align:center">+</span>
+                        <span class="sheet-field" style="width:100%" name='attr_PhysEvade'>0</span>
                     </div><div style="width:10%">
-                        <input type='number' style="width:100%" name='attr_PEB' value="0"/>
+                        <span style="display:block;text-align:center">+</span>
                     </div><div style="width:20%">
+                        <input type='number' style="width:100%" name='attr_PEB' value="0"/>
+                    </div><div style="width:10%">
                         <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <input type="hidden" name="attr_PhysEvade" />
-                        <input type="hidden" name="attr_PhysEvade_calc" />
+                        <input type="hidden" name="attr_PhysEvade" value="0"/>
+                        <input type="hidden" name="attr_PhysEvade_calc" value="0"/>
                         <span class="sheet-field" style="width:100%" name='attr_PhysEvade_calc'>0</span>
                     </div>
                 </div>
                 <div class="sheet-row">
-                    <div style="width:30%">
+                    <div style="width:20%">
                         <span class='sheet-label' >Special</span>
                     </div><div style="width:20%">
-                        <span style="display:block;text-align:center">+</span>
+                        <span class="sheet-field" style="width:100%" name='attr_SpecEvade'>0</span>
                     </div><div style="width:10%">
-                        <input type='number' style="width:100%" name='attr_ScEB' value="0"/>
+                        <span style="display:block;text-align:center">+</span>
                     </div><div style="width:20%">
+                        <input type='number' style="width:100%" name='attr_ScEB' value="0"/>
+                    </div><div style="width:10%">
                         <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <input type="hidden" name="attr_SpecEvade" />
-                        <input type="hidden" name="attr_SpecEvade_calc" />
+                        <input type="hidden" name="attr_SpecEvade" value="0"/>
+                        <input type="hidden" name="attr_SpecEvade_calc" value="0"/>
                         <span class="sheet-field" style="width:100%" name='attr_SpecEvade_calc'>0</span>
                     </div>
                 </div>
                 <div class="sheet-row">
-                    <div style="width:30%">
+                    <div style="width:20%">
                         <span class='sheet-label' >Speed</span>
                     </div><div style="width:20%">
-                        <span style="display:block;text-align:center">+</span>
+                        <span class="sheet-field" style="width:100%" name='attr_SpeedEvade'>0</span>
                     </div><div style="width:10%">
-                        <input type='number' style="width:100%" name='attr_SpEB' value="0" />
+                        <span style="display:block;text-align:center">+</span>
                     </div><div style="width:20%">
+                        <input type='number' style="width:100%" name='attr_SpEB' value="0" />
+                    </div><div style="width:10%">
                         <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
-                        <input type="hidden" name="attr_SpeedEvade" />
-                        <input type="hidden" name="attr_SpeedEvade_calc" />
+                        <input type="hidden" name="attr_SpeedEvade" value="0"/>
+                        <input type="hidden" name="attr_SpeedEvade_calc" value="0"/>
                         <span class="sheet-field" style="width:100%" name='attr_SpeedEvade_calc'>0</span>
                     </div>
                 </div>
@@ -2418,13 +2437,13 @@
                 <div class="sheet-row ">
                     <div style="width:30%">
                         <span class='sheet-label' >Overland</span>
-                    </div><div style="width:10%">
-                        <input type="number" name='attr_Overland' value='0' />                        
+                    </div><div style="width:15%">
+                        <input type="number" name='attr_Overland' style="width:100%" value='0' />                        
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
-                    </div><div style="width:10%">
+                    </div><div style="width:15%">
                         <input type="number" name="attr_Overland_bonus"  style="width:100%" value="0" />
-                    </div><div style="width:20%">
+                    </div><div style="width:10%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
                         <input type="hidden" name="attr_Overland_calc"  value="0" />
@@ -2434,13 +2453,13 @@
                 <div class="sheet-row ">
                     <div style="width:30%">
                         <span class='sheet-label' >Swim</span>                    
-                    </div><div style="width:10%">
-                        <input type="number" name='attr_Swim' value='0' />                        
+                    </div><div style="width:15%">
+                        <input type="number" name='attr_Swim' style="width:100%" value='0' />                        
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
-                    </div><div style="width:10%">
+                    </div><div style="width:15%">
                         <input type="number" name="attr_Swim_bonus"  style="width:100%" value="0" />
-                    </div><div style="width:20%">
+                    </div><div style="width:10%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
                         <input type="hidden" name="attr_Swim_calc"  value="0" />
@@ -2450,13 +2469,13 @@
                 <div class="sheet-row ">
                     <div style="width:30%">
                         <span class='sheet-label' >Long Jump</span>
-                    </div><div style="width:10%">
-                        <input type="number" name='attr_LJ' value='0' />                    
+                    </div><div style="width:15%">
+                        <input type="number" name='attr_LJ' style="width:100%" value='0' />                    
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
-                    </div><div style="width:10%">
+                    </div><div style="width:15%">
                         <input type="number" name="attr_LJ_bonus"  style="width:100%" value="0"  />
-                    </div><div style="width:20%">
+                    </div><div style="width:10%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
                         <input type="hidden" name="attr_LJ_calc"  value="0" />
@@ -2466,13 +2485,13 @@
                 <div class="sheet-row ">
                     <div style="width:30%">
                         <span class='sheet-label' >High Jump</span>
-                    </div><div style="width:10%">
-                        <input type="number" name='attr_HJ' value='0' />
+                    </div><div style="width:15%">
+                        <input type="number" name='attr_HJ' style="width:100%" value='0' />
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
-                    </div><div style="width:10%">
+                    </div><div style="width:15%">
                         <input type="number" name="attr_HJ_bonus"  style="width:100%" value="0"  />
-                    </div><div style="width:20%">
+                    </div><div style="width:10%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
                         <input type="hidden" name="attr_HJ_calc"  value="0" />
@@ -2482,13 +2501,13 @@
                 <div class="sheet-row ">
                     <div style="width:30%">
                         <span class='sheet-label' >Power</span>
-                    </div><div style="width:10%">
-                        <input type="number" name='attr_Power' value='0' />
+                    </div><div style="width:15%">
+                        <input type="number" name='attr_Power' style="width:100%" value='0' />
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
-                    </div><div style="width:10%">
+                    </div><div style="width:15%">
                         <input type="number" name="attr_Power_bonus"  style="width:100%" value="0"  />
-                    </div><div style="width:20%">
+                    </div><div style="width:10%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
                         <input type="hidden" name="attr_Power_calc"  value="0" />
@@ -2498,13 +2517,13 @@
                 <div class="sheet-row " style="border-bottom: 2px gray dotted">
                     <div style="width:30%">
                         <span class='sheet-label' >Throw</span>
-                    </div><div style="width:10%">
-                        <input type="number" name='attr_Throw' value='0' />
+                    </div><div style="width:15%">
+                        <input type="number" name='attr_Throw' style="width:100%" value='0' />
                     </div><div style="width:10%">
                         <span style="display:block;text-align:center">+</span>
-                    </div><div style="width:10%">
+                    </div><div style="width:15%">
                         <input type="number" name="attr_Throw_bonus"  style="width:100%" value="0"  />
-                    </div><div style="width:20%">
+                    </div><div style="width:10%">
                          <span style="display:block;text-align:center">=</span>
                     </div><div style="width:20%">
                         <input type="hidden" name="attr_Throw_calc"  value="0" />
@@ -2515,9 +2534,11 @@
                     <fieldset class="repeating_capabilities">
                         <div class="sheet-cap-item">
                             
-                            <div style="width:10%"></div><div style="width:60%">
+                            <div style="width:10%">
+                            </div><div style="width:60%">
                                 <input type="text" name="attr_Capability" />
-                            </div><div style="width:10%"></div><div style="width:20%">
+                            </div><div style="width:10%">
+                            </div><div style="width:20%">
                                 <input type="number" name="attr_Capability_Rank" />
                             </div>
                         </div>
@@ -2750,19 +2771,19 @@ The user is cured with a DC 16 Save." />
                 <td><input type='number' name='attr_PokemonEducation_bonus' value='0'/></td>
                 <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=PokemonEducation}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' /></td>
             </tr>
-            <tr align = "center">
+            <tr align = "center" >
                 <td class='sheet-table-header'>Technology Education</td>
                 <td><input type='number' name='attr_TechnologyEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_TechnologyEducation_bonus' value='0'/></td>
                 <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=TechnologyEducation}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' /></td>
             </tr>
-            <tr align = "center" style="border-bottom: 2px gray dotted">
+            <tr align = "center" >
                 <td class='sheet-table-header'>Guile</td>
                 <td><input type='number' name='attr_Guile' value='2'/> d6+</td>
                 <td><input type='number' name='attr_Guile_bonus' value='0'/></td>
                 <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Guile}} {{SL=[[@{Guile}d6+@{Guile_bonus}]]}}' name='roll_GuileCheck' /></td>
             </tr>
-            <tr align = "center">
+            <tr align = "center" style="border-bottom: 2px gray dotted">
                 <td class='sheet-table-header'>Perception</td>
                 <td><input type='number' name='attr_Perception' value='2'/> d6+</td>
                 <td><input type='number' name='attr_Perception_bonus' value='0'/></td>
@@ -3002,6 +3023,7 @@ The user is cured with a DC 16 Save." />
                             </div>
                             <div>
                                 <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
+                                <input type="hidden" name="attr_struggle_db_calc" value="4" />
                                 <span>DB: <input type="number" name="attr_struggle_db" value='4' /></span>
                                 <span class="sheet-db-breakdown"> 
                                     <input type="text" name="attr_struggle_db_roll" style="width: 200px;text-align: center;" value="1d8 + 6" />
@@ -4138,4 +4160,42 @@ The user is cured with a DC 16 Save." />
     <h3 class='sheet-header'>Import</h3>
     <button type="action" style="width: 100%;" name="act_import">Import</button>
     <textarea class='sheet-import sheet-textarea' name='attr_input'></textarea>
+</div>
+
+<div class="sheet-oldtab5 sheet-page-settings">
+    <h3 class='sheet-header'>Settings</h3>
+    <div class="sheet-settings">
+
+        <div class="sheet-row">
+            <h3 class='sheet-header'>Automation</h3>
+            <div class="sheet-oldtab">
+                <input type="checkbox" name="attr_setting-auto-hp" class="sheet-oldtab" checked/>
+                <span title="HP Automation" ></span>
+            </div>
+
+            <div class="sheet-oldtab">
+                <input type="checkbox" name="attr_setting-auto-evasion" class="sheet-oldtab" checked/>
+                <span title="Evasion Automation" ></span>
+            </div>            
+        </div>
+
+        <div class="sheet-row">
+            <h3 class='sheet-header'>Sheet Type</h3>
+            <div class="sheet-oldtab">
+                <input type="checkbox" name="attr_CharType" value="0" class="sheet-oldtab" />
+                <span title="Pokemon" ></span>
+            </div>
+            
+            <div class="sheet-oldtab">
+                <input type="checkbox" name="attr_CharType" value="1" class="sheet-oldtab" />
+                <span title="Trainer" ></span>
+            </div>
+            
+        </div>
+        
+        <div class="sheet-row">
+
+            
+        </div>
+    </div>
 </div>
