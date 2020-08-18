@@ -2,8 +2,8 @@
 
     let moveAttrs = [ 
         "repeating_moves_mlKnown","repeating_moves_mlName","repeating_moves_mlType","repeating_moves_mlFrequency",
-        "repeating_moves_mlCat","repeating_moves_mlRange","repeating_moves_mlAC","repeating_moves_mlCrit",
-        "repeating_moves_mlDB","repeating_moves_mlDB_roll","repeating_moves_mlDamageBonus","repeating_moves_mlUses_max",
+        "repeating_moves_mlCat","repeating_moves_mlRange","repeating_moves_mlAC_total","repeating_moves_mlCrit_total",
+        "repeating_moves_mlDB_calc","repeating_moves_mlDB_roll","repeating_moves_mlDamageBonus","repeating_moves_mlUses",
         "repeating_moves_mlContestType","repeating_moves_mlContestEffect","repeating_moves_mlEffects",
         "repeating_moves_mlID"
     ];
@@ -328,27 +328,35 @@
     });
     
     on("change:repeating_moves", function(eventinfo){
-            
+
         var source = eventinfo.sourceAttribute.substring(39);
-        var v;
+        var v ="";
         var update = {};
         
         if(source === "known"){ return;}
+        if(source === "ac" || source === "ac_bonus" ){ return;}
+        if(source === "db" || source === "db_bonus" || source === "stab"){ return;}
+        if(source === "crit" || source === "crit_mod" ){ return;}
         
-        getAttrs(["repeating_moves_ml"+source, "repeating_moves_mlID"], function(values){
-            var v = values[`repeating_moves_ml${source}`];
-            var id = values["repeating_moves_mlID"];
-            
-            
-            if(id != "" && values["repeating_moves_mlID"] != null){
-                
-                update["repeating_movesKnown_" + id + "_mk" + source] = v;
-               
+        getAttrs([`repeating_moves_ml${source}`, `repeating_moves_ml${source}_max` , "repeating_moves_mlID"], function(values){
+            var id = values["repeating_moves_mlID"];            
+            v = values[`repeating_moves_ml${source}`];
+            if(id != "" && values["repeating_moves_mlID"] != null){                
+                if(source === "ac_total"){
+                    update["repeating_movesKnown_" + id + "_mkac"] = v;
+                }else if(source === "crit_total"){
+                    update["repeating_movesKnown_" + id + "_mkcrit"] = v;
+                }else if(source === "db_calc"){
+                    update["repeating_movesKnown_" + id + "_mkdb"] = v;
+                }else if(source === "uses"){
+                    update["repeating_movesKnown_" + id + "_mkUses_max"] = eventinfo.newValue;
+                }else{
+                    update["repeating_movesKnown_" + id + "_mk" + source] = v;
+                }
             }
             setAttrs(update,{silent: true});
+            
         });
-        
-    
     });
     
     on("change:repeating_moves:mlKnown", function(eventinfo) {
@@ -366,15 +374,15 @@
                 update["repeating_movesKnown_"+ newID +"_mkCat"]           = values["repeating_moves_mlCat"];
                 update["repeating_movesKnown_"+ newID +"_mkFrequency"]     = values["repeating_moves_mlFrequency"];
                 update["repeating_movesKnown_"+ newID +"_mkRange"]         = values["repeating_moves_mlRange"];
-                update["repeating_movesKnown_"+ newID +"_mkAC"]            = values["repeating_moves_mlAC"];
-                update["repeating_movesKnown_"+ newID +"_mkCrit"]          = values["repeating_moves_mlCrit"];
-                update["repeating_movesKnown_"+ newID +"_mkDB"]            = values["repeating_moves_mlDB"];
+                update["repeating_movesKnown_"+ newID +"_mkAC"]            = values["repeating_moves_mlAC_total"];
+                update["repeating_movesKnown_"+ newID +"_mkCrit"]          = values["repeating_moves_mlCrit_total"];
+                update["repeating_movesKnown_"+ newID +"_mkDB"]            = values["repeating_moves_mlDB_calc"];
                 update["repeating_movesKnown_"+ newID +"_mkDB_roll"]       = values["repeating_moves_mlDB_roll"];
                 update["repeating_movesKnown_"+ newID +"_mkContestType"]   = values["repeating_moves_mlContestType"];
                 update["repeating_movesKnown_"+ newID +"_mkContestEffect"] = values["repeating_moves_mlContestEffect"];
                 update["repeating_movesKnown_"+ newID +"_mkEffects"]       = values["repeating_moves_mlEffects"];
-                update["repeating_movesKnown_"+ newID +"_mkUses_max"]      = values["repeating_moves_mlUses_max"];
-            
+                update["repeating_movesKnown_"+ newID +"_mkUses"]          = values["repeating_moves_mlUses"];
+                update["repeating_movesKnown_"+ newID +"_mkUses_max"]      = values["repeating_moves_mlUses"];
 
                 setAttrs(update,{silent: true});                
             });
@@ -391,18 +399,12 @@
     });
     
     on("remove:repeating_moves", function(eventinfo) {
-        //var id = eventinfo.removedInfo["repeating_moves_-LrS5VRJcSqFE1JXdN5l_mlID"];
-        
-        //removeRepeatingRow("repeating_movesKnown_" + id);
-        
+       
         for (var property in eventinfo.removedInfo) {
             if (eventinfo.removedInfo.hasOwnProperty(property)) {
-                if (property.match(/.*mlID/g)!=null) {
-                    
-                    removeRepeatingRow("repeating_movesKnown_" + eventinfo.removedInfo[property]);
-                    
-                }
-                
+                if (property.match(/.*mlID/g)!=null) {                    
+                    removeRepeatingRow("repeating_movesKnown_" + eventinfo.removedInfo[property]);                    
+                }                
             }
         }
         
@@ -418,24 +420,27 @@
         });
     });
 
-
     on("change:repeating_moves:mlDB change:repeating_moves:mlDB_bonus change:repeating_moves:mlStab", function(){
         update = {};        
-        getAttrs(["repeating_moves_mlDB", "repeating_moves_mlDB_bonus", "repeating_moves_mlStab"],function(values){
-           
+        getAttrs(["repeating_moves_mlDB", "repeating_moves_mlDB_bonus", "repeating_moves_mlStab","repeating_moves_mlID"], function(values){
+            var id = values["repeating_moves_mlID"];
             var db = parseInt(values["repeating_moves_mlDB"]) || 0;
             var db_b = parseInt(values["repeating_moves_mlDB_bonus"]) || 0;
             var stab = parseInt(values["repeating_moves_mlStab"]) || 0;
+            var db_total =db + db_b + (stab * 2);
             var x = dbCalc(db + db_b + (stab * 2));
+
             var roll = "";
-            update["repeating_moves_mlDB_calc"] = db + db_b + (stab * 2);
-            if(db > 0){
+            //update["repeating_moves_mlDB_calc"] = db_total;
+            setAttrs({"repeating_moves_mlDB_calc" : db_total });
+            
+            if( (db + db_b + (stab * 2)) > 0){
                 roll = "" + x.amount + "" + x.dice + " + " + x.bonus ;
                 update["repeating_moves_mlDB_roll"] = roll;
+                update[`repeating_movesKnown_${id}_mkDB_roll`] = roll;
+                setAttrs(update, {silent: true});
             }
-            setAttrs(update, {silent:true});
-        });
-        
+        });        
     });
 
     on("change:repeating_moves:mlCrit change:repeating_moves:mlCrit_mod", function(){
@@ -546,14 +551,7 @@
     on("sheet:opened change:level", function() {
         apCalc();
     });
-    
-
-    
-    
-    
-
-    
-    
+ 
     on("change:generic_db", function(){
         update = {};
         
@@ -1857,13 +1855,6 @@
             <span title="Trainer" ></span>
         </div>     
     </span>
-
-    <span>
-        <div class="sheet-oldtab">
-            <input type="radio" name="attr_tab" class="sheet-oldtab" value="5" checked/>
-            <span title="Settings" ></span>
-        </div>
-    </span>
         
 </div>
 <br />
@@ -1983,10 +1974,10 @@
                     <div style="width:20%">
                         <span class='sheet-label' >Nature</span>
                     </div><div style="width:30%">
-                        <span><input type="text" name="attr_nature" style="width:100%;text-align:center;"/></span> 
-                    </div><div style="width:25%">
-                        <span class='sheet-label'>High </span>
-                        <select name="attr_nature_high" style="width:auto" >
+                        <span><input type="text" name="attr_nature" style="width:100%;text-align:center;" value="Composed"/></span> 
+                    </div><div style="width:20%">
+                        <!-- span class='sheet-label'>High</span -->
+                        <select name="attr_nature_high" style="margin-left:5px;width:90%" >
                             <option value="HP"    >+HP</option>
                             <option value="ATK"   >+ATK</option>
                             <option value="DEF"   >+DEF</option>
@@ -1994,9 +1985,9 @@
                             <option value="SPDEF" >+SPDEF</option>
                             <option value="SPEED" >+SPEED</option>
                         </select>
-                    </div><div style="width:25%">
-                        <span class='sheet-label'>Low </span>
-                        <select name="attr_nature_low" style="width:auto">
+                    </div><div style="width:20%">
+                        <!-- span class='sheet-label'>Low </span -->
+                        <select name="attr_nature_low" style="margin-left:5px;width:90%">
                             <option value="HP"    >-HP</option>
                             <option value="ATK"   >-ATK</option>
                             <option value="DEF"   >-DEF</option>
@@ -2011,8 +2002,8 @@
                 <div class="sheet-row sheet-pokemon">
                     <div style="width:20%">
                         <span class='sheet-label' >Held Item</span>
-                    </div><div style="width:80%">
-                        <span><input type="text" name="attr_heldItem" \></span>
+                    </div><div style="width:50%">
+                        <span><input type="text" name="attr_heldItem" style="width:100%" /></span>
                     </div>
                 </div>
                 
@@ -2022,8 +2013,8 @@
                         <input type="hidden" name="attr_CharType" class="sheet-creature" value="1">
                         <span class='sheet-label sheet-trainer' >Height</span>
                         <span class='sheet-label sheet-pokemon' >Size</span>
-                    </div><div style="width:80%">
-                        <span><input type="text" name="attr_height" style="width:200px;text-align:center" \></span>
+                    </div><div style="width:50%">
+                        <span><input type="text" name="attr_height" style="width:100%;text-align:center" \></span>
                     </div>
                 
                 </div>
@@ -2911,6 +2902,7 @@ The user is cured with a DC 16 Save." />
                     <input type="hidden" name="attr_mkFrequency" class="sheet-freq" value="Physical" />
                     <span class="sheet-uses sheet-move-uses">
                         <input type="number" name="attr_mkUses" value='0' />
+                        <input type="hidden" name="attr_mkUses_max" value='0' />
                         <span>/</span>
                         <span name="attr_mkUses_max">0</span>
                     </span>
@@ -3097,7 +3089,7 @@ The user is cured with a DC 16 Save." />
                             </select>
                         </div><div style="width:10%">
                             <input type="hidden" name="attr_mlFrequency" value="At-Will" />
-                            <input type="text" placeholder="Uses" name="attr_mlUses_max" class="sheet-move-uses" />
+                            <input type="number" placeholder="Uses" name="attr_mlUses" class="sheet-move-uses" />
                         </div><div style="width:25%">
                             <select name="attr_mlCat" value="Physical">
                                 <option selected="selected">Physical</option>
@@ -3895,6 +3887,7 @@ The user is cured with a DC 16 Save." />
             <input type="hidden" name="attr_mkDamage_diceCount" value='0' />
             <input type="hidden" name="attr_mkDamage_diceType"  value='0' />
             <input type="hidden" name="attr_mkDamage_diceBonus" value='0' />
+            <input type="hidden" name="attr_mkUses_max" value='0' />
             
             <div class="sheet-table sheet-moveKnown-item">
                 
@@ -4094,7 +4087,7 @@ The user is cured with a DC 16 Save." />
                             </select>
                         </div><div style="width:10%">
                             <input type="hidden" name="attr_mlFrequency" value="At-Will" />
-                            <input type="text" placeholder="Uses" name="attr_mlUses_max" class="sheet-move-uses" />
+                            <input type="text" placeholder="Uses" name="attr_mlUses" class="sheet-move-uses" />
                         </div><div style="width:25%">
                             <select name="attr_mlCat" value="Physical">
                                 <option selected="selected">Physical</option>
@@ -4195,40 +4188,3 @@ The user is cured with a DC 16 Save." />
     <textarea class='sheet-import sheet-textarea' name='attr_input'></textarea>
 </div>
 
-<div class="sheet-oldtab5 sheet-page-settings">
-    <h3 class='sheet-header'>Settings</h3>
-    <div class="sheet-settings">
-
-        <div class="sheet-row">
-            <h3 class='sheet-header'>Automation</h3>
-            <div class="sheet-oldtab">
-                <input type="checkbox" name="attr_setting-auto-hp" class="sheet-oldtab" checked/>
-                <span title="HP Automation" ></span>
-            </div>
-
-            <div class="sheet-oldtab">
-                <input type="checkbox" name="attr_setting-auto-evasion" class="sheet-oldtab" checked/>
-                <span title="Evasion Automation" ></span>
-            </div>            
-        </div>
-
-        <div class="sheet-row">
-            <h3 class='sheet-header'>Sheet Type</h3>
-            <div class="sheet-oldtab">
-                <input type="checkbox" name="attr_CharType" value="0" class="sheet-oldtab" />
-                <span title="Pokemon" ></span>
-            </div>
-            
-            <div class="sheet-oldtab">
-                <input type="checkbox" name="attr_CharType" value="1" class="sheet-oldtab" />
-                <span title="Trainer" ></span>
-            </div>
-            
-        </div>
-        
-        <div class="sheet-row">
-
-            
-        </div>
-    </div>
-</div>
