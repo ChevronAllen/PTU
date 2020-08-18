@@ -407,6 +407,46 @@
         }
         
     });
+
+    on("change:repeating_moves:mlAC change:repeating_moves:mlAC_bonus", function(){
+        update={};
+        getAttrs(["repeating_moves_mlAC", "repeating_moves_mlAC_bonus"], function(values){
+            var ac   = parseInt(values["repeating_moves_mlAC"], 10) || 0;
+            var ac_b = parseInt(values["repeating_moves_mlAC_bonus"], 10) || 0;
+            update["repeating_moves_mlAC_total"] = ac + ac_b;
+            setAttrs(update);
+        });
+    });
+
+
+    on("change:repeating_moves:mlDB change:repeating_moves:mlDB_bonus change:repeating_moves:mlStab", function(){
+        update = {};        
+        getAttrs(["repeating_moves_mlDB", "repeating_moves_mlDB_bonus", "repeating_moves_mlStab"],function(values){
+           
+            var db = parseInt(values["repeating_moves_mlDB"]) || 0;
+            var db_b = parseInt(values["repeating_moves_mlDB_bonus"]) || 0;
+            var stab = parseInt(values["repeating_moves_mlStab"]) || 0;
+            var x = dbCalc(db + db_b + (stab * 2));
+            var roll = "";
+            update["repeating_moves_mlDB_calc"] = db + db_b + (stab * 2);
+            if(db > 0){
+                roll = "" + x.amount + "" + x.dice + " + " + x.bonus ;
+                update["repeating_moves_mlDB_roll"] = roll;
+            }
+            setAttrs(update, {silent:true});
+        });
+        
+    });
+
+    on("change:repeating_moves:mlCrit change:repeating_moves:mlCrit_mod", function(){
+        update={};
+        getAttrs(["repeating_moves_mlCrit", "repeating_moves_mlCrit_mod"], function(values){
+            var crit   = parseInt(values["repeating_moves_mlCrit"], 10) || 0;
+            var crit_m = parseInt(values["repeating_moves_mlCrit_mod"], 10) || 0;
+            update["repeating_moves_mlCrit_total"] = crit - crit_m;
+            setAttrs(update);
+        });
+    });
     
    
     /*
@@ -510,52 +550,9 @@
 
     
     
-    on("change:repeating_moves:mlDB", function() {
-        update={};
-        
-        getAttrs(["repeating_moves_mlDB"], function(values) {
-            
-            var db = parseInt(values["repeating_moves_mlDB"]) || 0;
-            var x = dbCalc(db);
-            var roll = "";
-            if(db >= 0){
-                roll = "" + x.amount + "" + x.dice + " + " + x.bonus ;
-                update["repeating_moves_mlDB_roll"] = roll;
-            }
-            setAttrs(update);
-            
-        });
-    });
     
-    on("change:repeating_moves:mlStab", function(eventinfo){
-        update={};
-        getAttrs(["repeating_moves_mlDB"], function(value){
-            var stab = parseInt(eventinfo.newValue) || 0;
-            var db = parseInt(value["repeating_moves_mlDB"]) || 0;
 
-            
-            if(stab == 1){
-                db = Math.min(28, db + 2);
-                
-            }else if(stab == 0){
-                db =  Math.max(1, db - 2);
-            }
-            
-            update["repeating_moves_mlDB"] = db;
-            
-            setAttrs(update);
-        });
-    });
     
-    /*
-    on("change:repeating_moves:mlDB_roll", function() {
-        update={};
-        
-        update["repeating_moves_mlDB"] = "";
-        setAttrs(update, {silent:true});
-        
-    });
-    */
     
     on("change:generic_db", function(){
         update = {};
@@ -3154,18 +3151,27 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
                                 
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc_total} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc_total} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc_total} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mlDB_calc}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mlDB_calc}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mlDB_calc}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
                             </div>
                             <div>
-                                <span>AC: <input type="number" name="attr_mlAC" value='2' /></span>
-                                <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> </span>
-                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC}]] }} {{ar= [[1d20cs>@{mlCrit} + (@{Acc_total} - @{mlAC}) ]] }} {{critsOn= [[@{mlCrit} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
+                                <input type="hidden" name="attr_mlAC_total" value='4' />
+                                <input type="hidden" name="attr_mlCrit_total" value='20' />                                
+                                <span>AC: <input type="number" name="attr_mlAC" value='2' /> 
+                                    + <input type="number" name="attr_mlAC_bonus" value='0' /> 
+                                </span>
+                                <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> 
+                                    - <input type="number" name="attr_mlCrit_mod" value ="0"/> 
+                                </span>
+                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC_total}]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{mlAC_total}) ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
                             </div>
                             <div>
-                                <input type="hidden" name="attr_mlDB_roll" value='0' />
-                                <span>DB: <input type="number" name="attr_mlDB" value="0" /></span>
+                                <input type="hidden" name="attr_mlDB_calc" value="4" />
+                                <input type="hidden" name="attr_mlDB_roll" value='1d8 + 6' />
+                                <span>DB: <input type="number" name="attr_mlDB" value="4" /> 
+                                    + <input type="number" name="attr_mlDB_bonus" value="0" />
+                                </span>
     
                                 <span class="sheet-db-breakdown"> 
                                     <input type="text" name="attr_mlDB_roll" style="width: 200px;text-align: center;" value="0" />
@@ -3178,9 +3184,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
                                 
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB_calc}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB_calc}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB_calc}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                             </div>
                         </div>
                     </div>
@@ -4142,18 +4148,18 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
                                 
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc_total} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc_total} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC} + 0]] }} {{ar= [[1d20cs>@{mlCrit} + @{Acc_total} - @{mlAC} ]] }} {{critsOn= [[@{mlCrit}]] }} {{db= [[@{mlDB}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mlDB_calc}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mlDB_calc}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mlDB_calc}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
                             </div>
                             <div>
                                 <span>AC: <input type="number" name="attr_mlAC" value='2' /></span>
                                 <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> </span>
-                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC}]] }} {{ar= [[1d20cs>@{mlCrit} + (@{Acc_total} - @{mlAC}) ]] }} {{critsOn= [[@{mlCrit} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
+                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC_total}]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{mlAC_total}) ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_mlDB_roll" value='0' />
-                                <span>DB: <input type="number" name="attr_mlDB" value="0" /></span>
+                                <span>DB: <input type="number" name="attr_mlDB" value="4" /></span>
     
                                 <span class="sheet-db-breakdown"> 
                                     <input type="text" name="attr_mlDB_roll" style="width: 200px;text-align: center;" value="0" />
@@ -4166,9 +4172,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
                                 
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB_calc}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB_calc}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mlDB_calc}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                             </div>
                         </div>
                     </div>
