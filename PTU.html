@@ -572,26 +572,42 @@
         });
         
     });
+
+    on("change:struggleAC change:struggleAC_bonus", function(){
+        update={};
+        getAttrs(["struggleAC", "struggleAC_bonus"],function(values){
+            var ac = parseInt(values["struggleAC"]) || 0;
+            var ac_b = parseInt(values["struggleAC_bonus"]) || 0;
+            update["struggleAC_total"] = ac + ac_b;
+            setAttrs(update);
+        });
+    });
+
+    on("change:struggleCrit change:struggleCrit_mod", function(){
+        update={};
+        getAttrs(["struggleCrit", "struggleCrit_mod"], function(values){
+            var crit    = parseInt(values["struggleCrit"]) || 20;
+            var crit_m  = parseInt(values["struggleCrit_mod"]) || 0;
+            update["struggleCrit_total"] = crit - crit_m;
+            setAttrs(update);
+        });
+    });
     
-    on("change:struggle_db change:struggleStab", function(){
-        update = {};
-        
-        getAttrs(["struggle_db","struggleStab"],function(values){
+    on("change:struggle_db change:struggle_db_bonus change:struggleStab", function(){
+        update = {};        
+        getAttrs(["struggle_db", "struggle_db_bonus", "struggleStab"],function(values){
            
             var db = parseInt(values["struggle_db"]) || 0;
+            var db_b = parseInt(values["struggle_db_bonus"]) || 0;
             var stab = parseInt(values["struggleStab"]) || 0;
-            var x = dbCalc(db + (stab * 2));
+            var x = dbCalc(db + db_b + (stab * 2));
             var roll = "";
-            
-            update[""struggle_db_calc""] = db + (stab * 2);
-
+            update["struggle_db_calc"] = db + db_b + (stab * 2);
             if(db > 0){
                 roll = "" + x.amount + "" + x.dice + " + " + x.bonus ;
                 update["struggle_db_roll"] = roll;
                 setAttrs(update, {silent:true});
             }
-            
-
         });
         
     });
@@ -600,7 +616,7 @@
         update = {};
         
 
-        update["struggle_db"] = "" ;
+        update["struggle_db_calc"] = "" ;
         
         setAttrs(update,{silent: true});
         
@@ -2250,6 +2266,11 @@
                     <td align="center"><input type='number' value='0' name='attr_dam_R'/></td>
                 </tr>
                 <tr>
+                    <td colspan="1" class='sheet-table-header'>Critical Range</td>
+                    <td colspan="4" align="center">&nbsp;</td>
+                    <td align="center"><input type='number' value='0' name='attr_crit_mod'/></td>
+                </tr>
+                <tr>
                     <td colspan="1" class='sheet-table-header'>Initiative</td>
                     <td colspan="3" align="center">&nbsp;</td>
                     <td align="center"><input type ='number' value = '0' name='attr_init_bonus'></td>
@@ -3012,19 +3033,25 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
                                 
-                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc_total} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
-                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc_total} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
-                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc_total} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + 0 + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_calc}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_calc}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_calc}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + 0 + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
                             </div>
                             <div>
-                                <span>AC: <input type="number" name="attr_struggleAC" value='4' /></span>
-                                <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> </span>
-                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC}]] }} {{ar= [[1d20cs>@{struggleCrit} + (@{Acc_total} - @{struggleAC})]] }} {{critsOn= [[@{struggleCrit} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
+                                <input type="hidden" name="attr_struggleCrit_total" value='20' />
+                                <input type="hidden" name="attr_struggleAC_total" value='4' />
+                                <span>AC: <input type="number" name="attr_struggleAC" value='4' /> 
+                                    + <input type="number" name="attr_struggleAC_bonus" value='0' /> </span>
+                                <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> 
+                                    - <input type="number" name="attr_struggleCrit_mod" value="0"  />                                
+                                </span>
+                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC_total}]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{struggleAC_total})]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
                                 <input type="hidden" name="attr_struggle_db_calc" value="4" />
-                                <span>DB: <input type="number" name="attr_struggle_db" value='4' /></span>
+                                <span>DB: <input type="number" name="attr_struggle_db" value='4' /> 
+                                    + <input type="number" name="attr_struggle_db_bonus" value='0' /></span>
                                 <span class="sheet-db-breakdown"> 
                                     <input type="text" name="attr_struggle_db_roll" style="width: 200px;text-align: center;" value="1d8 + 6" />
                                 </span>
@@ -3036,9 +3063,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
                                 
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_calc}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_calc}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_calc}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                             </div>
                         </div>
                     </div>
@@ -4001,14 +4028,14 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
                                 
-                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc_total} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
-                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc_total} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
-                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC} + 0]] }} {{ar= [[1d20cs>@{struggleCrit} + @{Acc_total} - @{struggleAC} ]] }} {{critsOn= [[@{struggleCrit}]] }} {{db= [[@{struggle_db}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + 0 + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_calc}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_calc}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_calc}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + 0 + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
                             </div>
                             <div>
                                 <span>AC: <input type="number" name="attr_struggleAC" value='4' /></span>
                                 <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> </span>
-                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC}]] }} {{ar= [[1d20cs>@{struggleCrit} + (@{Acc_total} - @{struggleAC})]] }} {{critsOn= [[@{struggleCrit} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
+                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC_total}]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{struggleAC_total})]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
@@ -4024,9 +4051,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
                                 
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_calc}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_calc}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_calc}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                             </div>
                         </div>
                     </div>
