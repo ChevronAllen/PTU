@@ -1,5 +1,5 @@
 .charsheet{
-    min-width:875px;
+    min-width:840px;
     max-width:900px;
     margin: 0 auto;
     background: #d6d5c9;
@@ -144,7 +144,26 @@ table.sheet-status-table td input:checked + span{
     background-color:black;
     color:white;
 }
-
+.sheet-custom-status{
+    background-color: #6c6c6c;
+}
+.sheet-custom-status .sheet-custom-status-item{
+    display: block;
+}
+.sheet-custom-status .sheet-custom-status-item .sheet-custom-status-name{
+    display: inline-block;
+    width:70%;
+}
+.sheet-custom-status .sheet-custom-status-item .sheet-custom-status-check{
+    display: inline-block;
+    width:20%;
+}
+.sheet-custom-status .sheet-custom-status-check{
+    padding: 0 10px ;
+}
+.sheet-custom-status .sheet-custom-status-item {
+    padding: 0 10px ;
+}
 
 input.sheet-oldtab1 {
     margin-left: 1px;
@@ -251,6 +270,23 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     width:30px;
     height:30px;
 }
+
+
+
+.sheet-background-row{
+    padding-left:10%;
+}
+.sheet-background-row > span{
+    font-weight: bold;
+    font-size:1.4rem;
+    display: inline-block;
+    width: 15%;
+}
+.sheet-background-row > input,
+.sheet-background-row > textarea{
+    font-style: italic;
+}
+
 
 /* Moves */
 .sheet-generic-rolls > div{

@@ -1923,44 +1923,13 @@
                     </div>
                 </div>
                 
-                <!-- Background -->
-                <div class="sheet-row sheet-trainer">
-                    <div style="width:20%">
-                        <span class='sheet-label' >Background</span>
-                    </div><div style="width:60%">
-                        <span><input type="text" name="attr_background" style="width:100%"\></span>
-                    </div><div style="width:10%">
-                        <span class="sheet-background sheet-hide-container">
-                            <input type="hidden" name="attr_background_show" class="sheet-hide-swap" value="1"/>
-                            <input type="checkbox" name="attr_background_show" value="1" checked/>
-                            <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Expand-Icon.png" class="sheet-a"/>
-                            <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Collapse-Icon.png" class="sheet-b"/>
-                        </span>
-                    </div><input type="hidden" name="attr_background_show" class="sheet-hide-swap" value="1"/>
-                    
-                    <div style="width:100%" class="sheet-a">
-                        <div>
-                            <span>Adept</span>
-                            <input type="text" name="attr_background_adept" />
-                        </div>
-                        <div>
-                            <span>Novice</span>
-                            <input type="text" name="attr_background_novice" />
-                        </div>
-                        <div>
-                            <span>Pathetic</span>
-                            <textarea name="attr_background_pathetic" ></textarea>
-                        </div>
-                    </div>
-                </div>
-                
                 <!-- Level -->
                 <div class="sheet-row">
                     <div style="width:20%">
                         <span class='sheet-label' >Level</span>
                     </div><div style="width:30%">
                         <span><input type="number" name="attr_level" style="width:45%" value="1" min='1' \></span>
-                    </div><div style="width:20%">
+                    </div><div style="width:10%">
                         <span class='sheet-label' >EXP</span>     
                     </div><div style="width:30%">
                         <span>
@@ -2029,7 +1998,38 @@
                         <span><input type="number" name="attr_weightClass"   min='0' \></span>
                     </div>
                 </div>
-                
+
+                <!-- Background -->
+                <div class="sheet-row sheet-trainer">
+                    <div style="width:20%">
+                        <span class='sheet-label' >Background</span>
+                    </div><div style="width:70%">
+                        <span><input type="text" name="attr_background" style="width:100%"\></span>
+                    </div><div style="width:10%">
+                        <span class="sheet-background sheet-hide-container">
+                            <input type="hidden" name="attr_background_show" class="sheet-hide-swap" value="1"/>
+                            <input type="checkbox" name="attr_background_show" value="1" checked/>
+                            <img src="https://i.imgur.com/kwVsJmi.png" class="sheet-a"/>
+                            <img src="https://i.imgur.com/PlZzvAT.png" class="sheet-b"/>
+                        </span>
+                    </div><input type="hidden" name="attr_background_show" class="sheet-hide-swap" value="1"/>
+                    
+                    <div class="sheet-a sheet-background-body" style="width: 100%; border-top: 2px gray dotted">
+                        <div class="sheet-background-row">
+                            <span>Adept</span>
+                            <input type="text" name="attr_background_adept" placeholder="1 Skill (4d6)"/>
+                        </div>
+                        <div class="sheet-background-row">
+                            <span>Novice</span>
+                            <input type="text" name="attr_background_novice" placeholder="1 Skill (3d6)"/>
+                        </div>
+                        <div class="sheet-background-row">
+                            <span style="display: block;" >Pathetic</span>
+                            <textarea name="attr_background_pathetic" placeholder="3 Skills (1d6)"></textarea>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- AP -->
                 <div class="sheet-row sheet-trainer" style="border-bottom: 2px gray dotted">
                     <div style="width:20%">
@@ -2282,7 +2282,7 @@
                 <input type="hidden" name="attr_Injuries" value="0" />
                 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
                 <div class="sheet-row">
-                    <button type='roll' name='act_calcDamage' style="width:100%" value="@{whisper} &{template:default} {{name= @{character_name} Damage Calculation}} {{Damage Taken= [[?{damage|0}]] }} {{After Defenses= [[(?{damage} - @{dam_R}) - ?{category|Physical, @{DEF_total}|Special,@{SPDEF_total}|Other, 0}  )]] }} {{After Type = [[floor( [[( (?{damage} - @{dam_R}) - ?{category|Physical, @{DEF_total}|Special,@{SPDEF_total}|Other, 0}) * ?{Effectiveness|Immune, 0|Triple Resisted, 0.125|Double Resisted, 0.25|Resisted, 0.5|Normal, 1|Effective, 1.5| Double Effective, 2| Triple Effective,3} ]] )]]  }}">Calculate Damage</button>
+                    <button type='roll' name='act_calcDamage' style="width:100%; margin:0px;" value="@{whisper} &{template:default} {{name= @{character_name} Damage Calculation}} {{Damage Taken= [[?{Damage|0}]] }} {{After Defenses= [[(?{Damage} - @{dam_R}) - ?{Category|Physical, @{DEF_total}|Special,@{SPDEF_total}|Other, 0}  )]] }} {{After Type = [[floor( [[( (?{Damage} - @{dam_R}) - ?{Category|Physical, @{DEF_total}|Special,@{SPDEF_total}|Other, 0}) * ?{Effectiveness|Immune, 0|Triple Resisted, 0.125|Double Resisted, 0.25|Resisted, 0.5|Normal, 1|Effective, 1.5| Double Effective, 2| Triple Effective,3} ]] )]]  }}">Calculate Damage</button>
                 </div>
                 <div class="sheet-row">
                     <div style="width:50%">
@@ -2293,7 +2293,7 @@
                 </div>
                 <div class="sheet-row">
                     <div style="width:50%">
-                        <span class='sheet-label' >Current Hit Point</span>
+                        <span class='sheet-label' >Current Hit Points</span>
                     </div><div style="width:30%">
                         <span><input type="number" name="attr_HitPoints" style="width:100%" value='0' \></span>
                     </div>
@@ -2302,7 +2302,8 @@
                     <div style="width:50%">
                         <span class='sheet-label' >Current Max Hit Points</span>
                     </div><div style="width:30%">
-                        <span><input type="number" name="attr_HitPoints_max" style="width:100%" value='10' \></span>
+                        <!--span><input type="number" name="attr_HitPoints_max" style="width:100%" value='10' \></span-->
+                        <span class="sheet-field" name="attr_HitPoints_max" style="width:100%" >10</span>
                     </div>
                 </div>
                 <div class="sheet-row">
@@ -2685,16 +2686,25 @@ The user is cured with a DC 16 Save." />
                 </tr>
             </table>
             <h4 class='sheet-minihead' style="border-bottom: 2px gray dotted">Custom Statuses</h4>
-            <fieldset class='repeating_statuses'>
-                <table class='sheet-table'>
-                    <td class="sheet-table-header" style="width:70%">
-                        <input type='text' name='attr_status_name'/>
-                    </td>
-                    <td>
-                        <input type='checkbox' value='1' name='attr_status_state'/>
-                    </td>
-                </table>
-            </fieldset>
+            <div class="sheet-custom-status">
+                <fieldset class='sheet-repeating_statuses sheet-table'>
+                    <!--table class='sheet-table'>
+                        <td class="sheet-table-header" style="width:70%">
+                            <input type='text' name='attr_status_name'/>
+                        </td>
+                        <td>
+                            <input type='checkbox' value='1' name='attr_status_state'/>
+                        </td>
+                    </table-->
+                    <div class="sheet-custom-status-item sheet-row">
+                        <div class="sheet-custom-status-name ">
+                            <input type='text' name='attr_status_name' style="width:100%" />
+                        </div><div class="sheet-custom-status-check">
+                            <input type='checkbox' value='1' name='attr_status_state' />
+                        </div>                    
+                    </div>
+                </fieldset>
+            </div>
             
             
         </div>
@@ -2951,8 +2961,8 @@ The user is cured with a DC 16 Save." />
         
         <input type='hidden' class='sheet-hide-swap' name='attr_hideMoveList' value='0'/>
         
-        <span class='sheet-a' >-</span>
-        <span class='sheet-b' >+</span>
+        <span class='sheet-a' ><img src="https://i.imgur.com/6Y3uQYI.png" style="width:1em;"></span>
+        <span class='sheet-b' ><img src="https://i.imgur.com/WMlVxKg.png" style="width:1em;"></span>
         <input type='checkbox' name='attr_hideMoveList' value='1' />
     </h3>
     <div class="sheet-movesList">
@@ -3706,6 +3716,7 @@ The user is cured with a DC 16 Save." />
             </fieldset>
         </div>
     </div>
+    
     <!-- Skills -->
     <div class='sheet-row'>
         <h3 class="sheet-header">Skills</h3>
@@ -3847,9 +3858,9 @@ The user is cured with a DC 16 Save." />
                 <div style="width:40px;">
                     <input type="number" name="attr_generic_db" value="4" min="0" style="width:100%"/>
                 </div>
-                <div style="width:70px;">
+                <div style="width:120px;">
                     <input type="hidden" name="attr_generic_db_roll" value="1d8+6" />
-                    <span class="sheet-field" name="attr_generic_db_roll">1d8+6</span>
+                    <span class="sheet-field" name="attr_generic_db_roll" style="width:80px;">1d8+6</span>
                 </div>
                 <div style="width:100px;">
                     <button type="roll" name="roll_generic_db" value="@{whisper} &{template:PTU}{{title=@{character_name}'s Damage}}{{damage= [[@{generic_db_roll} + ?{Class|None, 0|Physical, @{ATK_total}|Special, @{SPATK_total}} + @{dmg_bonus} ]]  }}">Damage</button>
@@ -3863,7 +3874,6 @@ The user is cured with a DC 16 Save." />
         </div>
         
     </div>
-    
     
     <!-- Known Moves Summary -->
     <h3 class="sheet-header">
@@ -3887,7 +3897,6 @@ The user is cured with a DC 16 Save." />
             <input type="hidden" name="attr_mkDamage_diceCount" value='0' />
             <input type="hidden" name="attr_mkDamage_diceType"  value='0' />
             <input type="hidden" name="attr_mkDamage_diceBonus" value='0' />
-            <input type="hidden" name="attr_mkUses_max" value='0' />
             
             <div class="sheet-table sheet-moveKnown-item">
                 
@@ -3908,6 +3917,7 @@ The user is cured with a DC 16 Save." />
                     <input type="hidden" name="attr_mkFrequency" class="sheet-freq" value="Physical" />
                     <span class="sheet-uses sheet-move-uses">
                         <input type="number" name="attr_mkUses" value='0' />
+                        <input type="hidden" name="attr_mkUses_max" value='0' />
                         <span>/</span>
                         <span name="attr_mkUses_max">0</span>
                     </span>
@@ -3956,8 +3966,8 @@ The user is cured with a DC 16 Save." />
         
         <input type='hidden' class='sheet-hide-swap' name='attr_hideMoveList' value='0'/>
         
-        <span class='sheet-a' >-</span>
-        <span class='sheet-b' >+</span>
+        <span class='sheet-a' ><img src="https://i.imgur.com/6Y3uQYI.png" style="width:1em;"></span>
+        <span class='sheet-b' ><img src="https://i.imgur.com/WMlVxKg.png" style="width:1em;"></span>
         <input type='checkbox' name='attr_hideMoveList' value='1' />
     </h3>
     <div class="sheet-movesList">
@@ -4032,13 +4042,20 @@ The user is cured with a DC 16 Save." />
                                 <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_calc}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + 0 + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
                             </div>
                             <div>
-                                <span>AC: <input type="number" name="attr_struggleAC" value='4' /></span>
-                                <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> </span>
+                                <input type="hidden" name="attr_struggleCrit_total" value='20' />
+                                <input type="hidden" name="attr_struggleAC_total" value='4' />
+                                <span>AC: <input type="number" name="attr_struggleAC" value='4' /> 
+                                    + <input type="number" name="attr_struggleAC_bonus" value='0' /> </span>
+                                <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> 
+                                    - <input type="number" name="attr_struggleCrit_mod" value="0"  />                                
+                                </span>
                                 <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC_total}]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{struggleAC_total})]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
-                                <span>DB: <input type="number" name="attr_struggle_db" value='4' /></span>
+                                <input type="hidden" name="attr_struggle_db_calc" value="4" />
+                                <span>DB: <input type="number" name="attr_struggle_db" value='4' /> 
+                                    + <input type="number" name="attr_struggle_db_bonus" value='0' /></span>
                                 <span class="sheet-db-breakdown"> 
                                     <input type="text" name="attr_struggle_db_roll" style="width: 200px;text-align: center;" value="1d8 + 6" />
                                 </span>
@@ -4087,7 +4104,7 @@ The user is cured with a DC 16 Save." />
                             </select>
                         </div><div style="width:10%">
                             <input type="hidden" name="attr_mlFrequency" value="At-Will" />
-                            <input type="text" placeholder="Uses" name="attr_mlUses" class="sheet-move-uses" />
+                            <input type="number" placeholder="Uses" name="attr_mlUses" class="sheet-move-uses" />
                         </div><div style="width:25%">
                             <select name="attr_mlCat" value="Physical">
                                 <option selected="selected">Physical</option>
@@ -4146,13 +4163,22 @@ The user is cured with a DC 16 Save." />
                                 <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mlDB_calc}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
                             </div>
                             <div>
-                                <span>AC: <input type="number" name="attr_mlAC" value='2' /></span>
-                                <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> </span>
+                                <input type="hidden" name="attr_mlAC_total" value='4' />
+                                <input type="hidden" name="attr_mlCrit_total" value='20' />                                
+                                <span>AC: <input type="number" name="attr_mlAC" value='2' /> 
+                                    + <input type="number" name="attr_mlAC_bonus" value='0' /> 
+                                </span>
+                                <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> 
+                                    - <input type="number" name="attr_mlCrit_mod" value ="0"/> 
+                                </span>
                                 <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC_total}]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{mlAC_total}) ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
                             </div>
                             <div>
-                                <input type="hidden" name="attr_mlDB_roll" value='0' />
-                                <span>DB: <input type="number" name="attr_mlDB" value="4" /></span>
+                                <input type="hidden" name="attr_mlDB_calc" value="4" />
+                                <input type="hidden" name="attr_mlDB_roll" value='1d8 + 6' />
+                                <span>DB: <input type="number" name="attr_mlDB" value="4" /> 
+                                    + <input type="number" name="attr_mlDB_bonus" value="0" />
+                                </span>
     
                                 <span class="sheet-db-breakdown"> 
                                     <input type="text" name="attr_mlDB_roll" style="width: 200px;text-align: center;" value="0" />
@@ -4178,7 +4204,8 @@ The user is cured with a DC 16 Save." />
                 
             </fieldset>
         </div>
-    </div>    
+    </div> 
+
 </div>
 
 <!-- Import Page -->
