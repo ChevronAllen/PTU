@@ -30,18 +30,21 @@
     ];
     
     on("change:weightClass " , function(e){
-        getAttrs(["weightClass"],function(v){
+        getAttrs(["weightClass","weight"],function(v){
             
             var wc = parseInt(v["weightClass"])||0;
+            var text = v["weight"] || "";
             var w = "--- ; --- ; ---";
             
             if(wc > 0 && wc < 8){
                 w = weights[wc-1];
             }
-            
-            setAttrs({
-                "weight": w
-            });
+
+            if(text.length <= 0 || weights.find( (el,i,arr) => {return el === text;}) != undefined ) {
+                setAttrs({
+                    "weight": w
+                });
+            }
         });
     });
     
@@ -2566,7 +2569,7 @@
                         <span>Burned</span>
                     </td>
                     <td style="width:25%" >
-                        <input type='checkbox' value='1' name='attr_st_froz' title="No Action. DC 16 Save Check. Vulnerable" />
+                        <input type='checkbox' value='1' name='attr_st_froz' title="No Actions. DC 16 Save Check. Vulnerable" />
                         <span>Frozen</span>
                     </td>
                 
@@ -2578,13 +2581,13 @@
                         <span>Paralysis</span>
                     </td>
                     <td  style="width:25%" >
-                        <input type='checkbox' value='1' name='attr_st_pois'  title="Sp Def -2 CS. 1 Tick Per Standard Taken/Skipped" />
+                        <input type='checkbox' value='1' name='attr_st_pois'  title="SpDef -2 CS. 1 Tick Per Standard Taken/Skipped" />
                         <span>Poisoned </span>
                     </td>
                 </tr>
                  <tr>
                     <td colspan='4'>
-                        <input type='checkbox' value='2' name='attr_st_pois'  title="Lose 5,10,20,40... HP" />
+                        <input type='checkbox' value='2' name='attr_st_pois'  title="SpDef -2 CS. HP Loss 5,10,20,40... per Standard Taken/Skipped" />
                         <span>Badly Poisoned</span>
                     </td>
                 </tr>
@@ -2609,7 +2612,7 @@ Cured by a DC 16 Save." />
                         <span>Cursed</span>
                     </td>
                     <td colspan='1'>
-                        <input type='checkbox' value='1' name='attr_st_disa'  title="Disables a  move. Stacks" />
+                        <input type='checkbox' value='1' name='attr_st_disa'  title="Disables a move. Stacks" />
                         <span>Disabled</span>
                     </td>
                 </tr>
@@ -2687,7 +2690,7 @@ The user is cured with a DC 16 Save." />
             </table>
             <h4 class='sheet-minihead' style="border-bottom: 2px gray dotted">Custom Statuses</h4>
             <div class="sheet-custom-status">
-                <fieldset class='sheet-repeating_statuses sheet-table'>
+                <fieldset class='repeating_custom-status'>
                     <!--table class='sheet-table'>
                         <td class="sheet-table-header" style="width:70%">
                             <input type='text' name='attr_status_name'/>
@@ -2697,11 +2700,11 @@ The user is cured with a DC 16 Save." />
                         </td>
                     </table-->
                     <div class="sheet-custom-status-item sheet-row">
-                        <div class="sheet-custom-status-name ">
+                        <div class="sheet-custom-status-name">
                             <input type='text' name='attr_status_name' style="width:100%" />
                         </div><div class="sheet-custom-status-check">
                             <input type='checkbox' value='1' name='attr_status_state' />
-                        </div>                    
+                        </div>                
                     </div>
                 </fieldset>
             </div>

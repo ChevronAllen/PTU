@@ -149,14 +149,15 @@ table.sheet-status-table td input:checked + span{
 }
 .sheet-custom-status .sheet-custom-status-item{
     display: block;
+    margin-bottom: 3px;
 }
 .sheet-custom-status .sheet-custom-status-item .sheet-custom-status-name{
     display: inline-block;
-    width:70%;
+    width:90%;
 }
 .sheet-custom-status .sheet-custom-status-item .sheet-custom-status-check{
     display: inline-block;
-    width:20%;
+    width:10%;
 }
 .sheet-custom-status .sheet-custom-status-check{
     padding: 0 10px ;
@@ -245,7 +246,7 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
   position: absolute;
   top: 0px;
   left: 102px;
-  background: white;
+  background: whitesmoke;
   overflow: auto;
   height: auto;
   right: 0;
@@ -255,7 +256,7 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
 }
 
 .sheet-tab [type=radio]:checked ~ label {
-  background: white;
+  background: whitesmoke;
   border-bottom: 1px solid white;
   z-index: 2;
 }
@@ -816,13 +817,18 @@ input.sheet-arrow:checked ~ table tr.sheet-featlist {
 
 .sheet-rolltemplate-PTU tr:nth-child(even),
 .sheet-rolltemplate-PTU_Move tr:nth-child(even) {
-    background-color: white;
+    background-color: whitesmoke;
 }
 
 table.sheet-big-table tr:nth-child(even),
 table.sheet-left-half-table tr:nth-child(even),
 table.sheet-right-half-table tr:nth-child(even){
     background-color: #E5E5E5;
+}
+table.sheet-big-table tr:nth-child(odd),
+table.sheet-left-half-table tr:nth-child(odd),
+table.sheet-right-half-table tr:nth-child(odd){
+    background-color: whitesmoke;
 }
 
 div.sheet-table{
@@ -844,7 +850,7 @@ table.sheet-table.sheet-basic-info  tr:nth-child(even){
 }
 div.sheet-table.sheet-basic-info  .sheet-row:nth-child(odd),
 table.sheet-table.sheet-basic-info  tr:nth-child(odd){
-    background-color: white;
+    background-color: whitesmoke;
 }
 .sheet-basic-info th{
     text-align: center;
