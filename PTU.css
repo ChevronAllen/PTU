@@ -867,6 +867,23 @@ table.sheet-table.sheet-basic-info  tr:nth-child(odd){
 }
 */
 
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(1){
+    width:30%;
+}
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(2),
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(6){
+    width:20%;
+}
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(3){
+    width:10%;
+}
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(4){
+    width:15%;
+}
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(5){
+    width:5%;
+}
+
 div.sheet-table .sheet-row  div{
     display:inline-block;
     width:100%;
