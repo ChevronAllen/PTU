@@ -2818,10 +2818,6 @@ The user is cured with a DC 16 Save." />
    
     <br/>
     
-    
-    
-    
-    
     <!-- Edges, Features, Abilities -->
     <div class='sheet-ability-features-edges'>
         <div class='sheet-edges'>
@@ -3028,98 +3024,109 @@ The user is cured with a DC 16 Save." />
     
     <br/>
     
-    <!-- Contests -->
-    <h3 class='sheet-header'>Contests</h3>
-    <table class='sheet-table' style="margin-top: 10px;margin-bottom: 10px;width:90%" align="center">
-        <tr>
-        <td>
-            <td class='sheet-table-header'>Beauty</td>
-            <td><input type='number' name='attr_Beauty' /></td>
-        </td>
-        <td>
-            <td class='sheet-table-header'>Cool</td>
-            <td><input type='number' name='attr_Cool' /></td>
-        </td>
-        <td>
-            <td class='sheet-table-header'>Cute</td>
-            <td><input type='number' name='attr_Cute' /></td>
-        </td>
-        <td>
-            <td class='sheet-table-header'>Smart</td>
-            <td><input type='number' name='attr_Smart' /></td>
-        </td>
-        <td>
-            <td class='sheet-table-header'>Tough</td>
-            <td><input type='number' name='attr_Tough' /></td>
-        </td>
-        </tr>
-    </table>
-    <table class='sheet-table'>
-        <td>
-           <td class='sheet-table-header'>Poffins</td>
-           <td><textarea class='sheet-textarea-b' name='attr_Poffins'></textarea></td>
-        </td>
-        <td>
-           <td class='sheet-table-header'>Vitamins</td>
-           <td><textarea class='sheet-textarea-b' name='attr_Vitamins'></textarea></td>
-        </td>
-    </table>
-    
-    <br/>
-    
-    <!-- Inventory -->
-    <div class='sheet-row sheet-inventory'>
-        <h3 class="sheet-header">Inventory</h3>
-        
-        <div class="sheet-inventory-money">
-            <span>Money</span>
-            <input type="number" name='attr_money' value="0" min='0' />
-        </div>
-
-        <fieldset class='repeating_inventory'>
-            
-            <div class="sheet-inventory-item">
-                <span class="sheet-hide-container">
-                    <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
-                    <input type="checkbox" name="attr_InventoryHide" value="1" />
-                    
-                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Expand-Icon.png" class="sheet-a" />
-                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Collapse-Icon.png"   class="sheet-b" />
-                </span>
-                <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
-                <input type="number" name='attr_InventoryQuantity' value="1" />
-                <input type="text" name='attr_InventoryName' />
-                <textarea class="sheet-b" name="attr_InventoryDesc"></textarea>
+    <!-- Contest & Inventory -->
+    <div class="sheet-row sheet-contest-inventory">
+        <div >
+            <!-- Contest -->
+            <h3 class='sheet-header'>Contests</h3>
+            <div>
+                <span class='sheet-label'>Beauty</span>
+                <input type='number' name='attr_Beauty' value="0" />
+            </div>
+            <div>
+                <span class='sheet-label'>Cool</span>
+                <input type='number' name='attr_Cool' value="0"/>
+            </div>
+            <div>
+                <span class='sheet-label'>Cute</span>
+                <input type='number' name='attr_Cute' value="0"/>
+            </div>
+            <div>
+                <span class='sheet-label'>Smart</span>
+                <input type='number' name='attr_Smart' value="0"/>
+            </div>
+            <div>
+                <span class='sheet-label'>Tough</span>
+                <input type='number' name='attr_Tough' value="0"/>
+            </div>
+            <div>
+                <span class='sheet-label'>Poffins</span>
+                <textarea class='sheet-textarea-b' name='attr_Poffins'></textarea>
+            </div>
+            <div>
+                <span class='sheet-label'>Vitamins</span>
+                <textarea class='sheet-textarea-b' name='attr_Vitamins'></textarea>
             </div>
             
-        </fieldset>
+        </div><div >
+            <!-- Inventory -->
+            <h3 class='sheet-header'>Inventory</h3>
+            <div class="sheet-inventory-money">
+                <span>Money</span>
+                <input type="number" name='attr_money' value="0" min='0' />
+            </div>
+            <fieldset class='repeating_inventory'>
+                <div class="sheet-inventory-item">
+                    <span class="sheet-hide-container">
+                        <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
+                        <input type="checkbox" name="attr_InventoryHide" value="1" />
+                        
+                        <img src="https://i.imgur.com/kwVsJmi.png" class="sheet-a" />
+                        <img src="https://i.imgur.com/PlZzvAT.png" class="sheet-b" />
+                    </span>
+                    <div class="sheet-inventory-header">
+                        <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
+                        <input type="number" name='attr_InventoryQuantity' value="1" style="width: 20%;"/>
+                        <input type="text"   name='attr_InventoryName' placeholder="Item Name" style="width: 70%;"/>
+                    </div>
+                    <input type="hidden"      name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
+                    <textarea class="sheet-b" name="attr_InventoryDesc" placeholder="Item Description"></textarea>
+                </div>
+                
+            </fieldset>
+        </div>
     </div>
+    <br/>
+    
+    
     
 </div>
 
 <!-- Notes -->
 <div class='sheet-oldtab2'>
-    <h3 class='sheet-header'>Notes</h3><br/>
-    <h4 class='sheet-header'>
-        Appearance
-    </h4>
-    <div>
-        <textarea name='attr_notesAppearance'></textarea>
-    </div>
+    <table style="width: 100%;">
+        <tr>
+            <th colspan ="4">
+                <h3 class='sheet-header'>Notes</h3><br/>
+            </th>
+        </tr>
+            
+        <tr>
+            <td colspan ="2">
+                <div>
+                    <h4 class='sheet-header'>Appearance</h4>
+                    <textarea name='attr_notesAppearance'></textarea>
+                </div>
+            </td>
+        
+            <td colspan ="2">
+                <div>
+                    <h4 class='sheet-header'>Background</h4>
+                    <textarea name='attr_notesBackground'></textarea>
+                </div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td colspan ="4">
+                <div>
+                    <h4 class='sheet-header'>Notes</h4>
+                    <textarea name='attr_notesGeneral'></textarea>
+                </div>
+            </td>
+        </tr>
+    </table>
     
-    <h4 class='sheet-header'>
-        Background
-    </h4>
-    <div>
-        <textarea name='attr_notesBackground'></textarea>
-    </div>
-    
-    <h4 class='sheet-header'>
-        Notes
-    </h4>
-    <div>
-        <textarea name='attr_notesGeneral'></textarea>
-    </div>
 
     <!-- Inventory -->
     <div class='sheet-row sheet-inventory'>
@@ -3137,12 +3144,12 @@ The user is cured with a DC 16 Save." />
                     <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
                     <input type="checkbox" name="attr_InventoryHide" value="1" />
                     
-                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Expand-Icon.png" class="sheet-a" />
-                    <img src="https://raw.githubusercontent.com/ChevronAllen/PTU/master/Collapse-Icon.png"   class="sheet-b" />
+                    <img src="https://i.imgur.com/kwVsJmi.png" class="sheet-a" />
+                    <img src="https://i.imgur.com/PlZzvAT.png" class="sheet-b" />
                 </span>
                 <input type="hidden" name="attr_InventoryHide" class="sheet-hide-swap" value="0" />
                 <input type="number" name='attr_InventoryQuantity' value="1" />
-                <input type="text" name='attr_InventoryName' />
+                <input type="text" name='attr_InventoryName' style="width: 80%;"/>
                 <textarea class="sheet-b" name="attr_InventoryDesc"></textarea>
             </div>
             
