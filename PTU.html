@@ -3853,18 +3853,15 @@ The user is cured with a DC 16 Save." />
         {{/ac}}
         
         {{#ac}}
-        {{#rollGreater() ac 0}}
         <tr>
             <td colspan="1"><div class="sheet-label">AC</div></td>
-            <td colspan="1"><div>{{ar}} &ge; {{^evasion}} Target Evasion {{/evasion}}{{#evasion}} {{evasion}} {{/evasion}}</div></td>
+            <td colspan="1"><div>{{ar}} {{#rollGreater() ac 0}} &ge; {{^evasion}} Target Evasion {{/evasion}}{{#evasion}} {{evasion}} {{/evasion}} {{/rollGreater() ac 0}}</div></td>
         </tr>
         <tr>
             <td colspan="1"><div class="sheet-label">Crit On</div></td>
             <td colspan="1"><div>{{critsOn}}+ </div></td>
         </tr>
-        {{/rollGreater() ac 0}}
         {{/ac}}
-        
         
         {{#rollGreater() db 0}}
         {{#db}}
@@ -3875,7 +3872,6 @@ The user is cured with a DC 16 Save." />
         {{/db}}
         {{/rollGreater() db 0}}
         
-        
         {{^db}}
         {{#damage}}
         <tr>
@@ -3884,6 +3880,7 @@ The user is cured with a DC 16 Save." />
         </tr>
         {{/damage}}
         {{/db}}
+        
         
         {{#contest_type}}
         <tr>
