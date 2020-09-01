@@ -1,5 +1,12 @@
+<!--
+    Authors: Chevron Allen (Cirnoble) built on the work of: 
+        Uriah Brown (PanoramicPanda) 
+        David Lee (camperdave)
+        Corin Stratton (cwstra)
+-->
+
 <!--input class='sheet-shortfield' name='attr_character_sheet' value='PTUv2' type='hidden'/-->
-<input type="hidden" name="attr_version" value="v2.0.0" />
+<input type="hidden" name="attr_version" value="0.0.0" />
 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
 
 <div class="sheet-center-img">
@@ -1359,9 +1366,9 @@ The user is cured with a DC 16 Save." />
                                 <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
                             </div>
                             <div>
-                                <input type="hidden" name="attr_mlAC_total" value='4' />
+                                <input type="hidden" name="attr_mlAC_total" value='0' />
                                 <input type="hidden" name="attr_mlCrit_total" value='20' />                                
-                                <span>AC: <input type="number" name="attr_mlAC" value='2' /> 
+                                <span>AC: <input type="number" name="attr_mlAC" value='0' /> 
                                     + <input type="number" name="attr_mlAC_bonus" value='0' /> 
                                 </span>
                                 <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> 
@@ -1370,14 +1377,14 @@ The user is cured with a DC 16 Save." />
                                 <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC_total}]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{mlAC_total}) ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
                             </div>
                             <div>
-                                <input type="hidden" name="attr_mldb_total" value="4" />
+                                <input type="hidden" name="attr_mldb_total" value="0" />
                                 <!-- <input type="hidden" name="attr_mlDB_roll" value='1d8 + 6' /> -->
-                                <span>DB: <input type="number" name="attr_mlDB" value="4" /> 
+                                <span>DB: <input type="number" name="attr_mlDB" value="0" /> 
                                     + <input type="number" name="attr_mlDB_bonus" value="0" />
                                 </span>
     
                                 <span class="sheet-db-breakdown"> 
-                                    <input type="text" name="attr_mlDB_roll" style="width: 200px;text-align: center;" value="1d8 + 6" />
+                                    <input type="text" name="attr_mlDB_roll" style="width: 200px;text-align: center;" value="0" />
                                 </span>
                                 
                                 <span>
@@ -1648,7 +1655,7 @@ The user is cured with a DC 16 Save." />
             <!-- Inventory -->
             <h3 class='sheet-header'>Inventory</h3>
             <div class="sheet-inventory-money">
-                <span>Money</span>
+                <span>₽</span>
                 <input type="number" name='attr_money' value="0" min='0' />
             </div>
             <fieldset class='repeating_inventory'>
@@ -1719,7 +1726,7 @@ The user is cured with a DC 16 Save." />
         <h3 class="sheet-header">Inventory</h3>
         
         <div class="sheet-inventory-money">
-            <span>Money</span>
+            <span>₽</span>
             <input type="number" name='attr_money' value="0" min='0' />
         </div>
 
@@ -2371,9 +2378,9 @@ The user is cured with a DC 16 Save." />
                                 <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
                             </div>
                             <div>
-                                <input type="hidden" name="attr_mlAC_total" value='4' />
+                                <input type="hidden" name="attr_mlAC_total" value='0' />
                                 <input type="hidden" name="attr_mlCrit_total" value='20' />                                
-                                <span>AC: <input type="number" name="attr_mlAC" value='2' /> 
+                                <span>AC: <input type="number" name="attr_mlAC" value='0' /> 
                                     + <input type="number" name="attr_mlAC_bonus" value='0' /> 
                                 </span>
                                 <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> 
@@ -2382,14 +2389,14 @@ The user is cured with a DC 16 Save." />
                                 <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC_total}]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{mlAC_total}) ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
                             </div>
                             <div>
-                                <input type="hidden" name="attr_mldb_total" value="4" />
+                                <input type="hidden" name="attr_mldb_total" value="0" />
                                 <!-- <input type="hidden" name="attr_mlDB_roll" value='1d8 + 6' /> -->
-                                <span>DB: <input type="number" name="attr_mlDB" value="4" /> 
+                                <span>DB: <input type="number" name="attr_mlDB" value="0" /> 
                                     + <input type="number" name="attr_mlDB_bonus" value="0" />
                                 </span>
     
                                 <span class="sheet-db-breakdown"> 
-                                    <input type="text" name="attr_mlDB_roll" style="width: 200px;text-align: center;" value="1d8 + 6" />
+                                    <input type="text" name="attr_mlDB_roll" style="width: 200px;text-align: center;" value="0" />
                                 </span>
                                 
                                 <span>
@@ -2488,7 +2495,7 @@ The user is cured with a DC 16 Save." />
     };
     
     
-    var tryFixOldMoves = function () {
+    var tryUpdateRepeatingMoves = function () {
         getSectionIDs("repeating_moves", function (idarray) {
             for(i = 0 ; i < idarray.length ; i++ )
             {   
@@ -2527,7 +2534,7 @@ The user is cured with a DC 16 Save." />
     };
     
         
-    var tryGetOldStruggle = function () {
+    var tryUpdateStruggle = function () {
         getAttrs(oldStruggleAttrs, function (values) {
             var update = {};
             
@@ -2555,73 +2562,164 @@ The user is cured with a DC 16 Save." />
         });
     };
     
-    function tryGetOldMove(n){
+    function tryUpdateMove(n){
         if(n > 6){return;}
         getAttrs(getOldMoveAttrs(n), function (values) {
             "use strict"; 
             var newrowid = generateRowID();
             var update = {};
             var autoFields = {};
-            
-            update[`repeating_moves_${newrowid}_mlID`]              = "";
-            update[`repeating_moves_${newrowid}_mlKnown`]           = 0;
-            update[`repeating_moves_${newrowid}_mlName`]            = values[`Move${n}_Name`] || "";
-            update[`repeating_moves_${newrowid}_mlFrequency`]       = values[`Move${n}_Freq`] || "At-Will";
-            update[`repeating_moves_${newrowid}_mlUses`]            = 0;
-            update[`repeating_moves_${newrowid}_mlType`]            = values[`Move${n}_Type`] || "Untyped";
-            update[`repeating_moves_${newrowid}_mlCat`]             = values[`Move${n}_DType`] || "Physical";
-            update[`repeating_moves_${newrowid}_mlContestType`]     = "Cool";
-            update[`repeating_moves_${newrowid}_mlContestEffect`]   = "";
-            update[`repeating_moves_${newrowid}_mlRange`]           = values[`Move${n}_Range`] || "";
-            update[`repeating_moves_${newrowid}_mlAC_bonus`]        = 0;
-            update[`repeating_moves_${newrowid}_mlAC_total`]        = "";
-            update[`repeating_moves_${newrowid}_mlCrit_mod`]        = 0;
-            update[`repeating_moves_${newrowid}_mlCrit_total`]      = "";
-            update[`repeating_moves_${newrowid}_mlDB_bonus`]        = 0;
-            update[`repeating_moves_${newrowid}_mlDB_roll`]         = "";
-            update[`repeating_moves_${newrowid}_mlStab`]            = 0;
-            update[`repeating_moves_${newrowid}_mlEffects`]         = values[`Move${n}_Effects`] || "";
 
-            autoFields[`repeating_moves_${newrowid}_mlAC`]      = parseInt(values[`Move${n}_AC`],10)||0;
-            autoFields[`repeating_moves_${newrowid}_mlDB`]      = parseInt(values[`Move${n}_DB`],10)||0;
-            autoFields[`repeating_moves_${newrowid}_mlCrit`]    = parseInt(values[`Move${n}_critsOn`],10)||20;
+            if(values[`Move${n}_Name`] != undefined){
 
-            setAttrs(update,{silent:true}, function () {
-                setAttrs(autoFields, function () {
-                        tryGetOldMove(n + 1);
-                });
+                update[`repeating_moves_${newrowid}_mlID`]              = "";
+                update[`repeating_moves_${newrowid}_mlKnown`]           = 0;
+                update[`repeating_moves_${newrowid}_mlName`]            = values[`Move${n}_Name`] || "";
+                update[`repeating_moves_${newrowid}_mlFrequency`]       = values[`Move${n}_Freq`] || "At-Will";
+                update[`repeating_moves_${newrowid}_mlUses`]            = 0;
+                update[`repeating_moves_${newrowid}_mlType`]            = values[`Move${n}_Type`] || "Untyped";
+                update[`repeating_moves_${newrowid}_mlCat`]             = values[`Move${n}_DType`] || "Physical";
+                update[`repeating_moves_${newrowid}_mlContestType`]     = "Cool";
+                update[`repeating_moves_${newrowid}_mlContestEffect`]   = "";
+                update[`repeating_moves_${newrowid}_mlRange`]           = values[`Move${n}_Range`] || "";
+                update[`repeating_moves_${newrowid}_mlAC_bonus`]        = 0;
+                update[`repeating_moves_${newrowid}_mlAC_total`]        = "";
+                update[`repeating_moves_${newrowid}_mlCrit_mod`]        = 0;
+                update[`repeating_moves_${newrowid}_mlCrit_total`]      = "";
+                update[`repeating_moves_${newrowid}_mlDB_bonus`]        = 0;
+                update[`repeating_moves_${newrowid}_mlDB_roll`]         = "";
+                update[`repeating_moves_${newrowid}_mlStab`]            = 0;
+                update[`repeating_moves_${newrowid}_mlEffects`]         = values[`Move${n}_Effects`] || "";
+                
+                autoFields[`repeating_moves_${newrowid}_mlAC`]          = parseInt(values[`Move${n}_AC`],10)||0;
+                autoFields[`repeating_moves_${newrowid}_mlDB`]          = parseInt(values[`Move${n}_DB`],10)||0;
+                autoFields[`repeating_moves_${newrowid}_mlCrit`]        = parseInt(values[`Move${n}_critsOn`],10)||20;
+            }                
+                
+            setAttrs(update, {silent: true}, function () {
+                setAttrs(autoFields);
             });
-            
+        });
+    };
+
+
+    function tryUpdateRepeatingConditions(){
+        getSectionIDs("statuses", function (idarray) {                 
+            for(i = 0 ; i < idarray.length ; i++ )
+            { 
+                getAttrs( 
+                [
+                    `repeating_statuses_${idarray[i]}_status_name1`,
+                    `repeating_statuses_${idarray[i]}_status_name2`,
+                    `repeating_statuses_${idarray[i]}_status_state1`,
+                    `repeating_statuses_${idarray[i]}_status_state2`
+                ], function (values) {
+                    var update = {};
+                    var id1 = generateRowID();
+                    
+                    if(values[`repeating_statuses_${idarray[i]}_status_name1`] != undefined){  
+                        update[`repeating_custom-status_${id1}_status_name`]    = values[`repeating_statuses_${idarray[i]}_status_name1`];
+                        update[`repeating_custom-status_${id1}_status_state`]   = parseInt(values[`repeating_statuses_${idarray[i]}_status_state1`],10)||0;
+                    }
+                    
+                    var id2 = generateRowID();
+                    if(values[`repeating_statuses_${idarray[i]}_status_name2`] != undefined){
+                        update[`repeating_custom-status_${id2}_status_name`]    = values[`repeating_statuses_${idarray[i]}_status_name2`];
+                        update[`repeating_custom-status_${id2}_status_state`]   = parseInt(values[`repeating_statuses_${idarray[i]}_status_state2`],10)||0;
+                    }
+                    
+                    setAttrs(update, {"silent": true});
+                });
+            }
         });
     };
     
+    function tryUpdateStaticFeature(){
+        getAttrs(["FeatureHide","FeatureName", "FeatureFreq", "FeatureTarget", "FeatureInfo"], function (values){
+            if(values["FeatureName"] != undefined){
+                var update = {};
+                var id = generateRowID();
+
+                update[`repeating_features_${id}_Feature_Hide`]     = values["FeatureHide"]     || "";
+                update[`repeating_features_${id}_Feature_Name`]     = values["FeatureName"]     || "";
+                update[`repeating_features_${id}_Feature_Freq`]     = values["FeatureFreq"]     || "";
+                update[`repeating_features_${id}_Feature_Target`]   = values["FeatureTarget"]   || "";
+                update[`repeating_features_${id}_Feature_Info`]     = values["FeatureInfo"]     || "";
+                
+                setAttrs(update,{"silent": true});            
+            }
+        });
+    };
+
+    function tryUpdateStaticAbility(){
+        getAttrs(["AbilityHide","AbilityName", "AbilityFreq", "AbilityTarget", "AbilityInfo"], function (values){
+            if(values["AbilityName"] != undefined){
+                var update = {};
+                var id = generateRowID();
+                
+                update[`repeating_abilities_${id}_Ability_Hide`]     = values["AbilityHide"]    || "";
+                update[`repeating_abilities_${id}_Ability_Name`]     = values["AbilityName"]    || "";
+                update[`repeating_abilities_${id}_Ability_Freq`]     = values["AbilityFreq"]    || "";
+                update[`repeating_abilities_${id}_Ability_Target`]   = values["AbilityTarget"]  || "";
+                update[`repeating_abilities_${id}_Ability_Info`]     = values["AbilityInfo"]    || "";
+                
+                setAttrs(update,{"silent": true});            
+            }
+        });
+    };
     
     var versioning = function (version) {
-        console.log("Versioning");
-        if (version < 2.0){
+        //console.log(`Updating Version: v_${version}`);
+        
+        if (version == undefined || version < 2.0){
             var update = {};
-            //  Import from old sheet attributes
-                // RepeatingMoves
-            tryFixOldMoves();
-                // Struggle
-            tryGetOldStruggle();            
-                // Moves 1-6
-            tryGetOldMove(1);
+            
+            // RepeatingMoves
+            //console.log("Update Repeating Moves");
+            tryUpdateRepeatingMoves();
+
+            // Repeating Conditions
+            //console.log("Update Repeating Conditions");
+            tryUpdateRepeatingConditions();
+
+            // Struggle
+            //console.log("Update Struggle");
+            tryUpdateStruggle();     
+
+            // Static Moves
+            //console.log("Update Static Moves");
+            tryUpdateMove(1);
+            tryUpdateMove(2);
+            tryUpdateMove(3);
+            tryUpdateMove(4);
+            tryUpdateMove(5);
+            tryUpdateMove(6);
+            
+            // Static Feature
+            //console.log("Update Static Feature");
+            tryUpdateStaticFeature();
+
+            // Static Ability
+            //console.log("Update Static Ability");
+            tryUpdateStaticAbility();
             
             update["version"] = "2.0";
-            console.log(`Updated sheet from v${version} to v2.0`);
-            setAttrs(update,{silent: true}, function () { versioning(2.0); });
-        }else{
-            if(version == "2.0"){
+            //console.log(`Updated sheet from v${version} to v2.0`);
+            setAttrs(update,{silent: true}, function () { 
+                versioning(2.0); 
+            });
+        }else if(version == 2.0){
 
-            }
         }
+        
     };
 
     on("sheet:opened", function () {
         "use strict";
-        getAttrs(["version"], function (values) {
-            versioning(parseFloat(values["version"], 10) || 0);
+        getAttrs(["character_name","version", "PokemonTabletopUnitedv1"], function (values) {
+            var version = parseFloat(values["version"], 10) || 0;
+            console.log(`Run updater for v${version} sheet '${values["character_name"]}'`);
+            versioning(version);
         });
     });
     
