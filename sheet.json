@@ -1,8 +1,8 @@
 {
-	"html": "PTU.html",
-	"css": "PTU.css",
+	"html": "PTUv2.html",
+	"css": "PTUv2.css",
 	"authors": "Chevron Allen (Cirnoble) based on work by Uriah Brown (PanoramicPanda), David Lee (camperdave), and Corin Stratton (cwstra)",
 	"roll20userid": "2130808",
-	"preview": "PTU.png",
-	"instructions": ""
+	"preview": "PTUv2.png",
+	"instructions": "A simplified adaptation of the Pokemon Tabletop United v1 sheet. This sheet is backwards compatible with the original sheet, it's reccommended that you make a backup of your game before applying this sheet to an existing game.\n\n    This sheet includes:\n    Damage Calculation Macro\n    Injury Automation\n    Stat Automation\n    Global Bonuses\n    Quick Notes section\n    Shortcuts for Known moves\n    Updated Roll Page (now called the Actions Page)\n    Notes Page\n    \n    \n    ! Important !\n    This sheet does not support automization for specific edges/features/abilities."
 }
