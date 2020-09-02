@@ -6,6 +6,12 @@
     --field-color:lightgrey;
 }
 
+.sheet-main-block{
+    display:grid;
+    grid-template-columns: 59% 39%;
+    gap:2%;
+}
+
 .sheet-move-button{
     float:right;
 }
@@ -57,6 +63,7 @@ input:not(.sheet-buttons)::-webkit-outer-spin-button {
 span.sheet-field{
     display:inline-block;
     min-height:25px;
+    min-width:50px;
     width:auto;
     padding:2px 5px;
     text-align-last:center;
@@ -64,7 +71,6 @@ span.sheet-field{
     border:1px solid black;
     background-color:var(--field-color);
     font-weight:bold;
-    min-width:75px;
 }
 
 textarea{
@@ -138,7 +144,27 @@ table.sheet-status-table td input:checked + span{
     background-color:black;
     color:white;
 }
-
+.sheet-custom-status{
+    background-color: #6c6c6c;
+}
+.sheet-custom-status .sheet-custom-status-item{
+    display: block;
+    margin-bottom: 3px;
+}
+.sheet-custom-status .sheet-custom-status-item .sheet-custom-status-name{
+    display: inline-block;
+    width:90%;
+}
+.sheet-custom-status .sheet-custom-status-item .sheet-custom-status-check{
+    display: inline-block;
+    width:10%;
+}
+.sheet-custom-status .sheet-custom-status-check{
+    padding: 0 10px ;
+}
+.sheet-custom-status .sheet-custom-status-item {
+    padding: 0 10px ;
+}
 
 input.sheet-oldtab1 {
     margin-left: 1px;
@@ -147,10 +173,10 @@ div.sheet-oldtab-group{
     margin-bottom:-2px;
 }
 div.sheet-oldtab{
-    display:inline-block;
-
-    
+    display:inline-block;    
     position:relative;
+    margin-top:3px;
+    margin-bottom: 3px;
 }
 div.sheet-oldtab > input.sheet-oldtab {
     display:block;
@@ -220,7 +246,7 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
   position: absolute;
   top: 0px;
   left: 102px;
-  background: white;
+  background: whitesmoke;
   overflow: auto;
   height: auto;
   right: 0;
@@ -230,7 +256,7 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
 }
 
 .sheet-tab [type=radio]:checked ~ label {
-  background: white;
+  background: whitesmoke;
   border-bottom: 1px solid white;
   z-index: 2;
 }
@@ -245,6 +271,21 @@ div.sheet-oldtab > input.sheet-oldtab:checked + span {
     width:30px;
     height:30px;
 }
+
+.sheet-background-row{
+    padding-left:10%;
+}
+.sheet-background-row > span{
+    font-weight: bold;
+    font-size:1.4rem;
+    display: inline-block;
+    width: 15%;
+}
+.sheet-background-row > input,
+.sheet-background-row > textarea{
+    font-style: italic;
+}
+
 
 /* Moves */
 .sheet-generic-rolls > div{
@@ -371,7 +412,9 @@ span.sheet-freq{
 .sheet-move-item .sheet-movesKnown-Add > input:checked + div{
     background:red;
 }
-
+.sheet-move-uses{
+    text-align: center;
+}
 input[value="At-Will"] + .sheet-move-uses,
 input[value="EOT"] + .sheet-move-uses,
 input[value="Static"] + .sheet-move-uses{
@@ -560,16 +603,32 @@ button[type=roll].sheet-blank-roll-button::before { content: ''; }
     height:100%;
     opacity:1;
 }
+.sheet-contest-inventory > div{
+    display: inline-block; 
+    vertical-align: top;
+    width: 50%;
+}
+.sheet-contest-inventory .sheet-label{
+    display: inline-block;
+    width:30%;
+}
 
-.sheet-inventory .itemcontrol{
+.sheet-contest-inventory .itemcontrol{
     z-index:1;
 }
 
 .sheet-inventory-item{
     display:block;
     position:relative;
-    width:700px;
     margin:2px auto;
+    padding:3px;
+    border-width:2px;
+    border-color: #838174;
+    border-style: groove;
+    background-color: #b1af9e;
+}
+.sheet-inventory-item .sheet-inventory-header{
+    width:100%;
 }
 .sheet-inventory-item input[type="number"]{
     display:inline-block;
@@ -579,8 +638,8 @@ button[type=roll].sheet-blank-roll-button::before { content: ''; }
 }
 .sheet-inventory-item input[type="text"]{
     display:inline-block;
-    width:600px;
 }
+.sheet-contest-inventory textarea,
 .sheet-inventory-item textarea{
     display:block;
     height:80px;
@@ -614,24 +673,19 @@ button[type=roll].sheet-blank-roll-button::before { content: ''; }
 
 .sheet-inventory-money{
     display:inline-block;
-    padding-left:20px;
+    margin-left:20px;
 }
 .sheet-inventory-money span{
     font-size:12pt;
     font-weight:bold;
-    color:black;
-    
+    color:black;  
 }
 .sheet-inventory-money input{
     font-size:12pt;
     font-weight:bold;
     width:100px !important; 
 }
-/*
-div.sheet-checklist {
-    display: none;
-}
-*/
+
 input.sheet-arrow[type="checkbox"] {
     position: absolute;
     top: 1px;
@@ -641,8 +695,7 @@ input.sheet-arrow[type="checkbox"] {
     z-index:1;
     opacity:0;
 }
-/*
-*/
+
 input.sheet-arrow[type="checkbox"] + span::before{
     display:inline-block; 
     position:absolute;
@@ -772,13 +825,18 @@ input.sheet-arrow:checked ~ table tr.sheet-featlist {
 
 .sheet-rolltemplate-PTU tr:nth-child(even),
 .sheet-rolltemplate-PTU_Move tr:nth-child(even) {
-    background-color: white;
+    background-color: whitesmoke;
 }
 
 table.sheet-big-table tr:nth-child(even),
 table.sheet-left-half-table tr:nth-child(even),
 table.sheet-right-half-table tr:nth-child(even){
     background-color: #E5E5E5;
+}
+table.sheet-big-table tr:nth-child(odd),
+table.sheet-left-half-table tr:nth-child(odd),
+table.sheet-right-half-table tr:nth-child(odd){
+    background-color: whitesmoke;
 }
 
 div.sheet-table{
@@ -800,7 +858,10 @@ table.sheet-table.sheet-basic-info  tr:nth-child(even){
 }
 div.sheet-table.sheet-basic-info  .sheet-row:nth-child(odd),
 table.sheet-table.sheet-basic-info  tr:nth-child(odd){
-    background-color: white;
+    background-color: whitesmoke;
+}
+.sheet-basic-info th{
+    text-align: center;
 }
 /*
 .sheet-table tr:nth-child(even),
@@ -813,6 +874,23 @@ table.sheet-table.sheet-basic-info  tr:nth-child(odd){
     background-color: white;
 }
 */
+
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(1){
+    width:30%;
+}
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(2),
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(6){
+    width:20%;
+}
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(3){
+    width:10%;
+}
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(4){
+    width:15%;
+}
+.sheet-basic-info.sheet-evasions .sheet-row > div:nth-child(5){
+    width:5%;
+}
 
 div.sheet-table .sheet-row  div{
     display:inline-block;
@@ -915,6 +993,7 @@ textarea.sheet-import{
 
 .sheet-table-header{
  font-weight: bold;
+ text-align: right;
 }
 
 .sheet-table-header-1{
