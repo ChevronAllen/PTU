@@ -5,9 +5,7 @@
         Corin Stratton (cwstra)
 -->
 
-<!--input class='sheet-shortfield' name='attr_character_sheet' value='PTUv2' type='hidden'/-->
-<input type="hidden" name="attr_version" value="0.0.0" />
-<input type="hidden" name='attr_character_sheet' value='PokemonTabletopUnitedv2'/>
+<input type="hidden" name="attr_version" />
 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
 
 <div class="sheet-center-img">
@@ -2695,16 +2693,19 @@ The user is cured with a DC 16 Save." />
             setAttrs(update,{silent: true}, function () { 
                 versioning(2.0); 
             });
-        }else if(version == 2.0){
-
-        }        
+        }       
     };
 
     on("sheet:opened", function () {
         getAttrs(["character_name","version", "character_sheet"], function (values) {
             var version = parseFloat(values["version"], 10) || 0;
-            console.log(`Run updater for v${version} sheet '${values["character_name"]}'`);
-            versioning(version);
+            console.log(`Running update for v${version} sheet '${values["character_name"]}'`);
+
+            if(version < 2.0){
+                versioning(1); 
+            }else if(version > 2.0){
+                versioning(version);
+            }
         });
     });
     
