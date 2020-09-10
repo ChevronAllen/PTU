@@ -3315,14 +3315,11 @@ The user is cured with a DC 16 Save." />
                             getSectionIDs("repeating_abilities", function(idarray) {
                                 rabils = idarray;
 
-
                                 if (rmoves==undefined){rmoves=[];}
                                 if (rcaps ==undefined){rcaps=[];}
                                 if (redges==undefined){redges=[];}
                                 if (rfeats==undefined){rfeats=[];}
                                 if (rabils==undefined){rabils=[];}
-                                
-                                
                                 
                                 for (var property in char) {
                                     if (char.hasOwnProperty(property)) {
@@ -3334,7 +3331,10 @@ The user is cured with a DC 16 Save." />
                                             
                                             for (var prop in char[property]){
                                                 if (char[property].hasOwnProperty(prop)){
-                                                    
+                                                    if(char[property]["Name"] == ""){
+                                                        break;
+                                                    }
+
                                                     x = "repeating_moves_" + i + "_ml";
                     
                                                     switch(prop){
@@ -3396,34 +3396,17 @@ The user is cured with a DC 16 Save." />
                                         } else if (property.match(/Feature\s*\d*/gi)!=null) {
                                             // Import Features
                                             
-                                            i = Number(property.substring(7));
-                                            //t = {};
-                                            if (i<2){
-                                                for (var prop in char[property]){
-                                                    if (char[property].hasOwnProperty(prop)){
-                                                        x = "Feature".concat(prop);
-                                                        t[x] = char[property][prop];
-                                                    }
+                                            //i = Number(property.substring(7));
+
+                                            i=generateRowID();
+
+                                            for (var prop in char[property]){
+                                                if (char[property].hasOwnProperty(prop)){
+                                                    x = "repeating_features_".concat(i).concat("_Feature_").concat(prop);
+                                                    t[x] = char[property][prop];
                                                 }
-                                                //setAttrs(t);
-                                            } else if (i<2+rfeats.length){
-                                                for (var prop in char[property]){
-                                                    if (char[property].hasOwnProperty(prop)){
-                                                        x = "repeating_features_".concat(rfeats[i-2]).concat("_Feature_").concat(prop);
-                                                        t[x] = char[property][prop];
-                                                    }
-                                                }
-                                                //setAttrs(t);
-                                            } else {
-                                                i=generateRowID();
-                                                for (var prop in char[property]){
-                                                    if (char[property].hasOwnProperty(prop)){
-                                                        x = "repeating_features_".concat(i).concat("_Feature_").concat(prop);
-                                                        t[x] = char[property][prop];
-                                                    }
-                                                }
-                                                //setAttrs(t);
                                             }
+                                            
                                         } else if (property.match(/Ability\s*\d*/gi)!=null) {
                                             
                                             i=generateRowID();
@@ -3450,11 +3433,10 @@ The user is cured with a DC 16 Save." />
                                             for (var prop in char[property]) {
                                                 if (char[property].hasOwnProperty(prop)) {
                                                     if (prop=="Overland"||prop=="Swim"||prop=="HJ"||prop=="LJ"||prop=="Power") {
-                                                        //t={};
                                                         t[prop]=char[property][prop];
-                                                        //setAttrs(t);
-                                                    }  else if (Number.isInteger(char[property][prop])){
-                                                        //t={};
+                                                    }else if (prop=="Throwing Range") {
+                                                        t["Throw"]= char[property][prop];
+                                                    }else if (Number.isInteger(char[property][prop])){
                                                         if (x<rcaps.length-1) {
                                                             t["repeating_capabilities_".concat(rcaps[x]).concat("_Capability")]=prop;
                                                             t["repeating_capabilities_".concat(rcaps[x]).concat("_Capability_Rank")]=char[property][prop];
@@ -3467,7 +3449,6 @@ The user is cured with a DC 16 Save." />
                                                         }
                                                         x++;
                                                     } else {
-                                                        //t={};
                                                         if (x<rcaps.length-1) {
                                                             t["repeating_capabilities_".concat(rcaps[x]).concat("_Capability")]=prop;
                                                             //setAttrs(t);
