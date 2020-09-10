@@ -3346,18 +3346,21 @@ The user is cured with a DC 16 Save." />
                                                             break;
                                                         case "Freq":
                                                             list = char[property][prop].match(/([a-wyz\-]+)(\s*[x]\s*)?(\d+)?/i);
-                                                            if(list.length <= 2){
-                                                                // has no use count
-                                                                t[x + "Frequency"] = list[1];
-                                                                t[x + "Uses_max"] = 1;
-                                                            }else if(list.length < 4){
-                                                                //number missing
-                                                                t[x + "Frequency"] = list[1];
-                                                                t[x + "Uses_max"] = 1;
-                                                            }else{
-                                                                // frequesncy and uses
-                                                                t[x + "Frequency"] = list[1];
-                                                                t[x + "Uses_max"] = parseInt(list[3])||1;
+                                                            if(list != undefined){
+
+                                                                if(list.length <= 2){
+                                                                    // has no use count
+                                                                    t[x + "Frequency"] = list[1];
+                                                                    t[x + "Uses_max"] = 1;
+                                                                }else if(list.length < 4){
+                                                                    //number missing
+                                                                    t[x + "Frequency"] = list[1];
+                                                                    t[x + "Uses_max"] = 1;
+                                                                }else{
+                                                                    // frequesncy and uses
+                                                                    t[x + "Frequency"] = list[1];
+                                                                    t[x + "Uses_max"] = parseInt(list[3])||1;
+                                                                }
                                                             }
                                                             
                                                             break;
