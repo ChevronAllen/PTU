@@ -4073,3 +4073,21 @@ The user is cured with a DC 16 Save." />
         
     </table>
 </rolltemplate>
+<!-- 
+    Jakob's Default RollTemplate
+ -->
+<rolltemplate class="sheet-rolltemplate-custom">
+    <div class="sheet-container sheet-color-{{color}}">
+      <div class="sheet-header">
+        {{#title}}<div class="sheet-title">{{title}}</div>{{/title}}
+        {{#subtitle}}<div class="sheet-subtitle">{{subtitle}}</div>{{/subtitle}}
+      </div>
+      <div class="sheet-content">
+        {{#allprops() title subtitle desc color}}
+        <div class="sheet-key">{{key}}</div>
+        <div class="sheet-value">{{value}}</div>
+        {{/allprops() title subtitle desc color}}
+        {{#desc}}<div class="sheet-desc">{{desc}}</div>{{/desc}}
+      </div>
+    </div>
+  </rolltemplate>
