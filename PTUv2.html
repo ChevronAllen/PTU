@@ -5,7 +5,7 @@
         Corin Stratton (cwstra)
 -->
 
-<input type="hidden" name="attr_version" />
+<input type="hidden" name="attr_version" value="2.0.1"/>
 <input type="hidden" name="attr_CharType" class="sheet-creature" value="0" />
 
 <div class="sheet-center-img">
@@ -918,8 +918,8 @@ The user is cured with a DC 16 Save." />
     </div>
     <br />
     
-    <!-- Skills -->
-    <div class='sheet-row'>
+   <!-- Skills -->
+   <div class='sheet-row'>
         <h3 class="sheet-header">Skills</h3>
         <br />
         <table class='sheet-left-half-table' STYLE="margin-bottom: 20px;">
@@ -959,7 +959,7 @@ The user is cured with a DC 16 Save." />
                 <td><input type='number' name='attr_Stealth_bonus' value='0'/></td>
                 <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Stealth}} {{SL=[[@{Stealth}d6+@{Stealth_bonus}]]}}' name='roll_StealthCheck'/></td>
             </tr>
-            <tr align = "center" style="border-bottom: 2px gray dotted">
+            <tr align = "center">
                 <td class='sheet-table-header'>Survival</td>
                 <td><input type='number' name='attr_Survival' value='2'/> d6+</td>
                 <td><input type='number' name='attr_Survival_bonus' value='0'/></td>
@@ -969,19 +969,19 @@ The user is cured with a DC 16 Save." />
                 <td class='sheet-table-header'>General Education</td>
                 <td><input type='number' name='attr_GeneralEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_GeneralEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=GeneralEducation}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=General Education}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/></td>
             </tr>
             <tr align = "center">
                 <td class='sheet-table-header'>Medicine Education</td>
                 <td><input type='number' name='attr_MedicineEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_MedicineEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=MedicineEducation}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' /></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Medicine Education}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' /></td>
             </tr>
             <tr align = "center">
                 <td class='sheet-table-header'>Occult Education</td>
                 <td><input type='number' name='attr_OccultEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_OccultEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=OccultEducation}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' /></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Occult Education}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' /></td>
             </tr>
         </table>
         <table class='sheet-right-half-table'>
@@ -995,21 +995,21 @@ The user is cured with a DC 16 Save." />
                 <td class='sheet-table-header'>Pokemon Education</td>
                 <td><input type='number' name='attr_PokemonEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_PokemonEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=PokemonEducation}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' /></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Pokemon Education}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' /></td>
             </tr>
-            <tr align = "center" >
+            <tr align = "center">
                 <td class='sheet-table-header'>Technology Education</td>
                 <td><input type='number' name='attr_TechnologyEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_TechnologyEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=TechnologyEducation}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' /></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Technology Education}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' /></td>
             </tr>
-            <tr align = "center" >
+            <tr align = "center">
                 <td class='sheet-table-header'>Guile</td>
                 <td><input type='number' name='attr_Guile' value='2'/> d6+</td>
                 <td><input type='number' name='attr_Guile_bonus' value='0'/></td>
                 <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Guile}} {{SL=[[@{Guile}d6+@{Guile_bonus}]]}}' name='roll_GuileCheck' /></td>
             </tr>
-            <tr align = "center" style="border-bottom: 2px gray dotted">
+            <tr align = "center">
                 <td class='sheet-table-header'>Perception</td>
                 <td><input type='number' name='attr_Perception' value='2'/> d6+</td>
                 <td><input type='number' name='attr_Perception_bonus' value='0'/></td>
@@ -1039,16 +1039,12 @@ The user is cured with a DC 16 Save." />
                 <td><input type='number' name='attr_Intuition_bonus' value='0'/></td>
                 <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intuition}} {{SL=[[@{Intuition}d6+@{Intuition_bonus}]]}}' name='roll_IntuitionCheck' /></td>
             </tr>
-        </table> <!--
-        </tr>
-        </table> -->
-    
+        </table>
     </div>
     <br/>
     
     <!-- Moves -->
     <div class="sheet-generic-rolls">
-        
         <!-- Generic Damage -->
         <div class="sheet-table">
             <div class="sheet-row">
@@ -1064,11 +1060,11 @@ The user is cured with a DC 16 Save." />
                     <span class="sheet-field" name="attr_generic_db_roll" style="width:80px;">1d8+6</span>
                 </div>
                 <div style="width:100px;">
-                    <button type="roll" name="roll_generic_db" value="@{whisper} &{template:PTU}{{title=@{character_name}'s Damage}}{{damage= [[@{generic_db_roll} + ?{Class|None, 0|Physical, @{ATK_total}|Special, @{SPATK_total}} + @{dmg_bonus} ]]  }}">Damage</button>
+                    <button type="roll" name="roll_generic_db" value="@{whisper} &{template:PTU}{{nick=@{character_name}}}{{title=Damage}}{{damage= [[@{generic_db_roll} + ?{Class|None, 0|Physical, @{ATK_total}|Special, @{SPATK_total}} + @{dmg_bonus} ]]  }}">Damage</button>
                 </div>
                 <div style="width:10px;"></div>
                 <div style="width:100px;">
-                    <button type="roll" name="roll_generic_accuracy" value="@{whisper} &{template:PTU}{{title=@{character_name}'s Accuracy}}{{AC= [[1d20 + @{Acc_total}]] }}">Accuracy</button>
+                    <button type="roll" name="roll_generic_accuracy" value="@{whisper} &{template:PTU}{{nick=@{character_name}}}{{title=Accuracy}}{{AC= [[1d20 + @{Acc_total}]] }}">Accuracy</button>
                 </div>
                 <div style="width:10px;"></div>
             </div>
@@ -1091,6 +1087,7 @@ The user is cured with a DC 16 Save." />
             <input type="hidden" name="attr_mkRange" value='' />
             <input type="hidden" name="attr_mkCat" value='Physical' />
             <input type="hidden" name="attr_mkCrit" value='0' />
+            <input type="hidden" name="attr_mk_multistrike" value='0' />
             <input type="hidden" name="attr_mkDB" value='0' />
             <input type="hidden" name="attr_mkDB_roll" value='0' />
             <input type="hidden" name="attr_mkContestType" value='' />
@@ -1109,9 +1106,9 @@ The user is cured with a DC 16 Save." />
                         
                         <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
                         
-                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{ATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
-                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{SPATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
-                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + 0 ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-physical" title="Show All" value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{dmgcat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{multistrike=[[@{mk_multistrike}]]}} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{ATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-special"  title="Show All" value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{dmgcat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{multistrike=[[@{mk_multistrike}]]}} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{SPATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-status"   title="Show All" value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{dmgcat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{multistrike=[[@{mk_multistrike}]]}} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + 0 ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
                         
                     </div>
                     <span name="attr_mkFrequency" class="sheet-freq">Frequency</span>
@@ -1135,9 +1132,8 @@ The user is cured with a DC 16 Save." />
                     <div class="sheet-move-AC">
                         <span class="sheet-label"> AC: </span> <span name="attr_mkAC"></span> 
                         <span class="sheet-label"> Crit On: </span> <span name="attr_mkCrit"></span>
-                        
-                        
-                        <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} + (@{Acc_total} - (@{mkAC}) ) ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
+                                                
+                        <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" title="Roll AC" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} + (@{Acc_total} - (@{mkAC}) ) ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
                         
                     </div>
                     
@@ -1150,9 +1146,9 @@ The user is cured with a DC 16 Save." />
                         
                         <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
                         
-                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" title="Roll DB" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  title="Roll DB" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   title="Roll DB" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                     
                     </div>
                     
@@ -1229,7 +1225,7 @@ The user is cured with a DC 16 Save." />
                                 </select>
                             </div>
                             <div>
-                                <input type="text" name="attr_struggleContestEffect" placeholder="Contest Effect"/>
+                                <input type="text" name="attr_struggleContestEffect" placeholder="Contest Effect" style="text-align: center"/>
                             </div>
                             
                             
@@ -1239,9 +1235,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
                                 
-                                <button type="roll" name="roll_struggleShow_physical" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{dmgcat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} ]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{struggle_multistrike}]]}} {{db= [[@{struggle_db_total}]] }} {{db_roll= [[@{struggle_db_roll} ]]}} {{damage= [[@{struggle_db_roll} + @{ATK_total}   + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effect= @{struggleEffects} }}"></button>
-                                <button type="roll" name="roll_struggleShow_special"  class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{dmgcat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} ]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{struggle_multistrike}]]}} {{db= [[@{struggle_db_total}]] }} {{db_roll= [[@{struggle_db_roll} ]]}} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effect= @{struggleEffects} }}"></button>
-                                <button type="roll" name="roll_struggleShow_status"   class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{dmgcat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} ]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{struggle_multistrike}]]}} {{db= [[@{struggle_db_total}]] }} {{db_roll= [[@{struggle_db_roll} ]]}} {{damage= [[@{struggle_db_roll} + 0              + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effect= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow_physical" class="sheet-move-button sheet-move-physical" title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{dmgcat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} ]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{struggle_multistrike}]]}} {{db= [[@{struggle_db_total}]] }} {{db_roll= [[@{struggle_db_roll} ]]}} {{damage= [[@{struggle_db_roll} + @{ATK_total}   + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effect= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow_special"  class="sheet-move-button sheet-move-special"  title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{dmgcat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} ]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{struggle_multistrike}]]}} {{db= [[@{struggle_db_total}]] }} {{db_roll= [[@{struggle_db_roll} ]]}} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effect= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow_status"   class="sheet-move-button sheet-move-status"   title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{dmgcat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} ]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{struggle_multistrike}]]}} {{db= [[@{struggle_db_total}]] }} {{db_roll= [[@{struggle_db_roll} ]]}} {{damage= [[@{struggle_db_roll} + 0              + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effect= @{struggleEffects} }}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_struggleCrit_total" value='20' />
@@ -1251,8 +1247,8 @@ The user is cured with a DC 16 Save." />
                                 <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> 
                                     - <input type="number" name="attr_struggleCrit_mod" value="0"  />                                
                                 </span>
-                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle: Accuracy }} {{ac= [[@{struggleAC_total}]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{struggleAC_total})]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
-                                <span class="sheet-multistrike-container">
+                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" title="Roll AC" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle: Accuracy }} {{ac= [[@{struggleAC_total}]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{struggleAC_total})]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
+                                <!-- <span class="sheet-multistrike-container">
                                     <input class="sheet-move-multistrike" name="attr_struggle_multistrike" type="hidden" />
                                     <input class="sheet-c" name="attr_struggle_multistrike" title="Five Strike" type="radio" value="0" checked/>
                                     <input class="sheet-a" name="attr_struggle_multistrike" title="No Multistrike" type="radio" value="2" />
@@ -1261,7 +1257,7 @@ The user is cured with a DC 16 Save." />
                                     <img class="sheet-a" src="https://i.imgur.com/xHmdPBa.png" />
                                     <img class="sheet-b" src="https://i.imgur.com/PaGMG5g.png" />
                                     <img class="sheet-c" src="https://i.imgur.com/GwdvtBR.png" />
-                                </span>
+                                </span> -->
                             </div>
                             <div>
                                 <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
@@ -1279,9 +1275,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
                                 
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle: Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle: Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle: Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" title="Roll Damage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle: Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" title="Roll Damage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle: Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" title="Roll Damage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle: Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                             </div>
                         </div>
                     </div>
@@ -1370,9 +1366,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
                                 
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{dmgcat= @{mlCat} }} {{ac= [[ @{mlAC_total} ]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{ml_multistrike}]]}} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total}   + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effect= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{dmgcat= @{mlCat} }} {{ac= [[ @{mlAC_total} ]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{ml_multistrike}]]}} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effect= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{dmgcat= @{mlCat} }} {{ac= [[ @{mlAC_total} ]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{ml_multistrike}]]}} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0              + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effect= @{mlEffects} }}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_mlAC_total" value='0' />
@@ -1383,7 +1379,7 @@ The user is cured with a DC 16 Save." />
                                 <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> 
                                     - <input type="number" name="attr_mlCrit_mod" value ="0"/> 
                                 </span>
-                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC_total}]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{mlAC_total}) ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
+                                <button type="roll" name="roll_mlAC" class="sheet-move-button" title="Roll AC" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC_total}]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{mlAC_total}) ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
                                 <span class="sheet-multistrike-container">
                                     <input class="sheet-move-multistrike" name="attr_ml_multistrike" type="hidden" value="0"/>
                                     <input class="sheet-c" name="attr_ml_multistrike" title="Five Strike" type="radio" value="0" checked/>
@@ -1413,9 +1409,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
                                 
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" title="Roll Damage" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  title="Roll Damage" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   title="Roll Damage" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                             </div>
                         </div>
                     </div>
@@ -1463,7 +1459,7 @@ The user is cured with a DC 16 Save." />
                         
                         <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
                         
-                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
+                        <button type='roll' value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
                         
                         <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
                     </div>
@@ -1496,7 +1492,7 @@ The user is cured with a DC 16 Save." />
                         
                         <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
                         
-                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{message= @{EdgeInfo} }} " ></button>
+                        <button type='roll' value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{message= @{EdgeInfo} }} " ></button>
                         
                         <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
                     </div>
@@ -1525,7 +1521,7 @@ The user is cured with a DC 16 Save." />
                 <div class='sheet-minihead sheet-ability'>
                     <input type='hidden' class='sheet-hide-swap' name="attr_Feature_Hide" value='0' />
                     <input type="checkbox" class="sheet-arrow " name="attr_Feature_Hide"  value="1" /><span></span>
-                    <button type='roll' value="&{template:PTU} {{title= @{Feature_Name} }} {{prerequisite= @{Feature_Prereq} }} {{frequency= @{Feature_Freq} }} {{target= @{Feature_Target} }} {{trigger= @{Feature_Trigger} }} {{message= @{Feature_Info} }} "></button>
+                    <button type='roll' value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{title= @{Feature_Name} }} {{prerequisite= @{Feature_Prereq} }} {{frequency= @{Feature_Freq} }} {{target= @{Feature_Target} }} {{trigger= @{Feature_Trigger} }} {{message= @{Feature_Info} }} "></button>
                     <input type="text" class="sheet-ability-name" name="attr_Feature_Name" placeholder="Feature Name" style="width:100%" />
                 </div>
                 
@@ -1585,7 +1581,7 @@ The user is cured with a DC 16 Save." />
                 <div class='sheet-minihead sheet-ability'>
                     <input type='hidden' class='sheet-hide-swap' name="attr_Ability_Hide" value='0' />
                     <input type="checkbox" class="sheet-arrow " name="attr_Ability_Hide"  value="1" /><span></span>
-                    <button type='roll' value="@{whisper} &{template:PTU} {{title= @{Ability_Name} }} {{frequency= @{Ability_Freq} }} {{target= @{Ability_Target} }} {{trigger= @{Ability_Trigger} }} {{message= @{Ability_Info} }} "></button>
+                    <button type='roll' value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{title= @{Ability_Name} }} {{frequency= @{Ability_Freq} }} {{target= @{Ability_Target} }} {{trigger= @{Ability_Trigger} }} {{message= @{Ability_Info} }} "></button>
                     <input type="text" class="sheet-ability-name" name="attr_Ability_Name" placeholder="Ability Name" style="width:100%" />
                 </div>
                 
@@ -1604,32 +1600,7 @@ The user is cured with a DC 16 Save." />
                         <textarea name='attr_Ability_Info' ></textarea>
                     </div>
                 </div>
-                
-                <!--input type="checkbox" class="sheet-arrow" name="attr_Ability_Hide"/><span></span>
-                <h4 class='sheet-minihead'>Ability</h4>
-                <table class='sheet-table'>
-                    <tr>
-                        <td class='sheet-table-header'>Name:</td>
-                        <td><input class='sheet-shortfield' name='attr_Ability_Name' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Frequency:</td>
-                        <td><input class='sheet-shortfield' name='attr_Ability_Freq' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Target:</td>
-                        <td><input class='sheet-shortfield' name='attr_Ability_
-                        ' type='text'></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Other Info:</td>
-                        <td><textarea class='sheet-textarea-b' name='attr_Ability_Info'></textarea></td>
-                    </tr>
-                    <tr class="sheet-featlist">
-                        <td class='sheet-table-header'>Display:</td>
-                        <td><button type='roll' value='&{template:PTU} {{dis=Ability}} {{desc=@{Ability_Info}}} {{nick=@{character_name}}} {{name=@{Ability_Name}}} {{freq=@{Ability_Freq}}} {{tar=@{Ability_Target}}}' name='roll_AbilRoll' /> Show</td>
-                    </tr>
-                </table-->
+        
             </fieldset>
         </div>
     </div>
@@ -1805,7 +1776,7 @@ The user is cured with a DC 16 Save." />
                         
                         <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
                         
-                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
+                        <button type='roll' value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{cost= @{EdgeCost} }} {{message= @{EdgeInfo} }} " ></button>
                         
                         <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
                     </div>
@@ -1838,7 +1809,7 @@ The user is cured with a DC 16 Save." />
                         
                         <input type="checkbox" class="sheet-arrow" name="attr_EdgeHide"  value="1" /><span></span>
                         
-                        <button type='roll' value="@{whisper} &{template:PTU} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{message= @{EdgeInfo} }} " ></button>
+                        <button type='roll' value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{title= @{EdgeName} }} {{prerequisite= @{EdgePrereq} }} {{message= @{EdgeInfo} }} " ></button>
                         
                         <input type="text" class="sheet-ability-name" name="attr_EdgeName" placeholder="Edge Name" style="width:100%" />
                     </div>
@@ -1867,7 +1838,7 @@ The user is cured with a DC 16 Save." />
                 <div class='sheet-minihead sheet-ability'>
                     <input type='hidden' class='sheet-hide-swap' name="attr_Feature_Hide" value='0' />
                     <input type="checkbox" class="sheet-arrow " name="attr_Feature_Hide"  value="1" /><span></span>
-                    <button type='roll' value="&{template:PTU} {{title= @{Feature_Name} }} {{prerequisite= @{Feature_Prereq} }} {{frequency= @{Feature_Freq} }} {{target= @{Feature_Target} }} {{trigger= @{Feature_Trigger} }} {{message= @{Feature_Info} }} "></button>
+                    <button type='roll' value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{title= @{Feature_Name} }} {{prerequisite= @{Feature_Prereq} }} {{frequency= @{Feature_Freq} }} {{target= @{Feature_Target} }} {{trigger= @{Feature_Trigger} }} {{message= @{Feature_Info} }} "></button>
                     <input type="text" class="sheet-ability-name" name="attr_Feature_Name" placeholder="Feature Name" style="width:100%" />
                 </div>
                 
@@ -1927,7 +1898,7 @@ The user is cured with a DC 16 Save." />
                 <div class='sheet-minihead sheet-ability'>
                     <input type='hidden' class='sheet-hide-swap' name="attr_Ability_Hide" value='0' />
                     <input type="checkbox" class="sheet-arrow " name="attr_Ability_Hide"  value="1" /><span></span>
-                    <button type='roll' value="@{whisper} &{template:PTU} {{title= @{Ability_Name} }} {{frequency= @{Ability_Freq} }} {{target= @{Ability_Target} }} {{trigger= @{Ability_Trigger} }} {{message= @{Ability_Info} }} "></button>
+                    <button type='roll' value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{title= @{Ability_Name} }} {{frequency= @{Ability_Freq} }} {{target= @{Ability_Target} }} {{trigger= @{Ability_Trigger} }} {{message= @{Ability_Info} }} "></button>
                     <input type="text" class="sheet-ability-name" name="attr_Ability_Name" placeholder="Ability Name" style="width:100%" />
                 </div>
                 
@@ -2002,19 +1973,19 @@ The user is cured with a DC 16 Save." />
                 <td class='sheet-table-header'>General Education</td>
                 <td><input type='number' name='attr_GeneralEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_GeneralEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=GeneralEducation}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=General Education}} {{SL=[[@{GeneralEducation}d6+@{GeneralEducation_bonus}]]}}' name='roll_GeneralEducationCheck'/></td>
             </tr>
             <tr align = "center">
                 <td class='sheet-table-header'>Medicine Education</td>
                 <td><input type='number' name='attr_MedicineEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_MedicineEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=MedicineEducation}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' /></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Medicine Education}} {{SL=[[@{MedicineEducation}d6+@{MedicineEducation_bonus}]]}}' name='roll_MedicineEducationCheck' /></td>
             </tr>
             <tr align = "center">
                 <td class='sheet-table-header'>Occult Education</td>
                 <td><input type='number' name='attr_OccultEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_OccultEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=OccultEducation}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' /></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Occult Education}} {{SL=[[@{OccultEducation}d6+@{OccultEducation_bonus}]]}}' name='roll_OccultEducationCheck' /></td>
             </tr>
         </table>
         <table class='sheet-right-half-table'>
@@ -2028,13 +1999,13 @@ The user is cured with a DC 16 Save." />
                 <td class='sheet-table-header'>Pokemon Education</td>
                 <td><input type='number' name='attr_PokemonEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_PokemonEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=PokemonEducation}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' /></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Pokemon Education}} {{SL=[[@{PokemonEducation}d6+@{PokemonEducation_bonus}]]}}' name='roll_PokemonEducationCheck' /></td>
             </tr>
             <tr align = "center">
                 <td class='sheet-table-header'>Technology Education</td>
                 <td><input type='number' name='attr_TechnologyEducation' value='2'/> d6+</td>
                 <td><input type='number' name='attr_TechnologyEducation_bonus' value='0'/></td>
-                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=TechnologyEducation}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' /></td>
+                <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Technology Education}} {{SL=[[@{TechnologyEducation}d6+@{TechnologyEducation_bonus}]]}}' name='roll_TechnologyEducationCheck' /></td>
             </tr>
             <tr align = "center">
                 <td class='sheet-table-header'>Guile</td>
@@ -2072,9 +2043,7 @@ The user is cured with a DC 16 Save." />
                 <td><input type='number' name='attr_Intuition_bonus' value='0'/></td>
                 <td><button type='roll' value='@{whisper} &{template:PTU} {{nick=@{character_name}}} {{skill=Intuition}} {{SL=[[@{Intuition}d6+@{Intuition_bonus}]]}}' name='roll_IntuitionCheck' /></td>
             </tr>
-        </table> <!--
-        </tr>
-        </table> -->
+        </table> 
     
     </div>
     <br/>
@@ -2123,6 +2092,7 @@ The user is cured with a DC 16 Save." />
             <input type="hidden" name="attr_mkRange" value='' />
             <input type="hidden" name="attr_mkCat" value='Physical' />
             <input type="hidden" name="attr_mkCrit" value='0' />
+            <input type="hidden" name="attr_mk_multistrike" value='0' />
             <input type="hidden" name="attr_mkDB" value='0' />
             <input type="hidden" name="attr_mkDB_roll" value='0' />
             <input type="hidden" name="attr_mkContestType" value='' />
@@ -2141,9 +2111,9 @@ The user is cured with a DC 16 Save." />
                         
                         <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
                         
-                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{ATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
-                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{SPATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
-                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{cat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + 0 ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-physical" title="Show All" value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{dmgcat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{multistrike=[[@{mk_multistrike}]]}} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{ATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-special"  title="Show All" value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{dmgcat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{multistrike=[[@{mk_multistrike}]]}} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + @{SPATK_total} ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
+                        <button type="roll" class="sheet-btn-show sheet-blank-roll-button sheet-move-status"   title="Show All" value="@{whisper} &{template:PTU} {{nick=@{character_name}}} {{name= @{mkName} }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange} }} {{dmgcat= @{mkCat} }} {{ac= [[ @{mkAC} + 0]] }} {{ar= [[1d20cs>@{mkCrit} + @{Acc_total} - @{mkAC} ]] }} {{critsOn= [[@{mkCrit}]] }} {{multistrike=[[@{mk_multistrike}]]}} {{db= [[@{mkDB}]] }} {{db_roll= @{mkDB_roll} }} {{roll= [[@{mkDB_roll} + 0 ]] }} {{contest_type= @{mkContestType} }} {{contest_effect= @{mkContestEffect} }} {{effects= @{mkEffects} }}"></button>
                         
                     </div>
                     <span name="attr_mkFrequency" class="sheet-freq">Frequency</span>
@@ -2167,9 +2137,8 @@ The user is cured with a DC 16 Save." />
                     <div class="sheet-move-AC">
                         <span class="sheet-label"> AC: </span> <span name="attr_mkAC"></span> 
                         <span class="sheet-label"> Crit On: </span> <span name="attr_mkCrit"></span>
-                        
-                        
-                        <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} + (@{Acc_total} - (@{mkAC}) ) ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
+                                                
+                        <button type="roll" class="sheet-btn-accuracy sheet-blank-roll-button sheet-move-physical" title="Roll AC" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mkName} }} {{ac= [[@{mkAC}]] }} {{ar= [[1d20cs>@{mkCrit} + (@{Acc_total} - (@{mkAC}) ) ]] }} {{critsOn= [[@{mkCrit} + 0]] }} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{range= @{mkRange}}} {{effect= @{mkEffects}}}"></button>
                         
                     </div>
                     
@@ -2182,9 +2151,9 @@ The user is cured with a DC 16 Save." />
                         
                         <input type="hidden" name="attr_mkCat" class='sheet-move-cat' />
                         
-                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-physical" title="Roll DB" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-special"  title="Roll DB" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                        <button type="roll" class="sheet-btn-damage sheet-blank-roll-button sheet-move-status"   title="Roll DB" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mkName}}} {{type= @{mkType} }} {{frequency= @{mkFrequency} }} {{db= [[@{mkDB}]] }} {{damage= [[@{mkDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                     
                     </div>
                     
@@ -2261,7 +2230,7 @@ The user is cured with a DC 16 Save." />
                                 </select>
                             </div>
                             <div>
-                                <input type="text" name="attr_struggleContestEffect" placeholder="Contest Effect"/>
+                                <input type="text" name="attr_struggleContestEffect" placeholder="Contest Effect" style="text-align: center"/>
                             </div>
                             
                             
@@ -2271,9 +2240,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
                                 
-                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_total}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
-                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_total}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
-                                <button type="roll" name="roll_struggleShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{cat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} + 0]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{db= [[@{struggle_db_total}]] }} {{db_roll= @{struggle_db_roll} }} {{roll= [[@{struggle_db_roll} + 0 + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effects= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow_physical" class="sheet-move-button sheet-move-physical" title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{dmgcat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} ]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{struggle_multistrike}]]}} {{db= [[@{struggle_db_total}]] }} {{db_roll= [[@{struggle_db_roll} ]]}} {{damage= [[@{struggle_db_roll} + @{ATK_total}   + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effect= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow_special"  class="sheet-move-button sheet-move-special"  title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{dmgcat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} ]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{struggle_multistrike}]]}} {{db= [[@{struggle_db_total}]] }} {{db_roll= [[@{struggle_db_roll} ]]}} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effect= @{struggleEffects} }}"></button>
+                                <button type="roll" name="roll_struggleShow_status"   class="sheet-move-button sheet-move-status"   title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= Struggle }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange} }} {{dmgcat= @{struggleCat} }} {{ac= [[ @{struggleAC_total} ]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + @{Acc_total} - @{struggleAC_total} ]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{struggle_multistrike}]]}} {{db= [[@{struggle_db_total}]] }} {{db_roll= [[@{struggle_db_roll} ]]}} {{damage= [[@{struggle_db_roll} + 0              + @{dmg_bonus}]] }} {{contest_type= @{struggleContestType} }} {{contest_effect= @{struggleContestEffect} }} {{effect= @{struggleEffects} }}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_struggleCrit_total" value='20' />
@@ -2283,7 +2252,17 @@ The user is cured with a DC 16 Save." />
                                 <span>Crit On: <input type="number" name="attr_struggleCrit" value="20"  /> 
                                     - <input type="number" name="attr_struggleCrit_mod" value="0"  />                                
                                 </span>
-                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle Accuracy }} {{ac= [[@{struggleAC_total}]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{struggleAC_total})]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
+                                <button type="roll" name="roll_struggleAC" class="sheet-move-button" title="Roll AC" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= Struggle: Accuracy }} {{ac= [[@{struggleAC_total}]] }} {{ar= [[1d20cs>[[@{struggleCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{struggleAC_total})]] }} {{critsOn= [[@{struggleCrit_total} - @{crit_mod} + 0]] }} {{type= @{struggleType} }} {{frequency= At-Will }} {{range= @{struggleRange}}} {{effect= @{struggleEffects}}}"></button>
+                                <!-- <span class="sheet-multistrike-container">
+                                    <input class="sheet-move-multistrike" name="attr_struggle_multistrike" type="hidden" />
+                                    <input class="sheet-c" name="attr_struggle_multistrike" title="Five Strike" type="radio" value="0" checked/>
+                                    <input class="sheet-a" name="attr_struggle_multistrike" title="No Multistrike" type="radio" value="2" />
+                                    <input class="sheet-b" name="attr_struggle_multistrike" title="Double Strike" type="radio" value="5" />
+                                    
+                                    <img class="sheet-a" src="https://i.imgur.com/xHmdPBa.png" />
+                                    <img class="sheet-b" src="https://i.imgur.com/PaGMG5g.png" />
+                                    <img class="sheet-c" src="https://i.imgur.com/GwdvtBR.png" />
+                                </span> -->
                             </div>
                             <div>
                                 <input type="hidden" name="attr_struggle_db_roll" value="1d8+6" />
@@ -2301,9 +2280,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_struggleCat" class='sheet-move-cat' value='Physical' />
                                 
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_struggleDamage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" title="Roll Damage" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle: Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" title="Roll Damage" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle: Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_struggleDamage" title="Roll Damage" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= Struggle: Damage}} {{type= @{struggleType} }} {{frequency= At-Will }} {{db= [[@{struggle_db_total}]] }} {{damage= [[@{struggle_db_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                             </div>
                         </div>
                     </div>
@@ -2392,9 +2371,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
                                 
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
-                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU_Move} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{cat= @{mlCat} }} {{ac= [[ @{mlAC_total} + 0]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effects= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-physical" title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{dmgcat= @{mlCat} }} {{ac= [[ @{mlAC_total} ]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{ml_multistrike}]]}} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{ATK_total}   + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effect= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-special"  title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{dmgcat= @{mlCat} }} {{ac= [[ @{mlAC_total} ]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{ml_multistrike}]]}} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effect= @{mlEffects} }}"></button>
+                                <button type="roll" name="roll_mlShow" class="sheet-move-button sheet-move-status"   title="Show All" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick=@{character_name}}} {{name= @{mlName} }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange} }} {{dmgcat= @{mlCat} }} {{ac= [[ @{mlAC_total} ]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + @{Acc_total} - @{mlAC_total} ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod}]] }} {{multistrike=[[@{ml_multistrike}]]}} {{db= [[@{mldb_total}]] }} {{db_roll= @{mlDB_roll} }} {{roll= [[@{mlDB_roll} + 0              + @{dmg_bonus} ]] }} {{contest_type= @{mlContestType} }} {{contest_effect= @{mlContestEffect} }} {{effect= @{mlEffects} }}"></button>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_mlAC_total" value='0' />
@@ -2405,7 +2384,17 @@ The user is cured with a DC 16 Save." />
                                 <span>Crit On: <input type="number" name="attr_mlCrit" value ="20"/> 
                                     - <input type="number" name="attr_mlCrit_mod" value ="0"/> 
                                 </span>
-                                <button type="roll" name="roll_mlAC" class="sheet-move-button" value="@{whisper} &{template:PTU} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC_total}]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{mlAC_total}) ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
+                                <button type="roll" name="roll_mlAC" class="sheet-move-button" title="Roll AC" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick= @{character_name}}} {{name= @{mlName} }} {{ac= [[@{mlAC_total}]] }} {{ar= [[1d20cs>[[@{mlCrit_total} - @{crit_mod}]] + (@{Acc_total} - @{mlAC_total}) ]] }} {{critsOn= [[@{mlCrit_total} - @{crit_mod} + 0]] }} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{range= @{mlRange}}} {{effect= @{mlEffects}}}"></button>
+                                <span class="sheet-multistrike-container">
+                                    <input class="sheet-move-multistrike" name="attr_ml_multistrike" type="hidden" value="0"/>
+                                    <input class="sheet-c" name="attr_ml_multistrike" title="Five Strike" type="radio" value="0" checked/>
+                                    <input class="sheet-a" name="attr_ml_multistrike" title="No Multistrike" type="radio" value="2" />
+                                    <input class="sheet-b" name="attr_ml_multistrike" title="Double Strike" type="radio" value="5" />
+                                    
+                                    <img class="sheet-a" src="https://i.imgur.com/xHmdPBa.png" />
+                                    <img class="sheet-b" src="https://i.imgur.com/PaGMG5g.png" />
+                                    <img class="sheet-c" src="https://i.imgur.com/GwdvtBR.png" />
+                                </span>
                             </div>
                             <div>
                                 <input type="hidden" name="attr_mldb_total" value="0" />
@@ -2425,9 +2414,9 @@ The user is cured with a DC 16 Save." />
                                 
                                 <input type="hidden" name="attr_mlCat" class='sheet-move-cat' value="Physical"/>
                                 
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
-                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   value="@{whisper} &{template:PTU} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-physical" title="Roll Damage" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + @{ATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-special"  title="Roll Damage" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + @{SPATK_total} + @{dmg_bonus} ]] }}"></button>
+                                <button type="roll" name="roll_mlDB" class="sheet-move-button sheet-move-status"   title="Roll Damage" value="@{whisper} &{template:PTU} {{whisper=@{whisper}}} {{nick= @{character_name} }} {{name= @{mlName}}} {{type= @{mlType} }} {{frequency= @{mlFrequency} }} {{db= [[@{mldb_total}]] }} {{damage= [[@{mlDB_roll} + 0 + @{dmg_bonus} ]] }}"></button>
                             </div>
                         </div>
                     </div>
@@ -2438,7 +2427,7 @@ The user is cured with a DC 16 Save." />
                 
             </fieldset>
         </div>
-    </div> 
+    </div>
 
 </div>
 
@@ -2456,7 +2445,7 @@ The user is cured with a DC 16 Save." />
         "repeating_moves_mlCat","repeating_moves_mlRange","repeating_moves_mlAC_total","repeating_moves_mlCrit_total",
         "repeating_moves_mldb_total","repeating_moves_mlDB_roll","repeating_moves_mlDamageBonus","repeating_moves_mlUses",
         "repeating_moves_mlContestType","repeating_moves_mlContestEffect","repeating_moves_mlEffects",
-        "repeating_moves_mlID"
+        "repeating_moves_mlID", "repeating_moves_ml_multistrike"
     ];
     
     let natures={
@@ -3052,6 +3041,8 @@ The user is cured with a DC 16 Save." />
                 update["repeating_movesKnown_"+ newID +"_mkUses"]          = values["repeating_moves_mlUses"];
                 update["repeating_movesKnown_"+ newID +"_mkUses_max"]      = values["repeating_moves_mlUses"];
 
+                update["repeating_movesKnown_"+ newID +"_mk_multistrike"]  = values["repeating_moves_ml_multistrike"];
+
                 setAttrs(update,{silent: true});
             });            
         }else{
@@ -3310,7 +3301,7 @@ The user is cured with a DC 16 Save." />
     });
     
     /*
-        Import character from Pokegenesis JSON data 
+        Import character from JSON data 
     */
     var infoImport = function() {
         getAttrs(["input"], function (v) {
@@ -3482,7 +3473,9 @@ The user is cured with a DC 16 Save." />
                                                 }
                                             }
                                         } else if(property.match(/nickname/i)){
-                                            t["character_name"] = char[property];
+                                            if(char[property].length > 0){
+                                                t["character_name"] = char[property];
+                                            }
                                         }else {
                                             t[property]= char[property] ;
                                         }
@@ -3818,7 +3811,7 @@ The user is cured with a DC 16 Save." />
         {{/nick}}
         
         {{#ac}}
-        {{#rollGreater() ac 0}}
+        {{#rollGreater() ac -1}}
             <tr>
                 <td colspan="2">
                     <span class="tcat">AC: </span>{{ar}} ≥ Target Evasion</td>
@@ -3828,7 +3821,7 @@ The user is cured with a DC 16 Save." />
                     <span class="tcat">Crits On: {{critsOn}}+</span>
                 </td>
             </tr>
-        {{/rollGreater() ac 0}}                
+        {{/rollGreater() ac -1}}                
         {{/ac}}
             
         {{^ac}}
@@ -3900,17 +3893,38 @@ The user is cured with a DC 16 Save." />
     {{/skill}}
         
         {{#skill}}
-            <tr><th colspan="2">{{nick}}:<br/>Rolling {{skill}}</th></tr>
-            <tr><td colspan="2"><span class="tcat">Result: </span>{{SL}}</td></tr>
+            <tr>
+                <th colspan="2">
+                    {{#nick}}
+                        <span class="sheet-owner">{{nick}}</span>
+                        <br/>
+                    {{/nick}}
+                    <span>Rolling&NewLine;{{skill}}</span>
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class="tcat">Result: </span>
+                    <span>{{SL}}</span>
+                </td>
+            </tr>
         {{/skill}}        
         
 {{/title}}
         
     {{#title}}
-        <tr><th colspan="2">{{title}}</th></tr>
-        {{#allprops() title message}}
+        <tr>
+            <th colspan="2">
+                {{#nick}}
+                <span class="sheet-owner">{{nick}}</span>
+                <br/>
+                {{/nick}}
+                <span>{{title}}</span>
+            </th>
+        </tr>
+        {{#allprops() nick title message}}
             <tr><td class='sheet-table-header'>{{key}}</td><td>{{value}}</td></tr>
-        {{/allprops() title message}}
+        {{/allprops() nick title message}}
         {{#message}}
             <tr><td colspan="2" >{{message}}</td></tr>
         {{/message}}
