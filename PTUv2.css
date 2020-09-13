@@ -26,6 +26,38 @@
     display:block;
 }
 
+.sheet-multistrike-container{
+    float: right;
+    position: relative;
+    margin-right: 55px;
+}
+.sheet-multistrike-container > input{
+    position: absolute;
+    top:0px;
+    left:0px;
+    opacity: 0;
+    z-index: 3;
+}
+.sheet-multistrike-container > img{
+    width: 28px;
+    height: 28px;
+}
+
+.sheet-move-multistrike ~ .sheet-a,
+.sheet-move-multistrike ~ .sheet-b,
+.sheet-move-multistrike ~ .sheet-c{
+    display: none;
+    
+}
+
+.sheet-move-multistrike[value="0"] ~ .sheet-a,
+.sheet-move-multistrike[value="2"] ~ .sheet-b,
+.sheet-move-multistrike[value="5"] ~ .sheet-c{
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+}
+
 
 button[type="roll"]{
     margin:0px;
@@ -728,12 +760,13 @@ tr.sheet-featlist {
 input.sheet-arrow:checked ~ table tr.sheet-featlist {
     display: table-row;
 }
-.sheet-rolltemplate-PTU_Move .sheet-spacing,
-.sheet-rolltemplate-PTU .sheet-spacing{
+.sheet-rolltemplate-PTU .sheet-spacing,
+.sheet-rolltemplate-PTU_Move .sheet-spacing{
     white-space:pre-line;
 }
 .sheet-rolltemplate-PTU table,
-.sheet-rolltemplate-PTU_Move table{
+.sheet-rolltemplate-PTU_Move table,
+.sheet-rolltemplate-PTU_FiveStrike table{
     width: 100%;
     border: 1px solid;
     color: black;
@@ -741,11 +774,12 @@ input.sheet-arrow:checked ~ table tr.sheet-featlist {
     font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 .sheet-rolltemplate-PTU th,
-.sheet-rolltemplate-PTU_Move th{
+.sheet-rolltemplate-PTU_Move th,
+.sheet-rolltemplate-PTU_FiveStrike th{
     background: url(http://i.imgur.com/5aRtcpq.png) left top no-repeat, url(http://i.imgur.com/yyzOMmI.png);
     /* url("http://i.imgur.com/yyzOMmI.png") top no-repeat*/;
     color: #ffffff;
-    padding: 2px 2px 2px 40px;
+    padding: 2px 2px 2px 45px;
     border-bottom: 1px solid black;
     line-height: 1.6em;
     font-size: 1.2em;
@@ -757,7 +791,8 @@ input.sheet-arrow:checked ~ table tr.sheet-featlist {
 }
 
 .sheet-rolltemplate-PTU td,
-.sheet-rolltemplate-PTU_Move td{
+.sheet-rolltemplate-PTU_Move td,
+.sheet-rolltemplate-PTU_FiveStrike td{
 	padding: 5px;
 	border-bottom: 1px solid black;
 }
@@ -770,35 +805,41 @@ input.sheet-arrow:checked ~ table tr.sheet-featlist {
 }
 
 .sheet-rolltemplate-PTU tr:nth-child(odd),
-.sheet-rolltemplate-PTU_Move tr:nth-child(odd){
+.sheet-rolltemplate-PTU_Move tr:nth-child(odd),
+.sheet-rolltemplate-PTU_FiveStrike tr:nth-child(odd){
 	background-color: rgba(217, 217, 214,1);
 }
 
 .sheet-rolltemplate-PTU tr:nth-child(even),
-.sheet-rolltemplate-PTU_Move tr:nth-child(even){
+.sheet-rolltemplate-PTU_Move tr:nth-child(even),
+.sheet-rolltemplate-PTU_FiveStrike tr:nth-child(even){
 	background-color: rgba(233, 233, 233,1);
 }
 
 .sheet-rolltemplate-PTU .inlinerollresult,
-.sheet-rolltemplate-PTU_Move .inlinerollresult {
+.sheet-rolltemplate-PTU_Move .inlinerollresult,
+.sheet-rolltemplate-PTU_FiveStrike .inlinerollresult{
 	display: inline-block;
 	min-width: 1.5em;
 	text-align: center;
 	border: 2px solid rgba(167, 168, 170,1); /*Cool Gray 6 C*/
 }
 
-.sheet-rolltemplate-PTU .inlinerollresult.fullcrit
-.sheet-rolltemplate-PTU_Move .inlinerollresult.fullcrit {
+.sheet-rolltemplate-PTU .inlinerollresult.fullcrit,
+.sheet-rolltemplate-PTU_Move .inlinerollresult.fullcrit ,
+.sheet-rolltemplate-PTU_FiveStrike .inlinerollresult.fullcrit{
 	border: 2px solid #3FB315;
 }
 
 .sheet-rolltemplate-PTU .inlinerollresult.fullfail,
-.sheet-rolltemplate-PTU_Move .inlinerollresult.fullfail {
+.sheet-rolltemplate-PTU_Move .inlinerollresult.fullfail,
+.sheet-rolltemplate-PTU_FiveStrike .inlinerollresult.fullfail{
 	border: 2px solid #B31515;
 }
 
-.sheet-rolltemplate-PTU .inlinerollresult.importantroll
-.sheet-rolltemplate-PTU_Move .inlinerollresult.importantroll {
+.sheet-rolltemplate-PTU .inlinerollresult.importantroll,
+.sheet-rolltemplate-PTU_Move .inlinerollresult.importantroll, 
+.sheet-rolltemplate-PTU_FiveStrike .inlinerollresult.importantroll{
 	border: 2px solid #4A57ED;
 }
 
@@ -819,13 +860,29 @@ input.sheet-arrow:checked ~ table tr.sheet-featlist {
 }
 
 .sheet-rolltemplate-PTU tr:nth-child(odd),
-.sheet-rolltemplate-PTU_Move tr:nth-child(odd) {
+.sheet-rolltemplate-PTU_Move tr:nth-child(odd),
+.sheet-rolltemplate-PTU_FiveStrike tr:nth-child(odd){
     background-color: #E5E5E5;
 }
 
 .sheet-rolltemplate-PTU tr:nth-child(even),
-.sheet-rolltemplate-PTU_Move tr:nth-child(even) {
+.sheet-rolltemplate-PTU_Move tr:nth-child(even),
+.sheet-rolltemplate-PTU_FiveStrike tr:nth-child(even){
     background-color: whitesmoke;
+}
+
+.sheet-rolltemplate-PTU .sheet-owner,
+.sheet-rolltemplate-PTU_Move .sheet-owner,
+.sheet-rolltemplate-PTU_FiveStrike .sheet-owner{
+    font-style: italic;
+}
+.sheet-rolltemplate-PTU_FiveStrike tr{
+    text-align: center;
+}
+.sheet-rolltemplate-PTU a[href^="!"]{
+    width:100%;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 /* Jakob's Default Rolltemplate */
